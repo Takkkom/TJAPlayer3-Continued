@@ -238,30 +238,16 @@ namespace FDK
 			ASIODevice = _nASIODevice;
 			bUseOSTimer = _bUseOSTimer;
 
-			ESoundDeviceType[] ESoundDeviceTypes = new ESoundDeviceType[ 4 ]
+			ESoundDeviceType[] ESoundDeviceTypes = new ESoundDeviceType[ 5 ]
 			{
-				ESoundDeviceType.ExclusiveWASAPI,
-				ESoundDeviceType.ASIO,
 				ESoundDeviceType.DirectSound,
+				ESoundDeviceType.ASIO,
+				ESoundDeviceType.SharedWASAPI,
+				ESoundDeviceType.ExclusiveWASAPI,
 				ESoundDeviceType.Unknown
 			};
 
-			int n初期デバイス;
-			switch ( soundDeviceType )
-			{
-				case ESoundDeviceType.ExclusiveWASAPI:
-					n初期デバイス = 0;
-					break;
-				case ESoundDeviceType.ASIO:
-					n初期デバイス = 1;
-					break;
-				case ESoundDeviceType.DirectSound:
-					n初期デバイス = 2;
-					break;
-				default:
-					n初期デバイス = 3;
-					break;
-			}
+			int n初期デバイス = (int)soundDeviceType;
 			for ( SoundDeviceType = ESoundDeviceTypes[ n初期デバイス ]; ; SoundDeviceType = ESoundDeviceTypes[ ++n初期デバイス ] )
 			{
 				try

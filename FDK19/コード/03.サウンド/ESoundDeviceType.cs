@@ -6,10 +6,10 @@ namespace FDK
 {
 	public enum ESoundDeviceType
 	{
-		ExclusiveWASAPI,
-		SharedWASAPI,
-		ASIO,
 		DirectSound,
+		ASIO,
+		SharedWASAPI,
+		ExclusiveWASAPI,
 		Unknown,
 	}
 }
