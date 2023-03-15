@@ -329,7 +329,7 @@ namespace TJAPlayer3
 				"\n" +
 				"Note: Exit CONFIGURATION to make\n" +
 				"     the setting take effect.",
-				new string[] { "DSound", "ASIO", "WASAPI" });
+				new string[] { "DSound", "ASIO", "SharedWASAPI", "ExclusiveWASAPI" });
 			this.list項目リスト.Add(this.iSystemSoundType);
 
 			// #24820 2013.1.15 yyagi
@@ -1571,22 +1571,7 @@ namespace TJAPlayer3
 				this.iSystemASIODevice_initial != this.iSystemASIODevice.n現在選択されている項目番号 ||
 				this.iSystemSoundTimerType_initial != this.iSystemSoundTimerType.GetIndex() )
 			{
-				ESoundDeviceType soundDeviceType;
-				switch ( this.iSystemSoundType.n現在選択されている項目番号 )
-				{
-					case 0:
-						soundDeviceType = ESoundDeviceType.DirectSound;
-						break;
-					case 1:
-						soundDeviceType = ESoundDeviceType.ASIO;
-						break;
-					case 2:
-						soundDeviceType = ESoundDeviceType.ExclusiveWASAPI;
-						break;
-					default:
-						soundDeviceType = ESoundDeviceType.Unknown;
-						break;
-				}
+				ESoundDeviceType soundDeviceType = (ESoundDeviceType)this.iSystemSoundType.n現在選択されている項目番号;
 
 				TJAPlayer3.Sound管理.t初期化( soundDeviceType,
 										this.iSystemWASAPIBufferSizeMs.n現在の値,

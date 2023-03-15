@@ -2127,29 +2127,13 @@ for (int i = 0; i < 3; i++) {
 			Trace.Indent();
 			try
 			{
-				ESoundDeviceType soundDeviceType;
-				switch ( TJAPlayer3.ConfigIni.nSoundDeviceType )
-				{
-					case 0:
-						soundDeviceType = ESoundDeviceType.DirectSound;
-						break;
-					case 1:
-						soundDeviceType = ESoundDeviceType.ASIO;
-						break;
-					case 2:
-						soundDeviceType = ESoundDeviceType.ExclusiveWASAPI;
-						break;
-					default:
-						soundDeviceType = ESoundDeviceType.Unknown;
-						break;
-				}
 				Sound管理 = new CSound管理(base.Window.Handle,
-											soundDeviceType,
-											TJAPlayer3.ConfigIni.nWASAPIBufferSizeMs,
+					(ESoundDeviceType)TJAPlayer3.ConfigIni.nSoundDeviceType,
+					TJAPlayer3.ConfigIni.nWASAPIBufferSizeMs,
 					// CDTXMania.ConfigIni.nASIOBufferSizeMs,
-											0,
-											TJAPlayer3.ConfigIni.nASIODevice,
-											TJAPlayer3.ConfigIni.bUseOSTimer
+					0,
+					TJAPlayer3.ConfigIni.nASIODevice,
+					TJAPlayer3.ConfigIni.bUseOSTimer
 				);
 				//Sound管理 = FDK.CSound管理.Instance;
 				//Sound管理.t初期化( soundDeviceType, 0, 0, CDTXMania.ConfigIni.nASIODevice, base.Window.Handle );
