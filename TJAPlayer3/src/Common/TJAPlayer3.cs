@@ -1928,28 +1928,6 @@ for (int i = 0; i < 3; i++) {
 			#endregion
 
 			DTX = null;
-
-			#region [ Skin の初期化 ]
-			//---------------------
-			Trace.TraceInformation( "スキンの初期化を行います。" );
-			Trace.Indent();
-			try
-			{
-				Skin = new SkinManager( TJAPlayer3._MainConfig.strSystemSkinSubfolderFullName, false);
-				TJAPlayer3._MainConfig.strSystemSkinSubfolderFullName = TJAPlayer3.Skin.GetCurrentSkinSubfolderFullName( true );	// 旧指定のSkinフォルダが消滅していた場合に備える
-				Trace.TraceInformation( "スキンの初期化を完了しました。" );
-			}
-			catch (Exception e)
-			{
-				Trace.TraceInformation( "スキンの初期化に失敗しました。" );
-				throw;
-			}
-			finally
-			{
-				Trace.Unindent();
-			}
-			//---------------------
-			#endregion
 			//-----------
 			#region [ Timer の初期化 ]
 			//---------------------
@@ -1976,29 +1954,6 @@ for (int i = 0; i < 3; i++) {
 			{
 				FPS = new FPSManager();
 				Trace.TraceInformation( "FPSカウンタを生成しました。" );
-			}
-			finally
-			{
-				Trace.Unindent();
-			}
-			//---------------------
-			#endregion
-			#region [ act文字コンソールの初期化 ]
-			//---------------------
-			Trace.TraceInformation( "文字コンソールの初期化を行います。" );
-			Trace.Indent();
-			try
-			{
-				_ConsoleText = new ConsoleText();
-				Trace.TraceInformation( "文字コンソールを生成しました。" );
-				_ConsoleText.Activate();
-				Trace.TraceInformation( "文字コンソールを活性化しました。" );
-				Trace.TraceInformation( "文字コンソールの初期化を完了しました。" );
-			}
-			catch( Exception exception )
-			{
-				Trace.TraceError( exception.ToString() );
-				Trace.TraceError( "文字コンソールの初期化に失敗しました。" );
 			}
 			finally
 			{
@@ -2163,6 +2118,53 @@ for (int i = 0; i < 3; i++) {
 			Random = new Random( (int) Timer.nシステム時刻 );
 			//---------------------
 			#endregion
+
+			#region [ Skin の初期化 ]
+			//---------------------
+			Trace.TraceInformation("スキンの初期化を行います。");
+			Trace.Indent();
+			try
+			{
+				Skin = new SkinManager(TJAPlayer3._MainConfig.strSystemSkinSubfolderFullName, false);
+				TJAPlayer3._MainConfig.strSystemSkinSubfolderFullName = TJAPlayer3.Skin.GetCurrentSkinSubfolderFullName(true);  // 旧指定のSkinフォルダが消滅していた場合に備える
+				Trace.TraceInformation("スキンの初期化を完了しました。");
+			}
+			catch (Exception e)
+			{
+				Trace.TraceInformation("スキンの初期化に失敗しました。");
+				throw;
+			}
+			finally
+			{
+				Trace.Unindent();
+			}
+			//---------------------
+			#endregion
+
+			#region [ act文字コンソールの初期化 ]
+			//---------------------
+			Trace.TraceInformation("文字コンソールの初期化を行います。");
+			Trace.Indent();
+			try
+			{
+				_ConsoleText = new ConsoleText();
+				Trace.TraceInformation("文字コンソールを生成しました。");
+				_ConsoleText.Activate();
+				Trace.TraceInformation("文字コンソールを活性化しました。");
+				Trace.TraceInformation("文字コンソールの初期化を完了しました。");
+			}
+			catch (Exception exception)
+			{
+				Trace.TraceError(exception.ToString());
+				Trace.TraceError("文字コンソールの初期化に失敗しました。");
+			}
+			finally
+			{
+				Trace.Unindent();
+			}
+			//---------------------
+			#endregion
+
 			#region [ ステージの初期化 ]
 			//---------------------
 			r現在のステージ = null;
