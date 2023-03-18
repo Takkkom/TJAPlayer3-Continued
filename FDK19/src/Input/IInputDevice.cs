@@ -8,7 +8,7 @@ namespace FDK
 	{
 		// プロパティ
 
-		InputTypes e入力デバイス種別
+		InputTypes NowInputDeviceType
 		{
 			get;
 		}
@@ -20,7 +20,7 @@ namespace FDK
 		{
 			get;
 		}
-		List<STInputEvent> list入力イベント
+		List<STInputEvent> InputEvents
 		{
 			get;
 		}
@@ -28,10 +28,10 @@ namespace FDK
 
 		// メソッドインターフェース
 
-		void tポーリング( bool bWindowがアクティブ中, bool bバッファ入力を使用する );
-		bool bキーが押された( int nKey );
-		bool bキーが押されている( int nKey );
-		bool bキーが離された( int nKey );
-		bool bキーが離されている( int nKey );
+		void Polling( bool bWindowがアクティブ中, bool bバッファ入力を使用する );
+		bool GetKeyPressed( int nKey );
+		bool GetKeyKeepPressed( int nKey );
+		bool GetKeyReleased( int nKey );
+		bool GetNoKeyPressed( int nKey );
 	}
 }

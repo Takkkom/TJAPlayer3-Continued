@@ -63,7 +63,7 @@ namespace TJAPlayer3
 		}
 		public void t選択曲が変更された()
 		{
-			Cスコア cスコア = TJAPlayer3.stage選曲.r現在選択中のスコア;
+			ScoreInfo cスコア = TJAPlayer3.stage選曲.r現在選択中のスコア;
 			if( ( cスコア != null ) && !TJAPlayer3.stage選曲.bスクロール中 )
 			{
 				try
@@ -87,7 +87,7 @@ namespace TJAPlayer3
 					this.tx文字列パネル.Scaling = new Vector3( 0.5f, 0.5f, 1f );
 					image.Dispose();
 				}
-				catch( CTextureCreateFailedException e )
+				catch( TextureCreateFailedException e )
 				{
 					Trace.TraceError( e.ToString() );
 					Trace.TraceError( "演奏履歴文字列テクスチャの作成に失敗しました。" );
@@ -156,7 +156,7 @@ namespace TJAPlayer3
 				this.ct登場アニメ用.Tick();
                 int x = 980;
                 int y = 350;
-                if (TJAPlayer3.stage選曲.r現在選択中のスコア != null && this.ct登場アニメ用.NowValue >= 2000 && TJAPlayer3.stage選曲.r現在選択中の曲.eノード種別 == C曲リストノード.Eノード種別.SCORE)
+                if (TJAPlayer3.stage選曲.r現在選択中のスコア != null && this.ct登場アニメ用.NowValue >= 2000 && TJAPlayer3.stage選曲.r現在選択中の曲.NowNodeType == SongInfoNode.NodeType.SCORE)
                 {
                     //CDTXMania.Tx.SongSelect_ScoreWindow_Text.n透明度 = ct登場アニメ用.n現在の値 - 1745;
                     if (TJAPlayer3.Tx.SongSelect_ScoreWindow[TJAPlayer3.stage選曲.n現在選択中の曲の難易度] != null)

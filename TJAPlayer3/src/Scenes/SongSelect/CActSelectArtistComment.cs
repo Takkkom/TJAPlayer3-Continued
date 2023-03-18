@@ -18,7 +18,7 @@ namespace TJAPlayer3
 		}
 		public void t選択曲が変更された()
 		{
-			Cスコア cスコア = TJAPlayer3.stage選曲.r現在選択中のスコア;
+			ScoreInfo cスコア = TJAPlayer3.stage選曲.r現在選択中のスコア;
 			if( cスコア != null )
 			{
 				Bitmap image = new Bitmap( 1, 1 );
@@ -45,7 +45,7 @@ namespace TJAPlayer3
 						this.txArtist.Scaling = new Vector3( 0.5f, 0.5f, 1f );
 						bitmap2.Dispose();
 					}
-					catch( CTextureCreateFailedException e )
+					catch( TextureCreateFailedException e )
 					{
 						Trace.TraceError( e.ToString() );
 						Trace.TraceError( "ARTISTテクスチャの生成に失敗しました。" );
@@ -103,7 +103,7 @@ namespace TJAPlayer3
 						this.txComment = new FDKTexture( TJAPlayer3.app.Device, bitmap4, TJAPlayer3.TextureFormat );
 						this.txComment.Scaling = new Vector3( 0.5f, 0.5f, 1f );
 					}
-					catch( CTextureCreateFailedException e )
+					catch( TextureCreateFailedException e )
 					{
 						Trace.TraceError( e.ToString() );
 						Trace.TraceError( "COMMENTテクスチャの生成に失敗しました。" );

@@ -26,7 +26,7 @@ namespace TJAPlayer3
                 var index = ListCombo[player][VoiceIndex[player]];
                 if (nCombo == index.nCombo)
                 {
-                    index.soundComboVoice?.tサウンドを先頭から再生する();
+                    index.soundComboVoice?.PlaySoundFromBegin();
                     VoiceIndex[player]++;
                 }
                 
@@ -61,7 +61,7 @@ namespace TJAPlayer3
                 // 1P、2P コンボボイス
                 for (int i = 0; i < TJAPlayer3._MainConfig.nPlayerCount; i++)
                 {
-                    var currentDir = CSkin.Path(string.Format(@"Sounds\Combo_{0}P\", i + 1));
+                    var currentDir = SkinManager.Path(string.Format(@"Sounds\Combo_{0}P\", i + 1));
                     if (Directory.Exists(currentDir))
                     {
                         foreach (var item in Directory.GetFiles(currentDir))
@@ -70,7 +70,7 @@ namespace TJAPlayer3
                             comboVoice.bFileFound = true;
                             comboVoice.nPlayer = i;
                             comboVoice.strFilePath = item;
-                            comboVoice.soundComboVoice = TJAPlayer3.Sound管理.tサウンドを生成する(item, ESoundGroup.Voice);
+                            comboVoice.soundComboVoice = TJAPlayer3._SoundManager.CreateFDKSound(item, SoundGroup.Voice);
                             comboVoice.nCombo = int.Parse(Path.GetFileNameWithoutExtension(item));
                             ListCombo[i].Add(comboVoice);
                         }
@@ -91,7 +91,7 @@ namespace TJAPlayer3
                 {
                     foreach (var item in ListCombo[i])
                     {
-                        TJAPlayer3.Sound管理.tサウンドを破棄する(item.soundComboVoice);
+                        TJAPlayer3._SoundManager.DisposeSound(item.soundComboVoice);
                     }
                     ListCombo[i].Clear();
                 }
@@ -114,7 +114,7 @@ namespace TJAPlayer3
         public int nCombo;
         public int nPlayer;
         public string strFilePath;
-        public CSound soundComboVoice;
+        public FDKSound soundComboVoice;
 
         public CComboVoice()
         {

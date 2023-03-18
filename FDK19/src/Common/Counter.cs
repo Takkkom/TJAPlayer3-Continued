@@ -118,24 +118,24 @@ namespace FDK
 			this.EndValue = 0;
 			this.IntervalMs = 0;
 			this.NowValue = 0;
-			this.NowElapsedTimeMs = Timer.Unused;
+			this.NowElapsedTimeMs = FDKTimer.Unused;
 
             this.StartValue_Double = 0;
             this.EndValue_Double = 0;
             this.Interval_Double = 0;
             this.NowValue_Double = 0;
-            this.NowElapsedTime_Double = CSoundTimer.Unused;
+            this.NowElapsedTime_Double = FDKSoundTimer.Unused;
 		}
 
 		/// <summary>生成と同時に開始する。</summary>
-		public Counter( int start, int end, int interval, Timer timer )
+		public Counter( int start, int end, int interval, FDKTimer timer )
 			: this()
 		{
 			this.Start( start, end, interval, timer );
 		}
 
         /// <summary>生成と同時に開始する。(double版)</summary>
-        public Counter( double start, double end, double interval, CSoundTimer timer )
+        public Counter( double start, double end, double interval, FDKSoundTimer timer )
             : this()
         {
             this.Start( start, end, interval * 1000.0, timer );
@@ -151,7 +151,7 @@ namespace FDK
 		/// <param name="n終了値">最後のカウント値。</param>
 		/// <param name="n間隔ms">カウント値を１増加させるのにかける時間（ミリ秒単位）。</param>
 		/// <param name="timer">カウントに使用するタイマ。</param>
-		public void Start( int n開始値, int n終了値, int n間隔ms, Timer timer )
+		public void Start( int n開始値, int n終了値, int n間隔ms, FDKTimer timer )
 		{
 			this.StartValue = n開始値;
 			this.EndValue = n終了値;
@@ -168,7 +168,7 @@ namespace FDK
 		/// <param name="db終了値">最後のカウント値。</param>
 		/// <param name="db間隔">カウント値を１増加させるのにかける時間（秒単位）。</param>
 		/// <param name="timer">カウントに使用するタイマ。</param>
-		public void Start( double db開始値, double db終了値, double db間隔, CSoundTimer timer )
+		public void Start( double db開始値, double db終了値, double db間隔, FDKSoundTimer timer )
 		{
 			this.StartValue_Double = db開始値;
 			this.EndValue_Double = db終了値;
@@ -184,7 +184,7 @@ namespace FDK
 		/// </summary>
 		public void Tick()
 		{
-			if ( ( this.timer != null ) && ( this.NowElapsedTimeMs != Timer.Unused ) )
+			if ( ( this.timer != null ) && ( this.NowElapsedTimeMs != FDKTimer.Unused ) )
 			{
 				long num = this.timer.n現在時刻;
 				if ( num < this.NowElapsedTimeMs )
@@ -206,7 +206,7 @@ namespace FDK
 		/// </summary>
 		public void Tick_Double()
 		{
-			if ( ( this.timerdb != null ) && ( this.NowElapsedTime_Double != CSoundTimer.Unused ) )
+			if ( ( this.timerdb != null ) && ( this.NowElapsedTime_Double != FDKSoundTimer.Unused ) )
 			{
 				double num = this.timerdb.n現在時刻;
 				if ( num < this.NowElapsedTime_Double )
@@ -228,7 +228,7 @@ namespace FDK
 		/// </summary>
 		public void TickLoop()
 		{
-			if ( ( this.timer != null ) && ( this.NowElapsedTimeMs != Timer.Unused ) )
+			if ( ( this.timer != null ) && ( this.NowElapsedTimeMs != FDKTimer.Unused ) )
 			{
 				long num = this.timer.n現在時刻;
 				if ( num < this.NowElapsedTimeMs )
@@ -250,7 +250,7 @@ namespace FDK
 		/// </summary>
 		public void TickLoop_Double()
 		{
-			if ( ( this.timerdb != null ) && ( this.NowElapsedTime_Double != CSoundTimer.Unused ) )
+			if ( ( this.timerdb != null ) && ( this.NowElapsedTime_Double != FDKSoundTimer.Unused ) )
 			{
 				double num = this.timerdb.n現在時刻;
 				if ( num < this.NowElapsedTimeMs )
@@ -272,8 +272,8 @@ namespace FDK
 		/// </summary>
 		public void Stop()
 		{
-			this.NowElapsedTimeMs = Timer.Unused;
-            this.NowElapsedTime_Double = CSoundTimer.Unused;
+			this.NowElapsedTimeMs = FDKTimer.Unused;
+            this.NowElapsedTime_Double = FDKSoundTimer.Unused;
 		}
 
 
@@ -338,8 +338,8 @@ namespace FDK
 
 		#region [ private ]
 		//-----------------
-		private Timer timer;
-        private CSoundTimer timerdb;
+		private FDKTimer timer;
+        private FDKSoundTimer timerdb;
 		private int IntervalMs;
         private double Interval_Double;
 		//-----------------

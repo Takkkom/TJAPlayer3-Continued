@@ -32,13 +32,13 @@ namespace TJAPlayer3
 		{
             if( !string.IsNullOrEmpty( TJAPlayer3._MainConfig.FontName) )
             {
-                this.pfMusicName = new CPrivateFastFont(new FontFamily(TJAPlayer3._MainConfig.FontName), TJAPlayer3.Skin.Result_MusicName_FontSize);
-                this.pfStageText = new CPrivateFastFont(new FontFamily(TJAPlayer3._MainConfig.FontName), TJAPlayer3.Skin.Result_StageText_FontSize);
+                this.pfMusicName = new CachePrivateFont(new FontFamily(TJAPlayer3._MainConfig.FontName), TJAPlayer3.Skin.Result_MusicName_FontSize);
+                this.pfStageText = new CachePrivateFont(new FontFamily(TJAPlayer3._MainConfig.FontName), TJAPlayer3.Skin.Result_StageText_FontSize);
             }
             else
             {
-                this.pfMusicName = new CPrivateFastFont(new FontFamily("MS UI Gothic"), TJAPlayer3.Skin.Result_MusicName_FontSize);
-                this.pfStageText = new CPrivateFastFont(new FontFamily("MS UI Gothic"), TJAPlayer3.Skin.Result_StageText_FontSize);
+                this.pfMusicName = new CachePrivateFont(new FontFamily("MS UI Gothic"), TJAPlayer3.Skin.Result_MusicName_FontSize);
+                this.pfStageText = new CachePrivateFont(new FontFamily("MS UI Gothic"), TJAPlayer3.Skin.Result_StageText_FontSize);
             }
 
 		    // After performing calibration, inform the player that
@@ -104,11 +104,11 @@ namespace TJAPlayer3
 			}
 			this.ct登場用.Tick();
 
-            if (TJAPlayer3.Skin.Result_MusicName_ReferencePoint == CSkin.ReferencePoint.Center)
+            if (TJAPlayer3.Skin.Result_MusicName_ReferencePoint == SkinManager.ReferencePoint.Center)
             {
                 this.txMusicName.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.Result_MusicName_X - ((this.txMusicName.TextureSize.Width * txMusicName.Scaling.X) / 2), TJAPlayer3.Skin.Result_MusicName_Y);
             }
-            else if (TJAPlayer3.Skin.Result_MusicName_ReferencePoint == CSkin.ReferencePoint.Left)
+            else if (TJAPlayer3.Skin.Result_MusicName_ReferencePoint == SkinManager.ReferencePoint.Left)
             {
                 this.txMusicName.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.Result_MusicName_X, TJAPlayer3.Skin.Result_MusicName_Y);
             }
@@ -119,11 +119,11 @@ namespace TJAPlayer3
 
             if(TJAPlayer3.stage選曲.n確定された曲の難易度 != (int)Difficulty.Dan)
             {
-                if (TJAPlayer3.Skin.Result_StageText_ReferencePoint == CSkin.ReferencePoint.Center)
+                if (TJAPlayer3.Skin.Result_StageText_ReferencePoint == SkinManager.ReferencePoint.Center)
                 {
                     this.txStageText.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.Result_StageText_X - ((this.txStageText.TextureSize.Width * txStageText.Scaling.X) / 2), TJAPlayer3.Skin.Result_StageText_Y);
                 }
-                else if (TJAPlayer3.Skin.Result_StageText_ReferencePoint == CSkin.ReferencePoint.Right)
+                else if (TJAPlayer3.Skin.Result_StageText_ReferencePoint == SkinManager.ReferencePoint.Right)
                 {
                     this.txStageText.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.Result_StageText_X - this.txStageText.TextureSize.Width, TJAPlayer3.Skin.Result_StageText_Y);
                 }
@@ -149,10 +149,10 @@ namespace TJAPlayer3
 		private Counter ct登場用;
 
         private FDKTexture txMusicName;
-        private CPrivateFastFont pfMusicName;
+        private CachePrivateFont pfMusicName;
 
         private FDKTexture txStageText;
-        private CPrivateFont pfStageText;
+        private PrivateFont pfStageText;
         //-----------------
 		#endregion
 	}

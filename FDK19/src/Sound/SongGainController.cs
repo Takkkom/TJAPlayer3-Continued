@@ -15,7 +15,7 @@
         public Lufs TargetLoudness { private get; set; }
         public bool ApplySongVol { private get; set; }
 
-        public void Set(int songVol, LoudnessMetadata? songLoudnessMetadata, CSound sound)
+        public void Set(int songVol, LoudnessMetadata? songLoudnessMetadata, FDKSound sound)
         {
             if (ApplyLoudnessMetadata && songLoudnessMetadata.HasValue)
             {
@@ -25,7 +25,7 @@
             }
             else
             {
-                sound.SetGain(ApplySongVol ? songVol : CSound.DefaultSongVol);
+                sound.SetGain(ApplySongVol ? songVol : FDKSound.DefaultSongVol);
             }
         }
     }

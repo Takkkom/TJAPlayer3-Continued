@@ -74,7 +74,7 @@ namespace TJAPlayer3
                 {
                     this.n現在の選択行 = this.t指定した方向に近い難易度番号を返す( 0, this.n現在の選択行 );
                 }
-                this.ct移動 = new Counter( 1, 710, 1, CSound管理.rc演奏用タイマ );
+                this.ct移動 = new Counter( 1, 710, 1, SoundManager.PlayTimer );
 			}
 		}
 		public void t前に移動()
@@ -173,18 +173,18 @@ namespace TJAPlayer3
 			if( this.NotActivated )
 				return;
 
-            this.tx背景 = TJAPlayer3.tテクスチャの生成( CSkin.Path( @"Graphics\5_diffselect_background.png" ) );
-            this.txヘッダー = TJAPlayer3.tテクスチャの生成( CSkin.Path( @"Graphics\5_diffselect_header_panel.png" ) );
-            this.txフッター = TJAPlayer3.tテクスチャの生成( CSkin.Path( @"Graphics\5_footer panel.png" ) );
+            this.tx背景 = TJAPlayer3.tテクスチャの生成( SkinManager.Path( @"Graphics\5_diffselect_background.png" ) );
+            this.txヘッダー = TJAPlayer3.tテクスチャの生成( SkinManager.Path( @"Graphics\5_diffselect_header_panel.png" ) );
+            this.txフッター = TJAPlayer3.tテクスチャの生成( SkinManager.Path( @"Graphics\5_footer panel.png" ) );
 
-            this.tx説明背景 = TJAPlayer3.tテクスチャの生成( CSkin.Path( @"Graphics\5_information_BG.png" ) );
-            this.tx説明1 = TJAPlayer3.tテクスチャの生成( CSkin.Path( @"Graphics\5_information.png" ) );
+            this.tx説明背景 = TJAPlayer3.tテクスチャの生成( SkinManager.Path( @"Graphics\5_information_BG.png" ) );
+            this.tx説明1 = TJAPlayer3.tテクスチャの生成( SkinManager.Path( @"Graphics\5_information.png" ) );
 
-            this.soundSelectAnnounce = TJAPlayer3.Sound管理.tサウンドを生成する( CSkin.Path( @"Sounds\DiffSelect.ogg" ), ESoundGroup.SoundEffect );
+            this.soundSelectAnnounce = TJAPlayer3._SoundManager.CreateFDKSound( SkinManager.Path( @"Sounds\DiffSelect.ogg" ), SoundGroup.SoundEffect );
 
             for( int i = 0; i < (int)Difficulty.Total; i++ )
             {
-                this.tx踏み台[ i ] = TJAPlayer3.tテクスチャの生成( CSkin.Path( @"Graphics\5_diffSelect_table" + i.ToString() + @".png" ) );
+                this.tx踏み台[ i ] = TJAPlayer3.tテクスチャの生成( SkinManager.Path( @"Graphics\5_diffSelect_table" + i.ToString() + @".png" ) );
             }
 
 			base.ManagedCreateResources();
@@ -221,13 +221,13 @@ namespace TJAPlayer3
 			{
 				for( int i = 0; i < 13; i++ )
 					this.ct登場アニメ用[ i ] = new Counter( -i * 10, 100, 3, TJAPlayer3.Timer );
-				this.nスクロールタイマ = CSound管理.rc演奏用タイマ.n現在時刻;
+				this.nスクロールタイマ = SoundManager.PlayTimer.n現在時刻;
 				TJAPlayer3.stage選曲.t選択曲変更通知();
 
-                this.n矢印スクロール用タイマ値 = CSound管理.rc演奏用タイマ.n現在時刻;
+                this.n矢印スクロール用タイマ値 = SoundManager.PlayTimer.n現在時刻;
 				this.ct三角矢印アニメ.Start( 0, 19, 40, TJAPlayer3.Timer );
 				
-                this.soundSelectAnnounce.tサウンドを再生する();
+                this.soundSelectAnnounce.PlaySound();
 				base.JustStartedUpdate = false;
 			}
 			//-----------------
@@ -275,27 +275,27 @@ namespace TJAPlayer3
 				//-----------------
 
                 //キー操作
-                if( TJAPlayer3.Input管理.Keyboard.bキーが押された( (int) SlimDX.DirectInput.Key.RightArrow ) )
+                if( TJAPlayer3.Input管理.Keyboard.GetKeyPressed( (int) SlimDX.DirectInput.Key.RightArrow ) )
                 {
                     this.t次に移動();
                 }
-                else if( TJAPlayer3.Input管理.Keyboard.bキーが押された( (int) SlimDX.DirectInput.Key.LeftArrow ) )
+                else if( TJAPlayer3.Input管理.Keyboard.GetKeyPressed( (int) SlimDX.DirectInput.Key.LeftArrow ) )
                 {
                     this.t前に移動();
                 }
                 else if ( ( TJAPlayer3.Pad.b押されたDGB( Eパッド.Decide ) ||
-						( ( TJAPlayer3._MainConfig.bEnterがキー割り当てのどこにも使用されていない && TJAPlayer3.Input管理.Keyboard.bキーが押された( (int) SlimDX.DirectInput.Key.Return ) ) ) ) )
+						( ( TJAPlayer3._MainConfig.bEnterがキー割り当てのどこにも使用されていない && TJAPlayer3.Input管理.Keyboard.GetKeyPressed( (int) SlimDX.DirectInput.Key.Return ) ) ) ) )
                 {
                     TJAPlayer3.stage選曲.actPresound.tサウンド停止();
-                    switch( TJAPlayer3.stage選曲.r現在選択中の曲.eノード種別 )
+                    switch( TJAPlayer3.stage選曲.r現在選択中の曲.NowNodeType )
                     {
-                        case C曲リストノード.Eノード種別.SCORE:
+                        case SongInfoNode.NodeType.SCORE:
                             {
                                 TJAPlayer3.Skin.sound決定音.t再生する();
                                 TJAPlayer3.stage選曲.t曲を選択する( this.n現在の選択行 );
                             }
                             break;
-                        case C曲リストノード.Eノード種別.RANDOM:
+                        case SongInfoNode.NodeType.RANDOM:
                             {
                                 TJAPlayer3.Skin.sound曲決定音.t再生する();
                                 TJAPlayer3.stage選曲.t曲を選択する( this.n現在の選択行 );
@@ -303,7 +303,7 @@ namespace TJAPlayer3
                             break;
                     }
                 }
-                else if( TJAPlayer3.Input管理.Keyboard.bキーが押された( (int) SlimDX.DirectInput.Key.F7 ) )
+                else if( TJAPlayer3.Input管理.Keyboard.GetKeyPressed( (int) SlimDX.DirectInput.Key.F7 ) )
                 {
                     this.bIsDifficltSelect = false;
                 }
@@ -411,7 +411,7 @@ namespace TJAPlayer3
         private FDKTexture tx説明背景;
         private FDKTexture tx説明1;
 
-        private CSound soundSelectAnnounce;
+        private FDKSound soundSelectAnnounce;
 
 
         private long n矢印スクロール用タイマ値;

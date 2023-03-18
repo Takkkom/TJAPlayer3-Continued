@@ -36,7 +36,7 @@ namespace TJAPlayer3.Animations
                     Counter.Start((int)StartValue, (int)EndValue, (int)TickInterval, TJAPlayer3.Timer);
                     break;
                 case CounterType.Double:
-                    Counter.Start((double)StartValue, (double)EndValue, (double)TickInterval, CSound管理.rc演奏用タイマ);
+                    Counter.Start((double)StartValue, (double)EndValue, (double)TickInterval, SoundManager.PlayTimer);
                     break;
                 default:
                     break;

@@ -52,7 +52,7 @@
 		/// <param name="pad">パッド入力。他のプラグインが入力占有中である場合は null が渡されます。</param>
 		/// <param name="keyboard">キーボード入力。他のプラグインが入力占有中である場合は null が渡されます。</param>
 		/// </summary>
-		void On進行描画( global::TJAPlayer3.CPad pad, FDK.IInputDevice keyboard );
+		void On進行描画( global::TJAPlayer3.PadManager pad, FDK.IInputDevice keyboard );
 
 		/// <summary>
 		/// <para>ステージが変わる度に呼び出されます。</para>
@@ -69,8 +69,8 @@
 		/// <param name="n曲番号inブロック">選択されている曲のブロック内の曲番号(0～4)。</param>
 		void On選択曲変更( string str選択曲ファイル名, int n曲番号inブロック );
 
-		void On演奏クリア( global::TJAPlayer3.CScoreIni scoreIni );
-		void On演奏失敗( global::TJAPlayer3.CScoreIni scoreIni );
-		void On演奏キャンセル( global::TJAPlayer3.CScoreIni scoreIni );
+		void On演奏クリア( global::TJAPlayer3.ScoreIni scoreIni );
+		void On演奏失敗( global::TJAPlayer3.ScoreIni scoreIni );
+		void On演奏キャンセル( global::TJAPlayer3.ScoreIni scoreIni );
 	}
 }

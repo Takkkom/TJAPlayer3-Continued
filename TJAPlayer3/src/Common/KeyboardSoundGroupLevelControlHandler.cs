@@ -23,37 +23,37 @@ namespace TJAPlayer3
         internal static void Handle(
             IInputDevice keyboard,
             SoundGroupLevelController soundGroupLevelController,
-            CSkin skin,
+            SkinManager skin,
             bool isSongPreview)
         {
-            var isAdjustmentPositive = keyboard.bキーが押された((int) SlimDX.DirectInput.Key.RightBracket);
-            if (!(isAdjustmentPositive || keyboard.bキーが押された((int) SlimDX.DirectInput.Key.LeftBracket)))
+            var isAdjustmentPositive = keyboard.GetKeyPressed((int) SlimDX.DirectInput.Key.RightBracket);
+            if (!(isAdjustmentPositive || keyboard.GetKeyPressed((int) SlimDX.DirectInput.Key.LeftBracket)))
             {
                 return;
             }
 
-            ESoundGroup soundGroup;
-            CSkin.Cシステムサウンド システムサウンド = null;
+            SoundGroup soundGroup;
+            SkinManager.Cシステムサウンド システムサウンド = null;
 
-            if (keyboard.bキーが押されている((int) SlimDX.DirectInput.Key.LeftControl) ||
-                keyboard.bキーが押されている((int) SlimDX.DirectInput.Key.RightControl))
+            if (keyboard.GetKeyKeepPressed((int) SlimDX.DirectInput.Key.LeftControl) ||
+                keyboard.GetKeyKeepPressed((int) SlimDX.DirectInput.Key.RightControl))
             {
-                soundGroup = ESoundGroup.SoundEffect;
+                soundGroup = SoundGroup.SoundEffect;
                 システムサウンド = skin.sound決定音;
             }
-            else if (keyboard.bキーが押されている((int) SlimDX.DirectInput.Key.LeftShift) ||
-                     keyboard.bキーが押されている((int) SlimDX.DirectInput.Key.RightShift))
+            else if (keyboard.GetKeyKeepPressed((int) SlimDX.DirectInput.Key.LeftShift) ||
+                     keyboard.GetKeyKeepPressed((int) SlimDX.DirectInput.Key.RightShift))
             {
-                soundGroup = ESoundGroup.Voice;
+                soundGroup = SoundGroup.Voice;
                 システムサウンド = skin.soundゲーム開始音;
             }
             else if (isSongPreview)
             {
-                soundGroup = ESoundGroup.SongPreview;
+                soundGroup = SoundGroup.SongPreview;
             }
             else
             {
-                soundGroup = ESoundGroup.SongPlayback;
+                soundGroup = SoundGroup.SongPlayback;
             }
 
             soundGroupLevelController.AdjustLevel(soundGroup, isAdjustmentPositive);

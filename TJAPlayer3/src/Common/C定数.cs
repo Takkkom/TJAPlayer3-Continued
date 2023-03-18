@@ -247,10 +247,10 @@ namespace TJAPlayer3
 		BGA,
 		BGAPAN
 	}
-	internal enum EFIFOモード
+	internal enum FadeModeType
 	{
-		フェードイン,
-		フェードアウト
+		FadeIn,
+		FadeOut
 	}
 	internal enum Eレーン
 	{

@@ -92,7 +92,7 @@ namespace TJAPlayer3
 			this.ct進行 = null;
 			if( this.sd効果音 != null )
 			{
-				TJAPlayer3.Sound管理.tサウンドを破棄する( this.sd効果音 );
+				TJAPlayer3._SoundManager.DisposeSound( this.sd効果音 );
 				this.sd効果音 = null;
 			}
 			base.Deactivate();
@@ -205,7 +205,7 @@ namespace TJAPlayer3
 		//-----------------
 		private bool b効果音再生済み;
 		private Counter ct進行;
-		private CSound sd効果音;
+		private FDKSound sd効果音;
 		//private CTexture txStageFailed;
   //      private CTexture txGameFailed;
   //      private CTexture txBlack;

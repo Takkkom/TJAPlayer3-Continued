@@ -33,7 +33,7 @@ namespace TJAPlayer3
         {
             this.ar踊り子モーション番号 = ConvertUtility.StringArrayToIntArray(TJAPlayer3.Skin.Game_Dancer_Motion);
             if(this.ar踊り子モーション番号 == null) ar踊り子モーション番号 = ConvertUtility.StringArrayToIntArray("0,0");
-            this.ct踊り子モーション = new Counter(0, this.ar踊り子モーション番号.Length - 1, 0.01, CSound管理.rc演奏用タイマ);
+            this.ct踊り子モーション = new Counter(0, this.ar踊り子モーション番号.Length - 1, 0.01, SoundManager.PlayTimer);
             base.ManagedCreateResources();
         }
 

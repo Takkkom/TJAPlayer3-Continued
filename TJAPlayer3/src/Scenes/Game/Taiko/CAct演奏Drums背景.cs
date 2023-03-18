@@ -17,7 +17,7 @@ namespace TJAPlayer3
         public void tFadeIn(int player)
         {
             this.ct上背景クリアインタイマー[player] = new Counter( 0, 100, 2, TJAPlayer3.Timer );
-            this.eFadeMode = EFIFOモード.フェードイン;
+            this.eFadeMode = FadeModeType.FadeIn;
         }
 
         //public void tFadeOut(int player)
@@ -189,7 +189,7 @@ namespace TJAPlayer3
         //private CTexture tx下背景メイン;
         //private CTexture tx下背景クリアメイン;
         //private CTexture tx下背景クリアサブ1;
-        private EFIFOモード eFadeMode;
+        private FadeModeType eFadeMode;
         //-----------------
         #endregion
     }

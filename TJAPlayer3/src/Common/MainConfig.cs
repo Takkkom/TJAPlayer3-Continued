@@ -1288,10 +1288,10 @@ namespace TJAPlayer3
 		    this.TargetLoudness = -7.4;
 
 		    this.ApplySongVol = false;
-		    this.SoundEffectLevel = CSound.DefaultSoundEffectLevel;
-		    this.VoiceLevel = CSound.DefaultVoiceLevel;
-		    this.SongPreviewLevel = CSound.DefaultSongPreviewLevel;
-		    this.SongPlaybackLevel = CSound.DefaultSongPlaybackLevel;
+		    this.SoundEffectLevel = FDKSound.DefaultSoundEffectLevel;
+		    this.VoiceLevel = FDKSound.DefaultVoiceLevel;
+		    this.SongPreviewLevel = FDKSound.DefaultSongPreviewLevel;
+		    this.SongPlaybackLevel = FDKSound.DefaultSongPlaybackLevel;
 		    this.KeyboardSoundLevelIncrement = DefaultKeyboardSoundLevelIncrement;
 			this.bログ出力 = true;
 			this.bSudden = new STDGBVALUE<bool>();
@@ -1363,7 +1363,7 @@ namespace TJAPlayer3
 			this.strSystemSkinSubfolderFullName = "";	// #28195 2012.5.2 yyagi 使用中のSkinサブフォルダ名
 			this.bTight = false;                        // #29500 2012.9.11 kairera0467 TIGHTモード
 			#region [ WASAPI/ASIO ]
-			this.nSoundDeviceType = (int)ESoundDeviceType.DirectSound;	// #24820 2012.12.23 yyagi 初期値はACM | #31927 2013.8.25 yyagi OSにより初期値変更
+			this.nSoundDeviceType = (int)SoundDeviceType.DirectSound;	// #24820 2012.12.23 yyagi 初期値はACM | #31927 2013.8.25 yyagi OSにより初期値変更
 			this.nWASAPIBufferSizeMs = 50;				// #24820 2013.1.15 yyagi 初期値は50(0で自動設定)
 			this.nASIODevice = 0;						// #24820 2013.1.17 yyagi
 //			this.nASIOBufferSizeMs = 0;					// #24820 2012.12.25 yyagi 初期値は0(自動設定)
@@ -1488,12 +1488,12 @@ namespace TJAPlayer3
 			#endregion
 			#region [ スキン関連 ]
 			#region [ Skinパスの絶対パス→相対パス変換 ]
-			Uri uriRoot = new Uri( System.IO.Path.Combine( TJAPlayer3.strEXEのあるフォルダ, "System" + System.IO.Path.DirectorySeparatorChar ) );
+			Uri uriRoot = new Uri( System.IO.Path.Combine( TJAPlayer3.DirectoryWithThisEXE, "System" + System.IO.Path.DirectorySeparatorChar ) );
 			if ( strSystemSkinSubfolderFullName != null && strSystemSkinSubfolderFullName.Length == 0 )
 			{
 				// Config.iniが空の状態でDTXManiaをViewerとして起動_終了すると、strSystemSkinSubfolderFullName が空の状態でここに来る。
 				// → 初期値として Default/ を設定する。
-				strSystemSkinSubfolderFullName = System.IO.Path.Combine( TJAPlayer3.strEXEのあるフォルダ, "System" + System.IO.Path.DirectorySeparatorChar + "Default" + System.IO.Path.DirectorySeparatorChar );
+				strSystemSkinSubfolderFullName = System.IO.Path.Combine( TJAPlayer3.DirectoryWithThisEXE, "System" + System.IO.Path.DirectorySeparatorChar + "Default" + System.IO.Path.DirectorySeparatorChar );
 			}
 			Uri uriPath = new Uri( System.IO.Path.Combine( this.strSystemSkinSubfolderFullName, "." + System.IO.Path.DirectorySeparatorChar ) );
 			string relPath = uriRoot.MakeRelativeUri( uriPath ).ToString();				// 相対パスを取得
@@ -1668,28 +1668,28 @@ namespace TJAPlayer3
 		    sw.WriteLine( "; Apply BS1770GAIN loudness metadata (0:OFF, 1:ON)" );
 		    sw.WriteLine( "{0}={1}", nameof(ApplyLoudnessMetadata), this.ApplyLoudnessMetadata ? 1 : 0 );
 			sw.WriteLine();
-		    sw.WriteLine( $"; BS1770GAIN によるラウドネスメータの目標値 (0). ({CSound.MinimumLufs}-{CSound.MaximumLufs})" );
-		    sw.WriteLine( $"; Loudness Target in dB (decibels) relative to full scale (0). ({CSound.MinimumLufs}-{CSound.MaximumLufs})" );
+		    sw.WriteLine( $"; BS1770GAIN によるラウドネスメータの目標値 (0). ({FDKSound.MinimumLufs}-{FDKSound.MaximumLufs})" );
+		    sw.WriteLine( $"; Loudness Target in dB (decibels) relative to full scale (0). ({FDKSound.MinimumLufs}-{FDKSound.MaximumLufs})" );
 		    sw.WriteLine( "{0}={1}", nameof(TargetLoudness), TargetLoudness );
 			sw.WriteLine();
 		    sw.WriteLine("; .tjaファイルのSONGVOLヘッダを音源の音量に適用する (0:OFF, 1:ON)");
 		    sw.WriteLine( "; Apply SONGVOL (0:OFF, 1:ON)" );
 		    sw.WriteLine( "{0}={1}", nameof(ApplySongVol), this.ApplySongVol ? 1 : 0 );
 		    sw.WriteLine();
-		    sw.WriteLine( $"; 効果音の音量 ({CSound.MinimumGroupLevel}-{CSound.MaximumGroupLevel}%)" );
-		    sw.WriteLine( $"; Sound effect level ({CSound.MinimumGroupLevel}-{CSound.MaximumGroupLevel}%)" );
+		    sw.WriteLine( $"; 効果音の音量 ({FDKSound.MinimumGroupLevel}-{FDKSound.MaximumGroupLevel}%)" );
+		    sw.WriteLine( $"; Sound effect level ({FDKSound.MinimumGroupLevel}-{FDKSound.MaximumGroupLevel}%)" );
 		    sw.WriteLine( "{0}={1}", nameof(SoundEffectLevel), SoundEffectLevel );
 		    sw.WriteLine();
-		    sw.WriteLine( $"; 各ボイス、コンボボイスの音量 ({CSound.MinimumGroupLevel}-{CSound.MaximumGroupLevel}%)" );
-		    sw.WriteLine( $"; Voice level ({CSound.MinimumGroupLevel}-{CSound.MaximumGroupLevel}%)" );
+		    sw.WriteLine( $"; 各ボイス、コンボボイスの音量 ({FDKSound.MinimumGroupLevel}-{FDKSound.MaximumGroupLevel}%)" );
+		    sw.WriteLine( $"; Voice level ({FDKSound.MinimumGroupLevel}-{FDKSound.MaximumGroupLevel}%)" );
 		    sw.WriteLine( "{0}={1}", nameof(VoiceLevel), VoiceLevel );
 		    sw.WriteLine();
-		    sw.WriteLine( $"; 選曲画面のプレビュー時の音量 ({CSound.MinimumGroupLevel}-{CSound.MaximumGroupLevel}%)" );
-		    sw.WriteLine( $"; Song preview level ({CSound.MinimumGroupLevel}-{CSound.MaximumGroupLevel}%)" );
+		    sw.WriteLine( $"; 選曲画面のプレビュー時の音量 ({FDKSound.MinimumGroupLevel}-{FDKSound.MaximumGroupLevel}%)" );
+		    sw.WriteLine( $"; Song preview level ({FDKSound.MinimumGroupLevel}-{FDKSound.MaximumGroupLevel}%)" );
 		    sw.WriteLine( "{0}={1}", nameof(SongPreviewLevel), SongPreviewLevel );
 			sw.WriteLine();
-		    sw.WriteLine( $"; ゲーム中の音源の音量 ({CSound.MinimumGroupLevel}-{CSound.MaximumGroupLevel}%)" );
-		    sw.WriteLine( $"; Song playback level ({CSound.MinimumGroupLevel}-{CSound.MaximumGroupLevel}%)" );
+		    sw.WriteLine( $"; ゲーム中の音源の音量 ({FDKSound.MinimumGroupLevel}-{FDKSound.MaximumGroupLevel}%)" );
+		    sw.WriteLine( $"; Song playback level ({FDKSound.MinimumGroupLevel}-{FDKSound.MaximumGroupLevel}%)" );
 		    sw.WriteLine( "{0}={1}", nameof(SongPlaybackLevel), SongPlaybackLevel );
 			sw.WriteLine();
 		    sw.WriteLine( $"; キーボードによる音量変更の増加量、減少量 ({MinimumKeyboardSoundLevelIncrement}-{MaximumKeyboardSoundLevelIncrement})" );
@@ -1997,7 +1997,7 @@ namespace TJAPlayer3
 					str = reader.ReadToEnd();
 				}
 				t文字列から読み込み( str );
-				CDTXVersion version = new CDTXVersion( this.strDTXManiaのバージョン );
+				DTXVersionManager version = new DTXVersionManager( this.strDTXManiaのバージョン );
 				//if( version.n整数部 <= 69 )
 				//{
 				//	this.tデフォルトのキーアサインに設定する();
@@ -2140,7 +2140,7 @@ namespace TJAPlayer3
 												string absSkinPath = str4;
 												if ( !System.IO.Path.IsPathRooted( str4 ) )
 												{
-													absSkinPath = System.IO.Path.Combine( TJAPlayer3.strEXEのあるフォルダ, "System" );
+													absSkinPath = System.IO.Path.Combine( TJAPlayer3.DirectoryWithThisEXE, "System" );
 													absSkinPath = System.IO.Path.Combine( absSkinPath, str4 );
 													Uri u = new Uri( absSkinPath );
 													absSkinPath = u.AbsolutePath.ToString();	// str4内に相対パスがある場合に備える
@@ -2320,7 +2320,7 @@ namespace TJAPlayer3
 											}
 											else if( str3.Equals( nameof(TargetLoudness) ) )
 											{
-												this.TargetLoudness = ConvertUtility.GetNumberIfInRange( str4, CSound.MinimumLufs.ToDouble(), CSound.MaximumLufs.ToDouble(), this.TargetLoudness );
+												this.TargetLoudness = ConvertUtility.GetNumberIfInRange( str4, FDKSound.MinimumLufs.ToDouble(), FDKSound.MaximumLufs.ToDouble(), this.TargetLoudness );
 											}
 											else if( str3.Equals( nameof(ApplySongVol) ) )
 											{
@@ -2328,19 +2328,19 @@ namespace TJAPlayer3
 											}
 											else if( str3.Equals( nameof(SoundEffectLevel) ) )
 											{
-												this.SoundEffectLevel = ConvertUtility.GetNumberIfInRange( str4, CSound.MinimumGroupLevel, CSound.MaximumGroupLevel, this.SoundEffectLevel );
+												this.SoundEffectLevel = ConvertUtility.GetNumberIfInRange( str4, FDKSound.MinimumGroupLevel, FDKSound.MaximumGroupLevel, this.SoundEffectLevel );
 											}
 											else if( str3.Equals( nameof(VoiceLevel) ) )
 											{
-												this.VoiceLevel = ConvertUtility.GetNumberIfInRange( str4, CSound.MinimumGroupLevel, CSound.MaximumGroupLevel, this.VoiceLevel );
+												this.VoiceLevel = ConvertUtility.GetNumberIfInRange( str4, FDKSound.MinimumGroupLevel, FDKSound.MaximumGroupLevel, this.VoiceLevel );
 											}
 											else if( str3.Equals( nameof(SongPreviewLevel) ) )
 											{
-												this.SongPreviewLevel = ConvertUtility.GetNumberIfInRange( str4, CSound.MinimumGroupLevel, CSound.MaximumGroupLevel, this.SongPreviewLevel );
+												this.SongPreviewLevel = ConvertUtility.GetNumberIfInRange( str4, FDKSound.MinimumGroupLevel, FDKSound.MaximumGroupLevel, this.SongPreviewLevel );
 											}
 											else if( str3.Equals( nameof(SongPlaybackLevel) ) )
 											{
-												this.SongPlaybackLevel = ConvertUtility.GetNumberIfInRange( str4, CSound.MinimumGroupLevel, CSound.MaximumGroupLevel, this.SongPlaybackLevel );
+												this.SongPlaybackLevel = ConvertUtility.GetNumberIfInRange( str4, FDKSound.MinimumGroupLevel, FDKSound.MaximumGroupLevel, this.SongPlaybackLevel );
 											}
 											else if( str3.Equals( nameof(KeyboardSoundLevelIncrement) ) )
 											{

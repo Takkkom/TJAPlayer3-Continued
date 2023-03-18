@@ -10,8 +10,8 @@ namespace FDK
 	[StructLayout( LayoutKind.Sequential )]
 	public struct STInputEvent
 	{
-		public int nKey { get; set; }
-		public bool b押された { get; set; }
-		public long nTimeStamp { get; set; }
+		public int PressedKeyIndex { get; set; }
+		public bool IsPressed { get; set; }
+		public long TimeStamp { get; set; }
 	}
 }

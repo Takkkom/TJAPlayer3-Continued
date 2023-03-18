@@ -120,7 +120,7 @@ namespace FDK
         /// <param name="device">Direct3D9 デバイス。</param>
         /// <param name="bitmap">作成元のビットマップ。</param>
         /// <param name="format">テクスチャのフォーマット。</param>
-        /// <exception cref="CTextureCreateFailedException">テクスチャの作成に失敗しました。</exception>
+        /// <exception cref="TextureCreateFailedException">テクスチャの作成に失敗しました。</exception>
         public FDKTexture(Device device, Bitmap bitmap, Format format)
             : this()
         {
@@ -142,7 +142,7 @@ namespace FDK
             catch (Exception e)
             {
                 this.Dispose();
-                throw new CTextureCreateFailedException("ビットマップからのテクスチャの生成に失敗しました。", e);
+                throw new TextureCreateFailedException("ビットマップからのテクスチャの生成に失敗しました。", e);
             }
         }
 
@@ -158,7 +158,7 @@ namespace FDK
         /// <param name="width">テクスチャの幅（希望値）。</param>
         /// <param name="height">テクスチャの高さ（希望値）。</param>
         /// <param name="format">テクスチャのフォーマット。</param>
-        /// <exception cref="CTextureCreateFailedException">テクスチャの作成に失敗しました。</exception>
+        /// <exception cref="TextureCreateFailedException">テクスチャの作成に失敗しました。</exception>
         public FDKTexture(Device device, int width, int height, Format format)
             : this(device, width, height, format, Pool.Managed)
         {
@@ -172,7 +172,7 @@ namespace FDK
         /// <param name="path">画像ファイル名。</param>
         /// <param name="format">テクスチャのフォーマット。</param>
         /// <param name="transparentBlack">画像の黒（0xFFFFFFFF）を透過させるなら true。</param>
-        /// <exception cref="CTextureCreateFailedException">テクスチャの作成に失敗しました。</exception>
+        /// <exception cref="TextureCreateFailedException">テクスチャの作成に失敗しました。</exception>
         public FDKTexture(Device device, string path, Format format, bool transparentBlack)
             : this(device, path, format, transparentBlack, Pool.Managed)
         {
@@ -199,7 +199,7 @@ namespace FDK
         /// <param name="height">テクスチャの高さ（希望値）。</param>
         /// <param name="format">テクスチャのフォーマット。</param>
         /// <param name="pool">テクスチャの管理方法。</param>
-        /// <exception cref="CTextureCreateFailedException">テクスチャの作成に失敗しました。</exception>
+        /// <exception cref="TextureCreateFailedException">テクスチャの作成に失敗しました。</exception>
         public FDKTexture(Device device, int width, int height, Format format, Pool pool)
             : this(device, width, height, format, pool, Usage.None)
         {
@@ -236,7 +236,7 @@ namespace FDK
             catch
             {
                 this.Dispose();
-                throw new CTextureCreateFailedException(string.Format("テクスチャの生成に失敗しました。\n({0}x{1}, {2})", width, height, format));
+                throw new TextureCreateFailedException(string.Format("テクスチャの生成に失敗しました。\n({0}x{1}, {2})", width, height, format));
             }
         }
 
@@ -252,7 +252,7 @@ namespace FDK
         /// <param name="format">テクスチャのフォーマット。</param>
         /// <param name="transparentBlack">画像の黒（0xFFFFFFFF）を透過させるなら true。</param>
         /// <param name="pool">テクスチャの管理方法。</param>
-        /// <exception cref="CTextureCreateFailedException">テクスチャの作成に失敗しました。</exception>
+        /// <exception cref="TextureCreateFailedException">テクスチャの作成に失敗しました。</exception>
         public FDKTexture(Device device, string path, Format format, bool transparentBlack, Pool pool)
             : this()
         {
@@ -296,7 +296,7 @@ namespace FDK
             {
                 this.Dispose();
                 // throw new CTextureCreateFailedException( string.Format( "テクスチャの生成に失敗しました。\n{0}", strファイル名 ) );
-                throw new CTextureCreateFailedException(string.Format("テクスチャの生成に失敗しました。\n"));
+                throw new TextureCreateFailedException(string.Format("テクスチャの生成に失敗しました。\n"));
             }
         }
 
@@ -361,7 +361,7 @@ namespace FDK
             {
                 this.Dispose();
                 // throw new CTextureCreateFailedException( string.Format( "テクスチャの生成に失敗しました。\n{0}", strファイル名 ) );
-                throw new CTextureCreateFailedException(string.Format("テクスチャの生成に失敗しました。\n"));
+                throw new TextureCreateFailedException(string.Format("テクスチャの生成に失敗しました。\n"));
             }
         }
         // メソッド

@@ -35,8 +35,8 @@ namespace TJAPlayer3
 		{
 			if ( !base.NotActivated )
 			{
-				string pathScrollBar = CSkin.Path( @"Graphics\5_scrollbar.png" );
-				string pathScrollPosition = CSkin.Path( @"Graphics\5_scrollbar.png" );
+				string pathScrollBar = SkinManager.Path( @"Graphics\5_scrollbar.png" );
+				string pathScrollPosition = SkinManager.Path( @"Graphics\5_scrollbar.png" );
 				if ( File.Exists( pathScrollBar ) )
 				{
 					this.txScrollBar = TJAPlayer3.tテクスチャの生成( pathScrollBar, false );

@@ -23,7 +23,7 @@ namespace TJAPlayer3
 		}
 		public object GetObj現在値( int pos )
 		{
-			return lciMenuItems[ pos ].cItem.obj現在値();
+			return lciMenuItems[ pos ].cItem.GetNowValue();
 		}
 		public bool bGotoDetailConfig
 		{
@@ -53,18 +53,18 @@ namespace TJAPlayer3
 		}
 
 
-		protected void Initialize( List<CItemBase> menulist, bool showAllItems, string title )
+		protected void Initialize( List<BaseItem> menulist, bool showAllItems, string title )
 		{
 			Initialize( menulist, showAllItems, title, 0 );
 		}
 
-		protected void Initialize( List<CItemBase> menulist, bool showAllItems, string title, int defaultPos )
+		protected void Initialize( List<BaseItem> menulist, bool showAllItems, string title, int defaultPos )
 		{
             ConditionallyInitializePrvFont();
 
 			stqMenuTitle = new stQuickMenuItem();
-			stqMenuTitle.cItem = new CItemBase();
-			stqMenuTitle.cItem.str項目名 = title;
+			stqMenuTitle.cItem = new BaseItem();
+			stqMenuTitle.cItem.Name = title;
 		    using (var bitmap = prvFont.DrawPrivateFont( title, Color.White, Color.Black ))
 		    {
 		        stqMenuTitle.txName = TJAPlayer3.tテクスチャの生成( bitmap, false );
@@ -75,7 +75,7 @@ namespace TJAPlayer3
 			{
 				stQuickMenuItem stqm = new stQuickMenuItem();
 				stqm.cItem = menulist[ i ];
-			    using (var bitmap = prvFont.DrawPrivateFont( menulist[ i ].str項目名, Color.White, Color.Black ))
+			    using (var bitmap = prvFont.DrawPrivateFont( menulist[ i ].Name, Color.White, Color.Black ))
 			    {
 			        stqm.txName = TJAPlayer3.tテクスチャの生成( bitmap, false );
 			        stqm.rectName = prvFont.RectStrings;
@@ -91,7 +91,7 @@ namespace TJAPlayer3
 	    {
 	        if (prvFont == null)
 	        {
-	            prvFont = new CPrivateFastFont(CSkin.Path(@"Graphics\ipag.ttf"), 18);
+	            prvFont = new CachePrivateFont(SkinManager.Path(@"Graphics\ipag.ttf"), 18);
 	        }
 	    }
 
@@ -103,17 +103,17 @@ namespace TJAPlayer3
 
 				if ( this.n現在の選択行 != lciMenuItems.Length - 1 )
 				{
-					if ( lciMenuItems[ n現在の選択行 ].cItem.e種別 == CItemBase.E種別.リスト ||
-						 lciMenuItems[ n現在の選択行 ].cItem.e種別 == CItemBase.E種別.ONorOFFトグル ||
-						 lciMenuItems[ n現在の選択行 ].cItem.e種別 == CItemBase.E種別.ONorOFFor不定スリーステート	)
+					if ( lciMenuItems[ n現在の選択行 ].cItem.NowItemType == BaseItem.ItemType.List ||
+						 lciMenuItems[ n現在の選択行 ].cItem.NowItemType == BaseItem.ItemType.ONorOFFToggle ||
+						 lciMenuItems[ n現在の選択行 ].cItem.NowItemType == BaseItem.ItemType.ONorOFFor不定スリーステート	)
 					{
-						lciMenuItems[ n現在の選択行 ].cItem.t項目値を次へ移動();
+						lciMenuItems[ n現在の選択行 ].cItem.MoveItemValueNext();
 					}
-					else if ( lciMenuItems[ n現在の選択行 ].cItem.e種別 == CItemBase.E種別.整数 )
+					else if ( lciMenuItems[ n現在の選択行 ].cItem.NowItemType == BaseItem.ItemType.Integer )
 					{
 						bIsSelectingIntItem = !bIsSelectingIntItem;		// 選択状態/選択解除状態を反転する
 					}
-					else if ( lciMenuItems[ n現在の選択行 ].cItem.e種別 == CItemBase.E種別.切替リスト )
+					else if ( lciMenuItems[ n現在の選択行 ].cItem.NowItemType == BaseItem.ItemType.SwitchingList )
 					{
 						// 特に何もしない
 					}
@@ -156,7 +156,7 @@ namespace TJAPlayer3
 				TJAPlayer3.Skin.soundカーソル移動音.t再生する();
 				if ( bIsSelectingIntItem )
 				{
-					 lciMenuItems[ n現在の選択行 ].cItem.t項目値を前へ移動();		// 項目移動と数値上下は方向が逆になるので注意
+					 lciMenuItems[ n現在の選択行 ].cItem.MoveItemValuePrev();		// 項目移動と数値上下は方向が逆になるので注意
 				}
 				else
 				{
@@ -174,7 +174,7 @@ namespace TJAPlayer3
 				TJAPlayer3.Skin.soundカーソル移動音.t再生する();
 				if ( bIsSelectingIntItem )
 				{
-					lciMenuItems[ n現在の選択行 ].cItem.t項目値を次へ移動();		// 項目移動と数値上下は方向が逆になるので注意
+					lciMenuItems[ n現在の選択行 ].cItem.MoveItemValueNext();		// 項目移動と数値上下は方向が逆になるので注意
 				}
 				else
 				{
@@ -199,7 +199,7 @@ namespace TJAPlayer3
 			base.NotActivated = true;
 
 			this.bIsActivePopupMenu = false;
-			this.font = new CActDFPFont();
+			this.font = new DFPFontManager();
 			base.ChildActivities.Add( this.font );
 			nItemSelecting = -1;
 
@@ -253,8 +253,8 @@ namespace TJAPlayer3
 				if ( this.bキー入力待ち )
 				{
 					#region [ Shift-F1: CONFIG画面 ]
-					if ( ( TJAPlayer3.Input管理.Keyboard.bキーが押されている( (int) SlimDX.DirectInput.Key.RightShift ) || TJAPlayer3.Input管理.Keyboard.bキーが押されている( (int) SlimDX.DirectInput.Key.LeftShift ) ) &&
-						TJAPlayer3.Input管理.Keyboard.bキーが押された( (int) SlimDX.DirectInput.Key.F1 ) )
+					if ( ( TJAPlayer3.Input管理.Keyboard.GetKeyKeepPressed( (int) SlimDX.DirectInput.Key.RightShift ) || TJAPlayer3.Input管理.Keyboard.GetKeyKeepPressed( (int) SlimDX.DirectInput.Key.LeftShift ) ) &&
+						TJAPlayer3.Input管理.Keyboard.GetKeyPressed( (int) SlimDX.DirectInput.Key.F1 ) )
 					{	// [SHIFT] + [F1] CONFIG
 						TJAPlayer3.Skin.sound取消音.t再生する();
 						tCancel();
@@ -262,7 +262,7 @@ namespace TJAPlayer3
 					}
 					#endregion
 					#region [ キー入力: キャンセル ]
-					else if ( ( TJAPlayer3.Input管理.Keyboard.bキーが押された( (int) SlimDX.DirectInput.Key.Escape )
+					else if ( ( TJAPlayer3.Input管理.Keyboard.GetKeyPressed( (int) SlimDX.DirectInput.Key.Escape )
 						|| TJAPlayer3.Pad.b押された( E楽器パート.DRUMS, Eパッド.FT )
 						|| TJAPlayer3.Pad.b押されたGB( Eパッド.Cancel ) )
                         && this.bEsc有効 )
@@ -290,7 +290,7 @@ namespace TJAPlayer3
 						TJAPlayer3.Pad.b押された( E楽器パート.DRUMS, Eパッド.Decide )	// #24756 2011.4.1 yyagi: Add condition "Drum-Decide" to enable CY in Sort Menu.
 						|| TJAPlayer3.Pad.b押された( E楽器パート.DRUMS, Eパッド.RD )
 						|| TJAPlayer3.Pad.b押された( E楽器パート.DRUMS, Eパッド.LC )
-						|| ( TJAPlayer3._MainConfig.bEnterがキー割り当てのどこにも使用されていない && TJAPlayer3.Input管理.Keyboard.bキーが押された( (int) SlimDX.DirectInput.Key.Return ) ) )
+						|| ( TJAPlayer3._MainConfig.bEnterがキー割り当てのどこにも使用されていない && TJAPlayer3.Input管理.Keyboard.GetKeyPressed( (int) SlimDX.DirectInput.Key.Return ) ) )
 					{
 						eInst = E楽器パート.DRUMS;
 						eAction = ESortAction.Decide;
@@ -301,7 +301,7 @@ namespace TJAPlayer3
 					}
 					#endregion
 					#region [ キー入力: 前に移動 ]
-					this.ctキー反復用.Up.RepeatKey( TJAPlayer3.Input管理.Keyboard.bキーが押されている( (int) SlimDX.DirectInput.Key.UpArrow ), new Counter.KeyProcess( this.t前に移動 ) );
+					this.ctキー反復用.Up.RepeatKey( TJAPlayer3.Input管理.Keyboard.GetKeyKeepPressed( (int) SlimDX.DirectInput.Key.UpArrow ), new Counter.KeyProcess( this.t前に移動 ) );
 					this.ctキー反復用.R.RepeatKey( TJAPlayer3.Pad.b押されているGB( Eパッド.R ), new Counter.KeyProcess( this.t前に移動 ) );
 					if ( TJAPlayer3.Pad.b押された( E楽器パート.DRUMS, Eパッド.SD ) )
 					{
@@ -309,7 +309,7 @@ namespace TJAPlayer3
 					}
 					#endregion
 					#region [ キー入力: 次に移動 ]
-					this.ctキー反復用.Down.RepeatKey( TJAPlayer3.Input管理.Keyboard.bキーが押されている( (int) SlimDX.DirectInput.Key.DownArrow ), new Counter.KeyProcess( this.t次に移動 ) );
+					this.ctキー反復用.Down.RepeatKey( TJAPlayer3.Input管理.Keyboard.GetKeyKeepPressed( (int) SlimDX.DirectInput.Key.DownArrow ), new Counter.KeyProcess( this.t次に移動 ) );
 					this.ctキー反復用.B.RepeatKey( TJAPlayer3.Pad.b押されているGB( Eパッド.B ), new Counter.KeyProcess( this.t次に移動 ) );
 					if ( TJAPlayer3.Pad.b押された( E楽器パート.DRUMS, Eパッド.LT ) )
 					{
@@ -359,23 +359,23 @@ namespace TJAPlayer3
                     if (bItemBold || bShowAllItems)
                     {
                         string s;
-                        switch (lciMenuItems[i].cItem.str項目名)
+                        switch (lciMenuItems[i].cItem.Name)
                         {
                             case "演奏速度":
                                 {
-                                    double d = (double)((int)lciMenuItems[i].cItem.obj現在値() / 20.0);
+                                    double d = (double)((int)lciMenuItems[i].cItem.GetNowValue() / 20.0);
                                     s = "x" + d.ToString("0.000");
                                 }
                                 break;
                             case "ばいそく":
                                 {
-                                    double d = (double)((((int)lciMenuItems[i].cItem.obj現在値()) + 1) / 2.0);
+                                    double d = (double)((((int)lciMenuItems[i].cItem.GetNowValue()) + 1) / 2.0);
                                     s = "x" + d.ToString("0.0");
                                 }
                                 break;
 
                             default:
-                                s = lciMenuItems[i].cItem.obj現在値().ToString();
+                                s = lciMenuItems[i].cItem.GetNowValue().ToString();
                                 break;
                         }
                         //font.t文字列描画( (int)(340 * Scale.X), (int)(80 + i * 32), s, bValueBold, 1.0f * Scale.Y);
@@ -409,12 +409,12 @@ namespace TJAPlayer3
 
 		//private CTexture txPopupMenuBackground;
 		//private CTexture txCursor;
-		private CActDFPFont font;
-        CPrivateFastFont prvFont;
+		private DFPFontManager font;
+        CachePrivateFont prvFont;
 
         internal struct stQuickMenuItem
         {
-            internal CItemBase cItem;
+            internal BaseItem cItem;
             internal FDKTexture txName;
             internal Rectangle rectName;
         }

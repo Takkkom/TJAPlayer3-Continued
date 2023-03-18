@@ -289,7 +289,7 @@ namespace TJAPlayer3
 
         public void tEnd()
         {
-            this.ct風船終了 = new Counter(0, 80, 10, CSound管理.rc演奏用タイマ);
+            this.ct風船終了 = new Counter(0, 80, 10, SoundManager.PlayTimer);
         }
     }
 }

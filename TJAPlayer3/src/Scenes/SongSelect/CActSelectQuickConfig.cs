@@ -33,10 +33,10 @@ namespace TJAPlayer3
 •More... 
 •EXIT 
 */
-			lci = new List<List<List<CItemBase>>>();									// この画面に来る度に、メニューを作り直す。
+			lci = new List<List<List<BaseItem>>>();									// この画面に来る度に、メニューを作り直す。
 			for ( int nConfSet = 0; nConfSet < 3; nConfSet++ )
 			{
-				lci.Add( new List<List<CItemBase>>() );									// ConfSet用の3つ分の枠。
+				lci.Add( new List<List<BaseItem>>() );									// ConfSet用の3つ分の枠。
 				for ( int nInst = 0; nInst < 3; nInst++ )
 				{
 					lci[ nConfSet ].Add( null );										// Drum/Guitar/Bassで3つ分、枠を作っておく
@@ -46,14 +46,14 @@ namespace TJAPlayer3
 			base.Initialize( lci[ nCurrentConfigSet ][ 0 ], true, QuickCfgTitle, 0 );	// ConfSet=0, nInst=Drums
 		}
 
-		private List<CItemBase> MakeListCItemBase( int nConfigSet, int nInst )
+		private List<BaseItem> MakeListCItemBase( int nConfigSet, int nInst )
 		{
-			List<CItemBase> l = new List<CItemBase>();
+			List<BaseItem> l = new List<BaseItem>();
 
 			#region [ 共通 Target/AutoMode/AutoLane ]
 			#endregion
 			#region [ 個別 ScrollSpeed ]
-			l.Add( new CItemInteger( "ばいそく", 0, 1999, TJAPlayer3._MainConfig.n譜面スクロール速度[ nInst ],
+			l.Add( new ItemInteger( "ばいそく", 0, 1999, TJAPlayer3._MainConfig.n譜面スクロール速度[ nInst ],
 				"演奏時のドラム譜面のスクロールの\n" +
 				"速度を指定します。\n" +
 				"x0.5 ～ x1000.0 を指定可能です。",
@@ -63,7 +63,7 @@ namespace TJAPlayer3
 				"(ScrollSpeed=x0.5 means half speed)" ) );
 			#endregion
 			#region [ 共通 Dark/Risky/PlaySpeed ]
-			l.Add( new CItemInteger( "演奏速度", 5, 40, TJAPlayer3._MainConfig.n演奏速度,
+			l.Add( new ItemInteger( "演奏速度", 5, 40, TJAPlayer3._MainConfig.n演奏速度,
 				"曲の演奏速度を、速くしたり遅くした\n" +
 				"りすることができます。\n" +
 				"（※一部のサウンドカードでは正しく\n" +
@@ -75,14 +75,14 @@ namespace TJAPlayer3
 				"Note: It also changes the songs' pitch." ) );
 			#endregion
 			#region [ 個別 Sud/Hid ]
-            l.Add( new CItemList( "ランダム", CItemBase.Eパネル種別.通常, (int) TJAPlayer3._MainConfig.eRandom.Taiko,
+            l.Add( new ItemList( "ランダム", BaseItem.PanelType.Normal, (int) TJAPlayer3._MainConfig.eRandom.Taiko,
 				"いわゆるランダム。\n  RANDOM: ちょっと変わる\n  MIRROR: あべこべ \n  SUPER: そこそこヤバい\n  HYPER: 結構ヤバい\nなお、実装は適当な模様",
 				"Guitar chips come randomly.\n\n Part: swapping lanes randomly for each\n  measures.\n Super: swapping chip randomly\n Hyper: swapping randomly\n  (number of lanes also changes)",
 				new string[] { "OFF", "RANDOM", "あべこべ", "SUPER", "HYPER" } ) );
-            l.Add( new CItemList( "ドロン", CItemBase.Eパネル種別.通常, (int) TJAPlayer3._MainConfig.eSTEALTH,
+            l.Add( new ItemList( "ドロン", BaseItem.PanelType.Normal, (int) TJAPlayer3._MainConfig.eSTEALTH,
 				"",
 				new string[] { "OFF", "ドロン", "ステルス" } ) );
-            l.Add( new CItemList( "ゲーム", CItemBase.Eパネル種別.通常, (int)TJAPlayer3._MainConfig.eGameMode,
+            l.Add( new ItemList( "ゲーム", BaseItem.PanelType.Normal, (int)TJAPlayer3._MainConfig.eGameMode,
                 "ゲームモード\n" +
                 "TYPE-A: 完走!叩ききりまショー!\n" +
                 "TYPE-B: 完走!叩ききりまショー!(激辛)\n" +
@@ -92,12 +92,12 @@ namespace TJAPlayer3
                 " ",
                 new string[] { "OFF", "完走!", "完走!激辛" }) );
 
-            l.Add(new CItemList(nameof(TJAPlayer3._MainConfig.ShinuchiMode), CItemBase.Eパネル種別.通常, TJAPlayer3._MainConfig.ShinuchiMode ? 1 : 0, "", "", new string[] { "OFF", "ON" }));
+            l.Add(new ItemList(nameof(TJAPlayer3._MainConfig.ShinuchiMode), BaseItem.PanelType.Normal, TJAPlayer3._MainConfig.ShinuchiMode ? 1 : 0, "", "", new string[] { "OFF", "ON" }));
 
 			#endregion
 			#region [ 共通 SET切り替え/More/Return ]
-			l.Add( new CSwitchItemList( "More...", CItemBase.Eパネル種別.通常, 0, "", "", new string[] { "" } ) );
-			l.Add( new CSwitchItemList( "戻る", CItemBase.Eパネル種別.通常, 0, "", "", new string[] { "", "" } ) );
+			l.Add( new CSwitchItemList( "More...", BaseItem.PanelType.Normal, 0, "", "", new string[] { "" } ) );
+			l.Add( new CSwitchItemList( "戻る", BaseItem.PanelType.Normal, 0, "", "", new string[] { "", "" } ) );
 			#endregion
 
 			return l;
@@ -241,7 +241,7 @@ namespace TJAPlayer3
 		//-----------------
 		private int nCurrentTarget = 0;
 		private int nCurrentConfigSet = 0;
-		private List<List<List<CItemBase>>> lci;		// DrGtBs, ConfSet, 選択肢一覧。都合、3次のListとなる。
+		private List<List<List<BaseItem>>> lci;		// DrGtBs, ConfSet, 選択肢一覧。都合、3次のListとなる。
 		private enum EOrder : int
 		{
 			ScrollSpeed = 0,

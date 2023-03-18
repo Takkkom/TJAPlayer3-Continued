@@ -39,9 +39,9 @@ namespace TJAPlayer3
 		{
 			if( !base.NotActivated )
 			{
-                this.txInfo_Back = TJAPlayer3.tテクスチャの生成( CSkin.Path( @"Graphics\5_information_BG.png" ) );
-                this.txInfo[ 0 ] = TJAPlayer3.tテクスチャの生成( CSkin.Path( @"Graphics\5_information.png" ) );
-                this.txInfo[ 1 ] = TJAPlayer3.tテクスチャの生成( CSkin.Path( @"Graphics\5_information2.png" ) );
+                this.txInfo_Back = TJAPlayer3.tテクスチャの生成( SkinManager.Path( @"Graphics\5_information_BG.png" ) );
+                this.txInfo[ 0 ] = TJAPlayer3.tテクスチャの生成( SkinManager.Path( @"Graphics\5_information.png" ) );
+                this.txInfo[ 1 ] = TJAPlayer3.tテクスチャの生成( SkinManager.Path( @"Graphics\5_information2.png" ) );
 				base.ManagedCreateResources();
 			}
 		}

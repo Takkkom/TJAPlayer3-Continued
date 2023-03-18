@@ -16,7 +16,7 @@ namespace TJAPlayer3
 	internal class CEnumSongs							// #27060 2011.2.7 yyagi 曲リストを取得するクラス
 	{													// ファイルキャッシュ(songslist.db)からの取得と、ディスクからの取得を、この一つのクラスに集約。
 
-		public CSongs管理 Songs管理						// 曲の探索結果はこのSongs管理に読み込まれる
+		public SongsManager Songs管理						// 曲の探索結果はこのSongs管理に読み込まれる
 		{
 			get;
 			private set;
@@ -78,8 +78,8 @@ namespace TJAPlayer3
 				this.thDTXFileEnumerate.Priority = tp;
 			}
 		}
-		private readonly string strPathSongsDB = TJAPlayer3.strEXEのあるフォルダ + "songs.db";
-		private readonly string strPathSongList = TJAPlayer3.strEXEのあるフォルダ + "songlist.db";
+		private readonly string strPathSongsDB = TJAPlayer3.DirectoryWithThisEXE + "songs.db";
+		private readonly string strPathSongList = TJAPlayer3.DirectoryWithThisEXE + "songlist.db";
 
 		public Thread thDTXFileEnumerate
 		{
@@ -102,10 +102,10 @@ namespace TJAPlayer3
 		/// </summary>
 		public CEnumSongs()
 		{
-			this.Songs管理 = new CSongs管理();
+			this.Songs管理 = new SongsManager();
 		}
 
-		public void Init( List<Cスコア> ls, int n )
+		public void Init( List<ScoreInfo> ls, int n )
 		{
 			if ( state == DTXEnumState.None )
 			{
@@ -146,7 +146,7 @@ namespace TJAPlayer3
 
 				if ( this.Songs管理 == null )		// Enumerating Songs完了後、CONFIG画面から再スキャンしたときにこうなる
 				{
-					this.Songs管理 = new CSongs管理();
+					this.Songs管理 = new SongsManager();
 				}
 				this.thDTXFileEnumerate = new Thread( new ThreadStart( this.t曲リストの構築2 ) );
 				this.thDTXFileEnumerate.Name = "曲リストの構築";
@@ -222,7 +222,7 @@ namespace TJAPlayer3
 				this.state = DTXEnumState.None;
 
 				this.Songs管理 = null;					// Songs管理を再初期化する (途中まで作った曲リストの最後に、一から重複して追記することにならないようにする。)
-				this.Songs管理 = new CSongs管理();
+				this.Songs管理 = new SongsManager();
 			}
 		}
 
@@ -243,7 +243,7 @@ namespace TJAPlayer3
 			{
 				#region [ 0) システムサウンドの構築  ]
 				//-----------------------------
-				TJAPlayer3.stage起動.eフェーズID = CStage.Eフェーズ.起動0_システムサウンドを構築;
+				TJAPlayer3.stage起動.eフェーズID = BaseScene.Eフェーズ.起動0_システムサウンドを構築;
 
 				Trace.TraceInformation( "0) システムサウンドを構築します。" );
 				Trace.Indent();
@@ -255,7 +255,7 @@ namespace TJAPlayer3
 					{
 						if ( !TJAPlayer3.Skin[ i ].b排他 )	// BGM系以外のみ読み込む。(BGM系は必要になったときに読み込む)
 						{
-							CSkin.Cシステムサウンド cシステムサウンド = TJAPlayer3.Skin[ i ];
+							SkinManager.Cシステムサウンド cシステムサウンド = TJAPlayer3.Skin[ i ];
 							if ( !TJAPlayer3.bコンパクトモード || cシステムサウンド.bCompact対象 )
 							{
 								try
@@ -299,7 +299,7 @@ namespace TJAPlayer3
 
 				#region [ 00) songlist.dbの読み込みによる曲リストの構築  ]
 				//-----------------------------
-				TJAPlayer3.stage起動.eフェーズID = CStage.Eフェーズ.起動00_songlistから曲リストを作成する;
+				TJAPlayer3.stage起動.eフェーズID = BaseScene.Eフェーズ.起動00_songlistから曲リストを作成する;
 
 				Trace.TraceInformation( "1) songlist.dbを読み込みます。" );
 				Trace.Indent();
@@ -308,7 +308,7 @@ namespace TJAPlayer3
 				{
 					if ( !TJAPlayer3._MainConfig.bConfigIniがないかDTXManiaのバージョンが異なる )
 					{
-						CSongs管理 s = new CSongs管理();
+						SongsManager s = new SongsManager();
 						s = Deserialize( strPathSongList );		// 直接this.Songs管理にdeserialize()結果を代入するのは避ける。nullにされてしまうことがあるため。
 						if ( s != null )
 						{
@@ -340,7 +340,7 @@ namespace TJAPlayer3
 
 				#region [ 1) songs.db の読み込み ]
 				//-----------------------------
-				TJAPlayer3.stage起動.eフェーズID = CStage.Eフェーズ.起動1_SongsDBからスコアキャッシュを構築;
+				TJAPlayer3.stage起動.eフェーズID = BaseScene.Eフェーズ.起動1_SongsDBからスコアキャッシュを構築;
 
 				Trace.TraceInformation( "2) songs.db を読み込みます。" );
 				Trace.Indent();
@@ -386,7 +386,7 @@ namespace TJAPlayer3
 			}
 			finally
 			{
-				TJAPlayer3.stage起動.eフェーズID = CStage.Eフェーズ.起動7_完了;
+				TJAPlayer3.stage起動.eフェーズID = BaseScene.Eフェーズ.起動7_完了;
 				TimeSpan span = (TimeSpan) ( DateTime.Now - now );
 				Trace.TraceInformation( "起動所要時間: {0}", span.ToString() );
 				lock ( this )							// #28700 2012.6.12 yyagi; state change must be in finally{} for exiting as of compact mode.
@@ -436,7 +436,7 @@ namespace TJAPlayer3
 								string path = str;
 								if ( !Path.IsPathRooted( path ) )
 								{
-									path = TJAPlayer3.strEXEのあるフォルダ + str;	// 相対パスの場合、絶対パスに直す(2010.9.16)
+									path = TJAPlayer3.DirectoryWithThisEXE + str;	// 相対パスの場合、絶対パスに直す(2010.9.16)
 								}
 
 								if ( !string.IsNullOrEmpty( path ) )
@@ -621,7 +621,7 @@ namespace TJAPlayer3
 		/// <summary>
 		/// 曲リストのserialize
 		/// </summary>
-		private static void SerializeSongList( CSongs管理 cs, string strPathSongList )
+		private static void SerializeSongList( SongsManager cs, string strPathSongList )
 		{
 			bool bSucceededSerialize = true;
 			Stream output = null;
@@ -660,7 +660,7 @@ namespace TJAPlayer3
 		/// </summary>
 		/// <param name="songs管理"></param>
 		/// <param name="strPathSongList"></param>
-		private CSongs管理 Deserialize( string strPathSongList )
+		private SongsManager Deserialize( string strPathSongList )
 		{
 			try
 			{
@@ -678,7 +678,7 @@ namespace TJAPlayer3
 					try
 					{
 						BinaryFormatter formatter = new BinaryFormatter();
-						return (CSongs管理) formatter.Deserialize( input );
+						return (SongsManager) formatter.Deserialize( input );
 					}
 					catch ( Exception e )
 					{

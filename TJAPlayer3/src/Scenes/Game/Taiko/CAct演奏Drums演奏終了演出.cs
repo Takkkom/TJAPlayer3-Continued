@@ -72,14 +72,14 @@ namespace TJAPlayer3
         public override void ManagedCreateResources()
         {
             this.b再生済み = false;
-            this.soundClear = TJAPlayer3.Sound管理.tサウンドを生成する(CSkin.Path(@"Sounds\Clear.ogg"), ESoundGroup.SoundEffect);
+            this.soundClear = TJAPlayer3._SoundManager.CreateFDKSound(SkinManager.Path(@"Sounds\Clear.ogg"), SoundGroup.SoundEffect);
             base.ManagedCreateResources();
         }
 
         public override void ManagedReleaseResources()
         {
             if (this.soundClear != null)
-                this.soundClear.t解放する();
+                this.soundClear.DisposeSound();
             base.ManagedReleaseResources();
         }
 
@@ -89,7 +89,7 @@ namespace TJAPlayer3
             {
                 base.JustStartedUpdate = false;
             }
-            if (this.ct進行メイン != null && (TJAPlayer3.stage演奏ドラム画面.eフェーズID == CStage.Eフェーズ.演奏_演奏終了演出 || TJAPlayer3.stage演奏ドラム画面.eフェーズID == CStage.Eフェーズ.演奏_STAGE_CLEAR_フェードアウト))
+            if (this.ct進行メイン != null && (TJAPlayer3.stage演奏ドラム画面.eフェーズID == BaseScene.Eフェーズ.演奏_演奏終了演出 || TJAPlayer3.stage演奏ドラム画面.eフェーズID == BaseScene.Eフェーズ.演奏_STAGE_CLEAR_フェードアウト))
             {
                 this.ct進行メイン.Tick();
 
@@ -309,7 +309,7 @@ namespace TJAPlayer3
         //CTexture[] txバチお右_成功 = new CTexture[ 5 ];
         //CTexture tx文字;
         //CTexture tx文字マスク;
-        CSound soundClear;
+        FDKSound soundClear;
         EndMode[] Mode;
         enum EndMode
         {

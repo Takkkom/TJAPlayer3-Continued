@@ -19,13 +19,13 @@ namespace TJAPlayer3
 			if( this.sound != null )
 			{
 				this.sound.t再生を停止する();
-				TJAPlayer3.Sound管理.tサウンドを破棄する( this.sound );
+				TJAPlayer3._SoundManager.DisposeSound( this.sound );
 				this.sound = null;
 			}
 		}
 		public void t選択曲が変更された()
 		{
-			Cスコア cスコア = TJAPlayer3.stage選曲.r現在選択中のスコア;
+			ScoreInfo cスコア = TJAPlayer3.stage選曲.r現在選択中のスコア;
 			
             if( ( cスコア != null ) && ( ( !( cスコア.ファイル情報.フォルダの絶対パス + cスコア.譜面情報.strBGMファイル名 ).Equals( this.str現在のファイル名 ) || ( this.sound == null ) ) || !this.sound.b再生中 ) )
 			{
@@ -35,7 +35,7 @@ namespace TJAPlayer3
 				if( ( cスコア.譜面情報.strBGMファイル名 != null ) && ( cスコア.譜面情報.strBGMファイル名.Length > 0 ) )
 				{
 					//this.ct再生待ちウェイト = new CCounter( 0, CDTXMania.ConfigIni.n曲が選択されてからプレビュー音が鳴るまでのウェイトms, 1, CDTXMania.Timer );
-                    if(TJAPlayer3.Sound管理.GetCurrentSoundDeviceType() != "DirectSound")
+                    if(TJAPlayer3._SoundManager.GetCurrentSoundDeviceType() != "DirectSound")
                     {
                         this.ct再生待ちウェイト = new Counter(0, 1, 270, TJAPlayer3.Timer);
                     } else
@@ -94,7 +94,7 @@ namespace TJAPlayer3
 				if( ( this.ctBGMフェードアウト用 != null ) && this.ctBGMフェードアウト用.IsProcessed )
 				{
 					this.ctBGMフェードアウト用.Tick();
-					TJAPlayer3.Skin.bgm選曲画面.nAutomationLevel_現在のサウンド = CSound.MaximumAutomationLevel - this.ctBGMフェードアウト用.NowValue;
+					TJAPlayer3.Skin.bgm選曲画面.nAutomationLevel_現在のサウンド = FDKSound.MaximumAutomationLevel - this.ctBGMフェードアウト用.NowValue;
 					if( this.ctBGMフェードアウト用.IsEndValueReached )
 					{
 						this.ctBGMフェードアウト用.Stop();
@@ -104,18 +104,18 @@ namespace TJAPlayer3
 
                 if (this.sound != null)
                 {
-                    Cスコア cスコア = TJAPlayer3.stage選曲.r現在選択中のスコア;
+                    ScoreInfo cスコア = TJAPlayer3.stage選曲.r現在選択中のスコア;
                     if (long再生位置 == -1)
                     {
-                        this.long再生開始時のシステム時刻 = CSound管理.rc演奏用タイマ.SystemTimeMs;
+                        this.long再生開始時のシステム時刻 = SoundManager.PlayTimer.SystemTimeMs;
                         this.long再生位置 = cスコア.譜面情報.nデモBGMオフセット;
-                        this.sound.t再生位置を変更する(cスコア.譜面情報.nデモBGMオフセット);
+                        this.sound.SetPosition(cスコア.譜面情報.nデモBGMオフセット);
                     }
                     else
                     {
-                        this.long再生位置 = CSound管理.rc演奏用タイマ.SystemTimeMs - this.long再生開始時のシステム時刻;
+                        this.long再生位置 = SoundManager.PlayTimer.SystemTimeMs - this.long再生開始時のシステム時刻;
                     }
-                    if (this.long再生位置 >= (this.sound.n総演奏時間ms - cスコア.譜面情報.nデモBGMオフセット) - 1 && this.long再生位置 <= (this.sound.n総演奏時間ms - cスコア.譜面情報.nデモBGMオフセット) + 0)
+                    if (this.long再生位置 >= (this.sound.TotalPlayTimeMs - cスコア.譜面情報.nデモBGMオフセット) - 1 && this.long再生位置 <= (this.sound.TotalPlayTimeMs - cスコア.譜面情報.nデモBGMオフセット) + 0)
                         this.long再生位置 = -1;
 
 
@@ -136,7 +136,7 @@ namespace TJAPlayer3
 		private Counter ct再生待ちウェイト;
         private long long再生位置;
         private long long再生開始時のシステム時刻;
-		private CSound sound;
+		private FDKSound sound;
 		private string str現在のファイル名;
 		
 		private void tBGMフェードアウト開始()
@@ -159,14 +159,14 @@ namespace TJAPlayer3
 		}
 		private void tプレビューサウンドの作成()
 		{
-			Cスコア cスコア = TJAPlayer3.stage選曲.r現在選択中のスコア;
-			if( ( cスコア != null ) && !string.IsNullOrEmpty( cスコア.譜面情報.strBGMファイル名 ) && TJAPlayer3.stage選曲.eフェーズID != CStage.Eフェーズ.選曲_NowLoading画面へのフェードアウト )
+			ScoreInfo cスコア = TJAPlayer3.stage選曲.r現在選択中のスコア;
+			if( ( cスコア != null ) && !string.IsNullOrEmpty( cスコア.譜面情報.strBGMファイル名 ) && TJAPlayer3.stage選曲.eフェーズID != BaseScene.Eフェーズ.選曲_NowLoading画面へのフェードアウト )
 			{
 				string strPreviewFilename = cスコア.ファイル情報.フォルダの絶対パス + cスコア.譜面情報.Presound;
 				try
                 {
                     strPreviewFilename = cスコア.ファイル情報.フォルダの絶対パス + cスコア.譜面情報.strBGMファイル名;
-                    this.sound = TJAPlayer3.Sound管理.tサウンドを生成する( strPreviewFilename, ESoundGroup.SongPreview );
+                    this.sound = TJAPlayer3._SoundManager.CreateFDKSound( strPreviewFilename, SoundGroup.SongPreview );
 
                     // 2018-08-27 twopointzero - DO attempt to load (or queue scanning) loudness metadata here.
                     //                           Initialization, song enumeration, and/or interactions may have
@@ -179,10 +179,10 @@ namespace TJAPlayer3
                     this.sound.t再生を開始する( true );
                     if( long再生位置 == -1 )
                     {
-                        this.long再生開始時のシステム時刻 = CSound管理.rc演奏用タイマ.SystemTimeMs;
+                        this.long再生開始時のシステム時刻 = SoundManager.PlayTimer.SystemTimeMs;
                         this.long再生位置 = cスコア.譜面情報.nデモBGMオフセット;
-                        this.sound.t再生位置を変更する( cスコア.譜面情報.nデモBGMオフセット );
-                        this.long再生位置 = CSound管理.rc演奏用タイマ.SystemTimeMs - this.long再生開始時のシステム時刻;
+                        this.sound.SetPosition( cスコア.譜面情報.nデモBGMオフセット );
+                        this.long再生位置 = SoundManager.PlayTimer.SystemTimeMs - this.long再生開始時のシステム時刻;
                     }
                     //if( long再生位置 == this.sound.n総演奏時間ms - 10 )
                     //    this.long再生位置 = -1;

@@ -117,7 +117,7 @@ namespace TJAPlayer3
 					this.txMessage = null;
 				}
 			}
-			catch ( CTextureCreateFailedException e )
+			catch ( TextureCreateFailedException e )
 			{
 				Trace.TraceError( "テクスチャの生成に失敗しました。(txMessage)" );
 				Trace.TraceError( e.ToString() );

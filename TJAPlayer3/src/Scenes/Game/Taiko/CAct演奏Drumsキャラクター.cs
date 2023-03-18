@@ -92,9 +92,9 @@ namespace TJAPlayer3
             if (arモーション番号 == null) this.arモーション番号 = ConvertUtility.StringArrayToIntArray("0,0");
             if (arゴーゴーモーション番号 == null) this.arゴーゴーモーション番号 = ConvertUtility.StringArrayToIntArray("0,0");
             if (arクリアモーション番号 == null) this.arクリアモーション番号 = ConvertUtility.StringArrayToIntArray("0,0");
-            ctChara_Normal = new Counter(0, arモーション番号.Length - 1, 10, CSound管理.rc演奏用タイマ);
-            ctChara_GoGo = new Counter(0, arゴーゴーモーション番号.Length - 1, 10, CSound管理.rc演奏用タイマ);
-            ctChara_Clear = new Counter(0, arクリアモーション番号.Length - 1, 10, CSound管理.rc演奏用タイマ);
+            ctChara_Normal = new Counter(0, arモーション番号.Length - 1, 10, SoundManager.PlayTimer);
+            ctChara_GoGo = new Counter(0, arゴーゴーモーション番号.Length - 1, 10, SoundManager.PlayTimer);
+            ctChara_Clear = new Counter(0, arクリアモーション番号.Length - 1, 10, SoundManager.PlayTimer);
             if (CharaAction_Balloon_Delay != null) CharaAction_Balloon_Delay.NowValue = CharaAction_Balloon_Delay.EndValue;
             base.ManagedCreateResources();
         }

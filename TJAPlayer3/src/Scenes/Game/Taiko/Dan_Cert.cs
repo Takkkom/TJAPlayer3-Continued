@@ -31,7 +31,7 @@ namespace TJAPlayer3
             TJAPlayer3.stage演奏ドラム画面.ReSetScore(TJAPlayer3.DTX.List_DanSongs[NowShowingNumber].ScoreInit, TJAPlayer3.DTX.List_DanSongs[NowShowingNumber].ScoreDiff);
             IsAnimating = true;
             TJAPlayer3.stage演奏ドラム画面.actPanel.SetPanelString(TJAPlayer3.DTX.List_DanSongs[NowShowingNumber].Title, TJAPlayer3.DTX.List_DanSongs[NowShowingNumber].Genre, 1 + NowShowingNumber + "曲目");
-            Sound_Section?.tサウンドを先頭から再生する();
+            Sound_Section?.PlaySoundFromBegin();
         }
 
         public override void Activate()
@@ -175,7 +175,7 @@ namespace TJAPlayer3
                 }
                 if(oldReached == false && Challenge[i].GetReached() == true)
                 {
-                    Sound_Failed?.tサウンドを先頭から再生する();
+                    Sound_Failed?.PlaySoundFromBegin();
                 }
             }
         }
@@ -200,16 +200,16 @@ namespace TJAPlayer3
         public override void ManagedCreateResources()
         {
             Dan_Plate = TJAPlayer3.tテクスチャの生成(Path.GetDirectoryName(TJAPlayer3.DTX.strファイル名の絶対パス) + @"\Dan_Plate.png");
-            Sound_Section = TJAPlayer3.Sound管理.tサウンドを生成する(CSkin.Path(@"Sounds\Dan\Section.ogg"), ESoundGroup.SoundEffect);
-            Sound_Failed = TJAPlayer3.Sound管理.tサウンドを生成する(CSkin.Path(@"Sounds\Dan\Failed.ogg"), ESoundGroup.SoundEffect);
+            Sound_Section = TJAPlayer3._SoundManager.CreateFDKSound(SkinManager.Path(@"Sounds\Dan\Section.ogg"), SoundGroup.SoundEffect);
+            Sound_Failed = TJAPlayer3._SoundManager.CreateFDKSound(SkinManager.Path(@"Sounds\Dan\Failed.ogg"), SoundGroup.SoundEffect);
             base.ManagedCreateResources();
         }
 
         public override void ManagedReleaseResources()
         {
             Dan_Plate?.Dispose();
-            Sound_Section?.t解放する();
-            Sound_Failed?.t解放する();
+            Sound_Section?.DisposeSound();
+            Sound_Failed?.DisposeSound();
             base.ManagedReleaseResources();
         }
 
@@ -602,8 +602,8 @@ namespace TJAPlayer3
         public bool IsAnimating;
 
         //音声関連
-        private CSound Sound_Section;
-        private CSound Sound_Failed;
+        private FDKSound Sound_Section;
+        private FDKSound Sound_Failed;
 
         
         //-----------------

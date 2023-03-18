@@ -58,11 +58,11 @@ namespace TJAPlayer3
 		{
 			if( !base.NotActivated )
 			{
-				this.txパネル本体 = TJAPlayer3.tテクスチャの生成( CSkin.Path( @"Graphics\5_preimage panel.png" ), false );
-				this.txセンサ = TJAPlayer3.tテクスチャの生成( CSkin.Path( @"Graphics\5_sensor.png" ), false );
+				this.txパネル本体 = TJAPlayer3.tテクスチャの生成( SkinManager.Path( @"Graphics\5_preimage panel.png" ), false );
+				this.txセンサ = TJAPlayer3.tテクスチャの生成( SkinManager.Path( @"Graphics\5_sensor.png" ), false );
 				//this.txセンサ光 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_sensor light.png" ), false );
 				this.txプレビュー画像 = null;
-				this.txプレビュー画像がないときの画像 = TJAPlayer3.tテクスチャの生成( CSkin.Path( @"Graphics\5_preimage default.png" ), false );
+				this.txプレビュー画像がないときの画像 = TJAPlayer3.tテクスチャの生成( SkinManager.Path( @"Graphics\5_preimage default.png" ), false );
 				this.sfAVI画像 = Surface.CreateOffscreenPlain( TJAPlayer3.app.Device.UnderlyingDevice, 0xcc, 0x10d, TJAPlayer3.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.SystemMemory );
 				this.nAVI再生開始時刻 = -1;
 				this.n前回描画したフレーム番号 = -1;
@@ -146,7 +146,7 @@ namespace TJAPlayer3
 
 		#region [ private ]
 		//-----------------
-		private CAvi avi;
+		private FDKAvi avi;
 		private bool b動画フレームを作成した;
 		private Counter ctセンサ光;
 		private Counter ct遅延表示;
@@ -242,7 +242,7 @@ namespace TJAPlayer3
 		}
 		private bool tプレビュー画像の指定があれば構築する()
 		{
-			Cスコア cスコア = TJAPlayer3.stage選曲.r現在選択中のスコア;
+			ScoreInfo cスコア = TJAPlayer3.stage選曲.r現在選択中のスコア;
 			if( ( cスコア == null ) || string.IsNullOrEmpty( cスコア.譜面情報.Preimage ) )
 			{
 				return false;
@@ -271,7 +271,7 @@ namespace TJAPlayer3
 		}
 		private bool tプレビュー動画の指定があれば構築する()
 		{
-			Cスコア cスコア = TJAPlayer3.stage選曲.r現在選択中のスコア;
+			ScoreInfo cスコア = TJAPlayer3.stage選曲.r現在選択中のスコア;
 			if( ( TJAPlayer3._MainConfig.bAVI有効 && ( cスコア != null ) ) && !string.IsNullOrEmpty( cスコア.譜面情報.Premovie ) )
 			{
 				string filename = cスコア.ファイル情報.フォルダの絶対パス + cスコア.譜面情報.Premovie;
@@ -292,7 +292,7 @@ namespace TJAPlayer3
 				}
 				try
 				{
-					this.avi = new CAvi( filename );
+					this.avi = new FDKAvi( filename );
 					this.nAVI再生開始時刻 = TJAPlayer3.Timer.n現在時刻;
 					this.n前回描画したフレーム番号 = -1;
 					this.b動画フレームを作成した = false;
@@ -311,7 +311,7 @@ namespace TJAPlayer3
 		}
 		private bool t背景画像があればその一部からプレビュー画像を構築する()
 		{
-			Cスコア cスコア = TJAPlayer3.stage選曲.r現在選択中のスコア;
+			ScoreInfo cスコア = TJAPlayer3.stage選曲.r現在選択中のスコア;
 			if( ( cスコア == null ) || string.IsNullOrEmpty( cスコア.譜面情報.Backgound ) )
 			{
 				return false;
@@ -380,14 +380,14 @@ namespace TJAPlayer3
         /// </summary>
 		private void t描画処理_ジャンル文字列()
 		{
-			C曲リストノード c曲リストノード = TJAPlayer3.stage選曲.r現在選択中の曲;
-			Cスコア cスコア = TJAPlayer3.stage選曲.r現在選択中のスコア;
+			SongInfoNode c曲リストノード = TJAPlayer3.stage選曲.r現在選択中の曲;
+			ScoreInfo cスコア = TJAPlayer3.stage選曲.r現在選択中のスコア;
 			if( ( c曲リストノード != null ) && ( cスコア != null ) )
 			{
 				string str = "";
-				switch( c曲リストノード.eノード種別 )
+				switch( c曲リストノード.NowNodeType )
 				{
-					case C曲リストノード.Eノード種別.SCORE:
+					case SongInfoNode.NodeType.SCORE:
 						if( ( c曲リストノード.strジャンル == null ) || ( c曲リストノード.strジャンル.Length <= 0 ) )
 						{
 							if( ( cスコア.譜面情報.ジャンル != null ) && ( cスコア.譜面情報.ジャンル.Length > 0 ) )
@@ -427,19 +427,19 @@ namespace TJAPlayer3
 						str = c曲リストノード.strジャンル;
 						break;
 
-					case C曲リストノード.Eノード種別.SCORE_MIDI:
+					case SongInfoNode.NodeType.SCORE_MIDI:
 						str = "MIDI";
 						break;
 
-					case C曲リストノード.Eノード種別.BOX:
+					case SongInfoNode.NodeType.BOX:
 						str = "MusicBox";
 						break;
 
-					case C曲リストノード.Eノード種別.BACKBOX:
+					case SongInfoNode.NodeType.BACKBOX:
 						str = "BackBox";
 						break;
 
-					case C曲リストノード.Eノード種別.RANDOM:
+					case SongInfoNode.NodeType.RANDOM:
 						str = "Random";
 						break;
 

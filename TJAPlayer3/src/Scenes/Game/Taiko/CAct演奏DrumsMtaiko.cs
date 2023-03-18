@@ -121,11 +121,11 @@ namespace TJAPlayer3
         {
             if( base.JustStartedUpdate )
 			{
-				this.nフラッシュ制御タイマ = FDK.CSound管理.rc演奏用タイマ.n現在時刻;
+				this.nフラッシュ制御タイマ = FDK.SoundManager.PlayTimer.n現在時刻;
 				base.JustStartedUpdate = false;
             }
             
-            long num = FDK.CSound管理.rc演奏用タイマ.n現在時刻;
+            long num = FDK.SoundManager.PlayTimer.n現在時刻;
 			if( num < this.nフラッシュ制御タイマ )
 			{
 				this.nフラッシュ制御タイマ = num;

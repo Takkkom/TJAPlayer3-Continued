@@ -22,7 +22,7 @@ namespace FDK
 
 			// 初めての進行処理
 
-			if( this.PrevTime == Timer.Unused )
+			if( this.PrevTime == FDKTimer.Unused )
 				this.PrevTime = this._Timer.NowTimeMs;
 
 
@@ -53,8 +53,8 @@ namespace FDK
 
 		#region [ protected ]
 		//-----------------
-		protected Timer _Timer = new Timer( Timer.TimerType.MultiMedia );
-		protected long PrevTime = Timer.Unused;
+		protected FDKTimer _Timer = new FDKTimer( FDKTimer.TimerType.MultiMedia );
+		protected long PrevTime = FDKTimer.Unused;
 		//-----------------
 		#endregion
 	}

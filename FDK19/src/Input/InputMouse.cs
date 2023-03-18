@@ -18,7 +18,7 @@ namespace FDK
 
 		public InputMouse( IntPtr hWnd, DirectInput directInput )
 		{
-			this.e入力デバイス種別 = InputTypes.Mouse;
+			this.NowInputDeviceType = InputTypes.Mouse;
 			this.GUID = "";
 			this.ID = 0;
 			try
@@ -52,7 +52,7 @@ namespace FDK
 				this.bMouseState[ i ] = false;
 
 			//this.timer = new CTimer( CTimer.E種別.MultiMedia );
-			this.list入力イベント = new List<STInputEvent>( 32 );
+			this.InputEvents = new List<STInputEvent>( 32 );
 		}
 
 
@@ -60,12 +60,12 @@ namespace FDK
 
 		#region [ IInputDevice 実装 ]
 		//-----------------
-		public InputTypes e入力デバイス種別 { get; private set; }
+		public InputTypes NowInputDeviceType { get; private set; }
 		public string GUID { get; private set; }
 		public int ID { get; private set; }
-		public List<STInputEvent> list入力イベント { get; private set; }
+		public List<STInputEvent> InputEvents { get; private set; }
 
-		public void tポーリング( bool bWindowがアクティブ中, bool bバッファ入力を使用する )
+		public void Polling( bool bWindowがアクティブ中, bool bバッファ入力を使用する )
 		{
 			for( int i = 0; i < 8; i++ )
 			{
@@ -76,7 +76,7 @@ namespace FDK
 			if( ( ( bWindowがアクティブ中 && ( this.devMouse != null ) ) && !this.devMouse.Acquire().IsFailure ) && !this.devMouse.Poll().IsFailure )
 			{
 				// this.list入力イベント = new List<STInputEvent>( 32 );
-				this.list入力イベント.Clear();			// #xxxxx 2012.6.11 yyagi; To optimize, I removed new();
+				this.InputEvents.Clear();			// #xxxxx 2012.6.11 yyagi; To optimize, I removed new();
 
 				if( bバッファ入力を使用する )
 				{
@@ -101,15 +101,15 @@ namespace FDK
 
                         STInputEvent item = new STInputEvent()
                         {
-                            nKey = key,
-                            b押された = wasPressed,
-                            nTimeStamp = CSound管理.rc演奏用タイマ.nサウンドタイマーのシステム時刻msへの変換( rawBufferedData.Timestamp ),
+                            PressedKeyIndex = key,
+                            IsPressed = wasPressed,
+                            TimeStamp = SoundManager.PlayTimer.TimeStampToSoundTimeMs( rawBufferedData.Timestamp ),
                         };
-                        this.list入力イベント.Add( item );
+                        this.InputEvents.Add( item );
 
-                        this.bMouseState[ item.nKey ] = wasPressed;
-                        this.bMousePushDown[ item.nKey ] = wasPressed;
-                        this.bMousePullUp[ item.nKey ] = !wasPressed;
+                        this.bMouseState[ item.PressedKeyIndex ] = wasPressed;
+                        this.bMousePushDown[ item.PressedKeyIndex ] = wasPressed;
+                        this.bMousePullUp[ item.PressedKeyIndex ] = !wasPressed;
                     }
 
 					//-----------------------------
@@ -128,11 +128,11 @@ namespace FDK
 							if( this.bMouseState[ j ] == false && buttons[ j ] == true )
 							{
 								var ev = new STInputEvent() {
-									nKey = j,
-									b押された = true,
-									nTimeStamp = CSound管理.rc演奏用タイマ.nシステム時刻,	// 演奏用タイマと同じタイマを使うことで、BGMと譜面、入力ずれを防ぐ。
+									PressedKeyIndex = j,
+									IsPressed = true,
+									TimeStamp = SoundManager.PlayTimer.nシステム時刻,	// 演奏用タイマと同じタイマを使うことで、BGMと譜面、入力ずれを防ぐ。
 								};
-								this.list入力イベント.Add( ev );
+								this.InputEvents.Add( ev );
 
 								this.bMouseState[ j ] = true;
 								this.bMousePushDown[ j ] = true;
@@ -140,11 +140,11 @@ namespace FDK
 							else if( this.bMouseState[ j ] == true && buttons[ j ] == false )
 							{
 								var ev = new STInputEvent() {
-									nKey = j,
-									b押された = false,
-									nTimeStamp = CSound管理.rc演奏用タイマ.nシステム時刻,	// 演奏用タイマと同じタイマを使うことで、BGMと譜面、入力ずれを防ぐ。
+									PressedKeyIndex = j,
+									IsPressed = false,
+									TimeStamp = SoundManager.PlayTimer.nシステム時刻,	// 演奏用タイマと同じタイマを使うことで、BGMと譜面、入力ずれを防ぐ。
 								};
-								this.list入力イベント.Add( ev );
+								this.InputEvents.Add( ev );
 
 								this.bMouseState[ j ] = false;
 								this.bMousePullUp[ j ] = true;
@@ -156,19 +156,19 @@ namespace FDK
 				}
 			}
 		}
-		public bool bキーが押された( int nButton )
+		public bool GetKeyPressed( int nButton )
 		{
 			return ( ( ( 0 <= nButton ) && ( nButton < 8 ) ) && this.bMousePushDown[ nButton ] );
 		}
-		public bool bキーが押されている( int nButton )
+		public bool GetKeyKeepPressed( int nButton )
 		{
 			return ( ( ( 0 <= nButton ) && ( nButton < 8 ) ) && this.bMouseState[ nButton ] );
 		}
-		public bool bキーが離された( int nButton )
+		public bool GetKeyReleased( int nButton )
 		{
 			return ( ( ( 0 <= nButton ) && ( nButton < 8 ) ) && this.bMousePullUp[ nButton ] );
 		}
-		public bool bキーが離されている( int nButton )
+		public bool GetNoKeyPressed( int nButton )
 		{
 			return ( ( ( 0 <= nButton ) && ( nButton < 8 ) ) && !this.bMouseState[ nButton ] );
 		}
@@ -191,9 +191,9 @@ namespace FDK
 				//    this.timer.Dispose();
 				//    this.timer = null;
 				//}
-				if ( this.list入力イベント != null )
+				if ( this.InputEvents != null )
 				{
-					this.list入力イベント = null;
+					this.InputEvents = null;
 				}
 				this.bDispose完了済み = true;
 			}

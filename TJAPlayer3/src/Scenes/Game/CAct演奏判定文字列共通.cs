@@ -78,7 +78,7 @@ namespace TJAPlayer3
 
 		// メソッド
 
-		public virtual void Start( int nLane, E判定 judge, int lag, CDTX.CChip pChip, int player )
+		public virtual void Start( int nLane, E判定 judge, int lag, Chart.CChip pChip, int player )
 		{
             // When performing calibration, reduce visual distraction
             // and current judgment feedback near the judgment position.

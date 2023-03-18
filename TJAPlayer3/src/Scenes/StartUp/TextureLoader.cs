@@ -11,33 +11,33 @@ namespace TJAPlayer3
         const string BASE = @"Graphics\";
 
         // Stage
-        const string TITLE = @"1_Title\";
-        const string CONFIG = @"2_Config\";
-        const string SONGSELECT = @"3_SongSelect\";
-        const string SONGLOADING = @"4_SongLoading\";
-        const string GAME = @"5_Game\";
-        const string RESULT = @"6_Result\";
-        const string EXIT = @"7_Exit\";
+        const string TITLE = @"Title\";
+        const string CONFIG = @"Config\";
+        const string SONGSELECT = @"SongSelect\";
+        const string SONGLOADING = @"SongLoading\";
+        const string GAME = @"Game\";
+        const string RESULT = @"Result\";
+        const string EXIT = @"Exit\";
 
         // InGame
-        const string CHARA = @"1_Chara\";
-        const string DANCER = @"2_Dancer\";
-        const string MOB = @"3_Mob\";
-        const string COURSESYMBOL = @"4_CourseSymbol\";
-        const string BACKGROUND = @"5_Background\";
-        const string TAIKO = @"6_Taiko\";
-        const string GAUGE = @"7_Gauge\";
-        const string FOOTER = @"8_Footer\";
-        const string END = @"9_End\";
-        const string EFFECTS = @"10_Effects\";
-        const string BALLOON = @"11_Balloon\";
-        const string LANE = @"12_Lane\";
-        const string GENRE = @"13_Genre\";
-        const string GAMEMODE = @"14_GameMode\";
-        const string FAILED = @"15_Failed\";
-        const string RUNNER = @"16_Runner\";
-        const string PUCHICHARA = @"18_PuchiChara\";
-        const string DANC = @"17_DanC\";
+        const string CHARA = @"Chara\";
+        const string DANCER = @"Dancer\";
+        const string MOB = @"Mob\";
+        const string COURSESYMBOL = @"CourseSymbol\";
+        const string BACKGROUND = @"Background\";
+        const string TAIKO = @"Taiko\";
+        const string GAUGE = @"Gauge\";
+        const string FOOTER = @"Footer\";
+        const string END = @"End\";
+        const string EFFECTS = @"Effects\";
+        const string BALLOON = @"Balloon\";
+        const string LANE = @"Lane\";
+        const string GENRE = @"Genre\";
+        const string GAMEMODE = @"GameMode\";
+        const string FAILED = @"Failed\";
+        const string RUNNER = @"Runner\";
+        const string PUCHICHARA = @"PuchiChara\";
+        const string DANC = @"DanC\";
 
         // InGame_Effects
         const string FIRE = @"Fire\";
@@ -54,15 +54,15 @@ namespace TJAPlayer3
 
         internal FDKTexture TxC(string FileName)
         {
-            return TJAPlayer3.tテクスチャの生成(CSkin.Path(BASE + FileName));
+            return TJAPlayer3.tテクスチャの生成(SkinManager.Path(BASE + FileName));
         }
-        internal CTextureAf TxCAf(string FileName)
+        internal FDKTextureAf TxCAf(string FileName)
         {
-            return TJAPlayer3.tテクスチャの生成Af(CSkin.Path(BASE + FileName));
+            return TJAPlayer3.tテクスチャの生成Af(SkinManager.Path(BASE + FileName));
         }
         internal FDKTexture TxCGen(string FileName)
         {
-            return TJAPlayer3.tテクスチャの生成(CSkin.Path(BASE + GAME + GENRE + FileName + ".png"));
+            return TJAPlayer3.tテクスチャの生成(SkinManager.Path(BASE + GAME + GENRE + FileName + ".png"));
         }
 
         public void LoadTexture()
@@ -150,7 +150,7 @@ namespace TJAPlayer3
 
             #endregion
             #region キャラクター
-            TJAPlayer3.Skin.Game_Chara_Ptn_Normal = TJAPlayer3.t連番画像の枚数を数える(CSkin.Path(BASE + GAME + CHARA + @"Normal\"));
+            TJAPlayer3.Skin.Game_Chara_Ptn_Normal = TJAPlayer3.t連番画像の枚数を数える(SkinManager.Path(BASE + GAME + CHARA + @"Normal\"));
             if (TJAPlayer3.Skin.Game_Chara_Ptn_Normal != 0)
             {
                 Chara_Normal = new FDKTexture[TJAPlayer3.Skin.Game_Chara_Ptn_Normal];
@@ -159,7 +159,7 @@ namespace TJAPlayer3
                     Chara_Normal[i] = TxC(GAME + CHARA + @"Normal\" + i.ToString() + ".png");
                 }
             }
-            TJAPlayer3.Skin.Game_Chara_Ptn_Clear = TJAPlayer3.t連番画像の枚数を数える(CSkin.Path(BASE + GAME + CHARA + @"Clear\"));
+            TJAPlayer3.Skin.Game_Chara_Ptn_Clear = TJAPlayer3.t連番画像の枚数を数える(SkinManager.Path(BASE + GAME + CHARA + @"Clear\"));
             if (TJAPlayer3.Skin.Game_Chara_Ptn_Clear != 0)
             {
                 Chara_Normal_Cleared = new FDKTexture[TJAPlayer3.Skin.Game_Chara_Ptn_Clear];
@@ -176,7 +176,7 @@ namespace TJAPlayer3
                     Chara_Normal_Maxed[i] = TxC(GAME + CHARA + @"Clear_Max\" + i.ToString() + ".png");
                 }
             }
-            TJAPlayer3.Skin.Game_Chara_Ptn_GoGo = TJAPlayer3.t連番画像の枚数を数える(CSkin.Path(BASE + GAME + CHARA + @"GoGo\"));
+            TJAPlayer3.Skin.Game_Chara_Ptn_GoGo = TJAPlayer3.t連番画像の枚数を数える(SkinManager.Path(BASE + GAME + CHARA + @"GoGo\"));
             if (TJAPlayer3.Skin.Game_Chara_Ptn_GoGo != 0)
             {
                 Chara_GoGoTime = new FDKTexture[TJAPlayer3.Skin.Game_Chara_Ptn_GoGo];
@@ -194,7 +194,7 @@ namespace TJAPlayer3
                 }
             }
 
-            TJAPlayer3.Skin.Game_Chara_Ptn_10combo = TJAPlayer3.t連番画像の枚数を数える(CSkin.Path(BASE + GAME + CHARA + @"10combo\"));
+            TJAPlayer3.Skin.Game_Chara_Ptn_10combo = TJAPlayer3.t連番画像の枚数を数える(SkinManager.Path(BASE + GAME + CHARA + @"10combo\"));
             if (TJAPlayer3.Skin.Game_Chara_Ptn_10combo != 0)
             {
                 Chara_10Combo = new FDKTexture[TJAPlayer3.Skin.Game_Chara_Ptn_10combo];
@@ -203,7 +203,7 @@ namespace TJAPlayer3
                     Chara_10Combo[i] = TxC(GAME + CHARA + @"10combo\" + i.ToString() + ".png");
                 }
             }
-            TJAPlayer3.Skin.Game_Chara_Ptn_10combo_Max = TJAPlayer3.t連番画像の枚数を数える(CSkin.Path(BASE + GAME + CHARA + @"10combo_Max\"));
+            TJAPlayer3.Skin.Game_Chara_Ptn_10combo_Max = TJAPlayer3.t連番画像の枚数を数える(SkinManager.Path(BASE + GAME + CHARA + @"10combo_Max\"));
             if (TJAPlayer3.Skin.Game_Chara_Ptn_10combo_Max != 0)
             {
                 Chara_10Combo_Maxed = new FDKTexture[TJAPlayer3.Skin.Game_Chara_Ptn_10combo_Max];
@@ -213,7 +213,7 @@ namespace TJAPlayer3
                 }
             }
 
-            TJAPlayer3.Skin.Game_Chara_Ptn_GoGoStart = TJAPlayer3.t連番画像の枚数を数える(CSkin.Path(BASE + GAME + CHARA + @"GoGoStart\"));
+            TJAPlayer3.Skin.Game_Chara_Ptn_GoGoStart = TJAPlayer3.t連番画像の枚数を数える(SkinManager.Path(BASE + GAME + CHARA + @"GoGoStart\"));
             if (TJAPlayer3.Skin.Game_Chara_Ptn_GoGoStart != 0)
             {
                 Chara_GoGoStart = new FDKTexture[TJAPlayer3.Skin.Game_Chara_Ptn_GoGoStart];
@@ -222,7 +222,7 @@ namespace TJAPlayer3
                     Chara_GoGoStart[i] = TxC(GAME + CHARA + @"GoGoStart\" + i.ToString() + ".png");
                 }
             }
-            TJAPlayer3.Skin.Game_Chara_Ptn_GoGoStart_Max = TJAPlayer3.t連番画像の枚数を数える(CSkin.Path(BASE + GAME + CHARA + @"GoGoStart_Max\"));
+            TJAPlayer3.Skin.Game_Chara_Ptn_GoGoStart_Max = TJAPlayer3.t連番画像の枚数を数える(SkinManager.Path(BASE + GAME + CHARA + @"GoGoStart_Max\"));
             if (TJAPlayer3.Skin.Game_Chara_Ptn_GoGoStart_Max != 0)
             {
                 Chara_GoGoStart_Maxed = new FDKTexture[TJAPlayer3.Skin.Game_Chara_Ptn_GoGoStart_Max];
@@ -231,7 +231,7 @@ namespace TJAPlayer3
                     Chara_GoGoStart_Maxed[i] = TxC(GAME + CHARA + @"GoGoStart_Max\" + i.ToString() + ".png");
                 }
             }
-            TJAPlayer3.Skin.Game_Chara_Ptn_ClearIn = TJAPlayer3.t連番画像の枚数を数える(CSkin.Path(BASE + GAME + CHARA + @"ClearIn\"));
+            TJAPlayer3.Skin.Game_Chara_Ptn_ClearIn = TJAPlayer3.t連番画像の枚数を数える(SkinManager.Path(BASE + GAME + CHARA + @"ClearIn\"));
             if (TJAPlayer3.Skin.Game_Chara_Ptn_ClearIn != 0)
             {
                 Chara_Become_Cleared = new FDKTexture[TJAPlayer3.Skin.Game_Chara_Ptn_ClearIn];
@@ -240,7 +240,7 @@ namespace TJAPlayer3
                     Chara_Become_Cleared[i] = TxC(GAME + CHARA + @"ClearIn\" + i.ToString() + ".png");
                 }
             }
-            TJAPlayer3.Skin.Game_Chara_Ptn_SoulIn = TJAPlayer3.t連番画像の枚数を数える(CSkin.Path(BASE + GAME + CHARA + @"SoulIn\"));
+            TJAPlayer3.Skin.Game_Chara_Ptn_SoulIn = TJAPlayer3.t連番画像の枚数を数える(SkinManager.Path(BASE + GAME + CHARA + @"SoulIn\"));
             if (TJAPlayer3.Skin.Game_Chara_Ptn_SoulIn != 0)
             {
                 Chara_Become_Maxed = new FDKTexture[TJAPlayer3.Skin.Game_Chara_Ptn_SoulIn];
@@ -249,7 +249,7 @@ namespace TJAPlayer3
                     Chara_Become_Maxed[i] = TxC(GAME + CHARA + @"SoulIn\" + i.ToString() + ".png");
                 }
             }
-            TJAPlayer3.Skin.Game_Chara_Ptn_Balloon_Breaking = TJAPlayer3.t連番画像の枚数を数える(CSkin.Path(BASE + GAME + CHARA + @"Balloon_Breaking\"));
+            TJAPlayer3.Skin.Game_Chara_Ptn_Balloon_Breaking = TJAPlayer3.t連番画像の枚数を数える(SkinManager.Path(BASE + GAME + CHARA + @"Balloon_Breaking\"));
             if (TJAPlayer3.Skin.Game_Chara_Ptn_Balloon_Breaking != 0)
             {
                 Chara_Balloon_Breaking = new FDKTexture[TJAPlayer3.Skin.Game_Chara_Ptn_Balloon_Breaking];
@@ -258,7 +258,7 @@ namespace TJAPlayer3
                     Chara_Balloon_Breaking[i] = TxC(GAME + CHARA + @"Balloon_Breaking\" + i.ToString() + ".png");
                 }
             }
-            TJAPlayer3.Skin.Game_Chara_Ptn_Balloon_Broke = TJAPlayer3.t連番画像の枚数を数える(CSkin.Path(BASE + GAME + CHARA + @"Balloon_Broke\"));
+            TJAPlayer3.Skin.Game_Chara_Ptn_Balloon_Broke = TJAPlayer3.t連番画像の枚数を数える(SkinManager.Path(BASE + GAME + CHARA + @"Balloon_Broke\"));
             if (TJAPlayer3.Skin.Game_Chara_Ptn_Balloon_Broke != 0)
             {
                 Chara_Balloon_Broke = new FDKTexture[TJAPlayer3.Skin.Game_Chara_Ptn_Balloon_Broke];
@@ -267,7 +267,7 @@ namespace TJAPlayer3
                     Chara_Balloon_Broke[i] = TxC(GAME + CHARA + @"Balloon_Broke\" + i.ToString() + ".png");
                 }
             }
-            TJAPlayer3.Skin.Game_Chara_Ptn_Balloon_Miss = TJAPlayer3.t連番画像の枚数を数える(CSkin.Path(BASE + GAME + CHARA + @"Balloon_Miss\"));
+            TJAPlayer3.Skin.Game_Chara_Ptn_Balloon_Miss = TJAPlayer3.t連番画像の枚数を数える(SkinManager.Path(BASE + GAME + CHARA + @"Balloon_Miss\"));
             if (TJAPlayer3.Skin.Game_Chara_Ptn_Balloon_Miss != 0)
             {
                 Chara_Balloon_Miss = new FDKTexture[TJAPlayer3.Skin.Game_Chara_Ptn_Balloon_Miss];
@@ -278,7 +278,7 @@ namespace TJAPlayer3
             }
             #endregion
             #region 踊り子
-            TJAPlayer3.Skin.Game_Dancer_Ptn = TJAPlayer3.t連番画像の枚数を数える(CSkin.Path(BASE + GAME + DANCER + @"1\"));
+            TJAPlayer3.Skin.Game_Dancer_Ptn = TJAPlayer3.t連番画像の枚数を数える(SkinManager.Path(BASE + GAME + DANCER + @"1\"));
             if (TJAPlayer3.Skin.Game_Dancer_Ptn != 0)
             {
                 Dancer = new FDKTexture[5][];
@@ -293,7 +293,7 @@ namespace TJAPlayer3
             }
             #endregion
             #region モブ
-            TJAPlayer3.Skin.Game_Mob_Ptn = TJAPlayer3.t連番画像の枚数を数える(CSkin.Path(BASE + GAME + MOB));
+            TJAPlayer3.Skin.Game_Mob_Ptn = TJAPlayer3.t連番画像の枚数を数える(SkinManager.Path(BASE + GAME + MOB));
             Mob = new FDKTexture[TJAPlayer3.Skin.Game_Mob_Ptn];
             for (int i = 0; i < TJAPlayer3.Skin.Game_Mob_Ptn; i++)
             {
@@ -362,7 +362,7 @@ namespace TJAPlayer3
             Gauge_Line = new FDKTexture[2];
             Gauge_Line[0] = TxC(GAME + GAUGE + @"1P_Line.png");
             Gauge_Line[1] = TxC(GAME + GAUGE + @"2P_Line.png");
-            TJAPlayer3.Skin.Game_Gauge_Rainbow_Ptn = TJAPlayer3.t連番画像の枚数を数える(CSkin.Path(BASE + GAME + GAUGE + @"Rainbow\"));
+            TJAPlayer3.Skin.Game_Gauge_Rainbow_Ptn = TJAPlayer3.t連番画像の枚数を数える(SkinManager.Path(BASE + GAME + GAUGE + @"Rainbow\"));
             if (TJAPlayer3.Skin.Game_Gauge_Rainbow_Ptn != 0)
             {
                 Gauge_Rainbow = new FDKTexture[TJAPlayer3.Skin.Game_Gauge_Rainbow_Ptn];
@@ -419,7 +419,7 @@ namespace TJAPlayer3
                 Effects_Hit_Good[i] = TxC(GAME + EFFECTS + @"Hit\" + @"Good\" + i.ToString() + ".png");
                 Effects_Hit_Good_Big[i] = TxC(GAME + EFFECTS + @"Hit\" + @"Good_Big\" + i.ToString() + ".png");
             }
-            TJAPlayer3.Skin.Game_Effect_Roll_Ptn = TJAPlayer3.t連番画像の枚数を数える(CSkin.Path(BASE + GAME + EFFECTS + @"Roll\"));
+            TJAPlayer3.Skin.Game_Effect_Roll_Ptn = TJAPlayer3.t連番画像の枚数を数える(SkinManager.Path(BASE + GAME + EFFECTS + @"Roll\"));
             Effects_Roll = new FDKTexture[TJAPlayer3.Skin.Game_Effect_Roll_Ptn];
             for (int i = 0; i < TJAPlayer3.Skin.Game_Effect_Roll_Ptn; i++)
             {

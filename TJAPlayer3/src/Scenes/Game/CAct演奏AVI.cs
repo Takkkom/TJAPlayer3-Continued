@@ -21,7 +21,7 @@ namespace TJAPlayer3
 
 		// メソッド
 
-		public void Start( int nチャンネル番号, CDTX.CAVI rAVI, CDTX.CDirectShow dsBGV, int n開始サイズW, int n開始サイズH, int n終了サイズW, int n終了サイズH, int n画像側開始位置X, int n画像側開始位置Y, int n画像側終了位置X, int n画像側終了位置Y, int n表示側開始位置X, int n表示側開始位置Y, int n表示側終了位置X, int n表示側終了位置Y, int n総移動時間ms, int n移動開始時刻ms )
+		public void Start( int nチャンネル番号, Chart.CAVI rAVI, Chart.CDirectShow dsBGV, int n開始サイズW, int n開始サイズH, int n終了サイズW, int n終了サイズH, int n画像側開始位置X, int n画像側開始位置Y, int n画像側終了位置X, int n画像側終了位置Y, int n表示側開始位置X, int n表示側開始位置Y, int n表示側終了位置X, int n表示側終了位置Y, int n総移動時間ms, int n移動開始時刻ms )
 		{
             if ( ( nチャンネル番号 == 0x54 || nチャンネル番号 == 0x5A ) && TJAPlayer3._MainConfig.bAVI有効 )
             {
@@ -51,7 +51,7 @@ namespace TJAPlayer3
                         this.n表示側終了位置X = n表示側終了位置X;
                         this.n表示側終了位置Y = n表示側終了位置Y;
                         this.n総移動時間ms = n総移動時間ms;
-                        this.n移動開始時刻ms = (n移動開始時刻ms != -1) ? n移動開始時刻ms : CSound管理.rc演奏用タイマ.n現在時刻;
+                        this.n移動開始時刻ms = (n移動開始時刻ms != -1) ? n移動開始時刻ms : SoundManager.PlayTimer.n現在時刻;
                         this.n前回表示したフレーム番号 = -1;
 
                         this.vclip = new Vector3(1.42f, 1.42f, 1f);
@@ -145,7 +145,7 @@ namespace TJAPlayer3
 		}
 		public void SkipStart( int n移動開始時刻ms )
 		{
-			foreach ( CDTX.CChip chip in TJAPlayer3.DTX.listChip )
+			foreach ( Chart.CChip chip in TJAPlayer3.DTX.listChip )
 			{
 				if ( chip.n発声時刻ms > n移動開始時刻ms )
 				{
@@ -202,7 +202,7 @@ namespace TJAPlayer3
 				{
 					return 0;
 				}
-				int time = (int) ( ( CSound管理.rc演奏用タイマ.n現在時刻 - this.n移動開始時刻ms ) * ( ( (double) TJAPlayer3._MainConfig.n演奏速度 ) / 20.0 ) );
+				int time = (int) ( ( SoundManager.PlayTimer.n現在時刻 - this.n移動開始時刻ms ) * ( ( (double) TJAPlayer3._MainConfig.n演奏速度 ) / 20.0 ) );
                 int frameNoFromTime = 0;
 
                 #region[ frameNoFromTime ]
@@ -279,11 +279,11 @@ namespace TJAPlayer3
 				Point point4 = new Point( this.n表示側終了位置X, this.n表示側終了位置Y );
 				long num3 = this.n総移動時間ms;
 				long num4 = this.n移動開始時刻ms;
-				if ( CSound管理.rc演奏用タイマ.n現在時刻 < num4 )
+				if ( SoundManager.PlayTimer.n現在時刻 < num4 )
 				{
-					num4 = CSound管理.rc演奏用タイマ.n現在時刻;
+					num4 = SoundManager.PlayTimer.n現在時刻;
 				}
-				time = (int) ( ( CSound管理.rc演奏用タイマ.n現在時刻 - num4 ) * ( ( (double) TJAPlayer3._MainConfig.n演奏速度 ) / 20.0 ) );
+				time = (int) ( ( SoundManager.PlayTimer.n現在時刻 - num4 ) * ( ( (double) TJAPlayer3._MainConfig.n演奏速度 ) / 20.0 ) );
 				if ( num3 == 0 )
 				{
 					rectangle = new Rectangle( location, size3 );
@@ -618,7 +618,7 @@ namespace TJAPlayer3
         public Vector3 vector;
 
 		private IntPtr pBmp;
-		private CDTX.CAVI rAVI;
+		private Chart.CAVI rAVI;
 		private FDKTexture tx描画用;
         private FDKTexture tx窓描画用;
 
@@ -628,7 +628,7 @@ namespace TJAPlayer3
         private long lDshowPosition;
         private long lStopPosition;
 
-        public CDTX.CDirectShow dsBGV;
+        public Chart.CDirectShow dsBGV;
 
 		//-----------------
 		#endregion

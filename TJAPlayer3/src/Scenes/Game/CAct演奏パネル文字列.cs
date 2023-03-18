@@ -83,7 +83,7 @@ namespace TJAPlayer3
 					        this.tx難易度とステージ数 = TJAPlayer3.tテクスチャの生成( bmpDiff, false );
 					    }
 					}
-					catch( CTextureCreateFailedException e )
+					catch( TextureCreateFailedException e )
 					{
 						Trace.TraceError( e.ToString() );
 						Trace.TraceError( "パネル文字列テクスチャの生成に失敗しました。" );
@@ -156,11 +156,11 @@ namespace TJAPlayer3
         {
             if( this.tx歌詞テクスチャ != null )
             {
-                if (TJAPlayer3.Skin.Game_Lyric_ReferencePoint == CSkin.ReferencePoint.Left)
+                if (TJAPlayer3.Skin.Game_Lyric_ReferencePoint == SkinManager.ReferencePoint.Left)
                 {
                 this.tx歌詞テクスチャ.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.Game_Lyric_X , TJAPlayer3.Skin.Game_Lyric_Y);
                 }
-                else if (TJAPlayer3.Skin.Game_Lyric_ReferencePoint == CSkin.ReferencePoint.Right)
+                else if (TJAPlayer3.Skin.Game_Lyric_ReferencePoint == SkinManager.ReferencePoint.Right)
                 {
                 this.tx歌詞テクスチャ.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.Game_Lyric_X - this.tx歌詞テクスチャ.TextureSize.Width, TJAPlayer3.Skin.Game_Lyric_Y);
                 }
@@ -187,19 +187,19 @@ namespace TJAPlayer3
 		{
             if( !string.IsNullOrEmpty( TJAPlayer3._MainConfig.FontName ) )
             {
-                this.pfMusicName = new CPrivateFastFont( new FontFamily( TJAPlayer3._MainConfig.FontName), TJAPlayer3.Skin.Game_MusicName_FontSize);
+                this.pfMusicName = new CachePrivateFont( new FontFamily( TJAPlayer3._MainConfig.FontName), TJAPlayer3.Skin.Game_MusicName_FontSize);
                 //this.pf縦書きテスト = new CPrivateFastFont( new FontFamily( CDTXMania.ConfigIni.strPrivateFontで使うフォント名 ), 22 );
             }
             else
-                this.pfMusicName = new CPrivateFastFont( new FontFamily("MS UI Gothic"), TJAPlayer3.Skin.Game_MusicName_FontSize);
+                this.pfMusicName = new CachePrivateFont( new FontFamily("MS UI Gothic"), TJAPlayer3.Skin.Game_MusicName_FontSize);
 
             if( !string.IsNullOrEmpty(TJAPlayer3.Skin.Game_Lyric_FontName))
             {
-                this.pf歌詞フォント = new CPrivateFastFont(new FontFamily(TJAPlayer3.Skin.Game_Lyric_FontName), TJAPlayer3.Skin.Game_Lyric_FontSize);
+                this.pf歌詞フォント = new CachePrivateFont(new FontFamily(TJAPlayer3.Skin.Game_Lyric_FontName), TJAPlayer3.Skin.Game_Lyric_FontSize);
             }
             else
             {
-                this.pf歌詞フォント = new CPrivateFastFont(new FontFamily("MS UI Gothic"), TJAPlayer3.Skin.Game_Lyric_FontSize);
+                this.pf歌詞フォント = new CachePrivateFont(new FontFamily("MS UI Gothic"), TJAPlayer3.Skin.Game_Lyric_FontSize);
             }
 
 			this.txPanel = null;
@@ -259,11 +259,11 @@ namespace TJAPlayer3
                         if (this.txMusicName.TextureSize.Width <= 660.0f)
                             fRate = 1.0f;
                         this.txMusicName.Scaling.X = fRate;
-                        if (TJAPlayer3.Skin.Game_MusicName_ReferencePoint == CSkin.ReferencePoint.Center)
+                        if (TJAPlayer3.Skin.Game_MusicName_ReferencePoint == SkinManager.ReferencePoint.Center)
                         {
                             this.txMusicName.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.Game_MusicName_X - ((this.txMusicName.TextureSize.Width * fRate) / 2), TJAPlayer3.Skin.Game_MusicName_Y);
                         }
-                        else if (TJAPlayer3.Skin.Game_MusicName_ReferencePoint == CSkin.ReferencePoint.Left)
+                        else if (TJAPlayer3.Skin.Game_MusicName_ReferencePoint == SkinManager.ReferencePoint.Left)
                         {
                             this.txMusicName.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.Game_MusicName_X, TJAPlayer3.Skin.Game_MusicName_Y);
                         }
@@ -313,11 +313,11 @@ namespace TJAPlayer3
                         {
                             JustStartedUpdate = false;
                         }
-                        if (TJAPlayer3.Skin.Game_MusicName_ReferencePoint == CSkin.ReferencePoint.Center)
+                        if (TJAPlayer3.Skin.Game_MusicName_ReferencePoint == SkinManager.ReferencePoint.Center)
                         {
                             this.txMusicName.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.Game_MusicName_X - ((this.txMusicName.TextureSize.Width * txMusicName.Scaling.X) / 2), TJAPlayer3.Skin.Game_MusicName_Y);
                         }
-                        else if (TJAPlayer3.Skin.Game_MusicName_ReferencePoint == CSkin.ReferencePoint.Left)
+                        else if (TJAPlayer3.Skin.Game_MusicName_ReferencePoint == SkinManager.ReferencePoint.Left)
                         {
                             this.txMusicName.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.Game_MusicName_X, TJAPlayer3.Skin.Game_MusicName_Y);
                         }
@@ -327,11 +327,11 @@ namespace TJAPlayer3
                         }
                     }
                     if (this.tx難易度とステージ数 != null)
-                        if (TJAPlayer3.Skin.Game_MusicName_ReferencePoint == CSkin.ReferencePoint.Center)
+                        if (TJAPlayer3.Skin.Game_MusicName_ReferencePoint == SkinManager.ReferencePoint.Center)
                         {
                             this.tx難易度とステージ数.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.Game_MusicName_X - (this.tx難易度とステージ数.TextureSize.Width / 2), TJAPlayer3.Skin.Game_MusicName_Y);
                         }
-                        else if (TJAPlayer3.Skin.Game_MusicName_ReferencePoint == CSkin.ReferencePoint.Left)
+                        else if (TJAPlayer3.Skin.Game_MusicName_ReferencePoint == SkinManager.ReferencePoint.Left)
                         {
                             this.tx難易度とステージ数.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.Game_MusicName_X, TJAPlayer3.Skin.Game_MusicName_Y);
                         }
@@ -363,8 +363,8 @@ namespace TJAPlayer3
         private FDKTexture tx難易度とステージ数;
         private FDKTexture txGENRE;
         private FDKTexture tx歌詞テクスチャ;
-        private CPrivateFastFont pfMusicName;
-        private CPrivateFastFont pf歌詞フォント;
+        private CachePrivateFont pfMusicName;
+        private CachePrivateFont pf歌詞フォント;
 		//-----------------
 		#endregion
 	}

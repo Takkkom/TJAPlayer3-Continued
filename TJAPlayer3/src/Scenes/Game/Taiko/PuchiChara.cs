@@ -18,7 +18,7 @@ namespace TJAPlayer3
         public override void Activate()
         {
             Counter = new Counter(0, TJAPlayer3.Skin.Game_PuchiChara[2] - 1, TJAPlayer3.Skin.Game_PuchiChara_Timer, TJAPlayer3.Timer);
-            SineCounter = new Counter(0, 360, TJAPlayer3.Skin.Game_PuchiChara_SineTimer, CSound管理.rc演奏用タイマ);
+            SineCounter = new Counter(0, 360, TJAPlayer3.Skin.Game_PuchiChara_SineTimer, SoundManager.PlayTimer);
             base.Activate();
         }
         public override void Deactivate()
@@ -31,7 +31,7 @@ namespace TJAPlayer3
         public void ChangeBPM(double bpm)
         {
             Counter = new Counter(0, TJAPlayer3.Skin.Game_PuchiChara[2] - 1, (int)(TJAPlayer3.Skin.Game_PuchiChara_Timer * bpm / TJAPlayer3.Skin.Game_PuchiChara[2]), TJAPlayer3.Timer);
-            SineCounter = new Counter(1, 360, TJAPlayer3.Skin.Game_PuchiChara_SineTimer * bpm / 180, CSound管理.rc演奏用タイマ);
+            SineCounter = new Counter(1, 360, TJAPlayer3.Skin.Game_PuchiChara_SineTimer * bpm / 180, SoundManager.PlayTimer);
         }
 
         /// <summary>

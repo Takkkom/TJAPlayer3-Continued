@@ -25,7 +25,7 @@ namespace FDK
 		public FPSManager()
 		{
 			this.NowFPS = 0;
-			this.FPSTimer = new Timer( Timer.TimerType.MultiMedia );
+			this.FPSTimer = new FDKTimer( FDKTimer.TimerType.MultiMedia );
 			this.StartTimeMs = this.FPSTimer.n現在時刻;
 			this.NowFrameCount = 0;
 			this.IsFPSChanged = false;
@@ -55,7 +55,7 @@ namespace FDK
 
 		#region [ private ]
 		//-----------------
-		private Timer FPSTimer;
+		private FDKTimer FPSTimer;
 		private long StartTimeMs;
 		private int NowFrameCount;
 		//-----------------

@@ -13,7 +13,7 @@ namespace FDK
 
 		public InputJoystick( IntPtr hWnd, DeviceInstance di, DirectInput directInput )
 		{
-			this.e入力デバイス種別 = InputTypes.Joystick;
+			this.NowInputDeviceType = InputTypes.Joystick;
 			this.GUID = di.InstanceGuid.ToString();
 			this.ID = 0;
 			try
@@ -59,7 +59,7 @@ namespace FDK
 
 			//this.timer = new CTimer( CTimer.E種別.MultiMedia );
 
-			this.list入力イベント = new List<STInputEvent>( 32 );
+			this.InputEvents = new List<STInputEvent>( 32 );
 		}
 		
 		
@@ -72,7 +72,7 @@ namespace FDK
 
 		#region [ IInputDevice 実装 ]
 		//-----------------
-		public InputTypes e入力デバイス種別
+		public InputTypes NowInputDeviceType
 		{ 
 			get;
 			private set;
@@ -87,13 +87,13 @@ namespace FDK
 			get; 
 			private set;
 		}
-		public List<STInputEvent> list入力イベント 
+		public List<STInputEvent> InputEvents 
 		{
 			get;
 			private set; 
 		}
 
-		public void tポーリング( bool bWindowがアクティブ中, bool bバッファ入力を使用する )
+		public void Polling( bool bWindowがアクティブ中, bool bバッファ入力を使用する )
 		{
 			#region [ bButtonフラグ初期化 ]
 			for ( int i = 0; i < 256; i++ )
@@ -106,7 +106,7 @@ namespace FDK
 			if ( ( bWindowがアクティブ中 && !this.devJoystick.Acquire().IsFailure ) && !this.devJoystick.Poll().IsFailure )
 			{
 				// this.list入力イベント = new List<STInputEvent>( 32 );
-				this.list入力イベント.Clear();						// #xxxxx 2012.6.11 yyagi; To optimize, I removed new();
+				this.InputEvents.Clear();						// #xxxxx 2012.6.11 yyagi; To optimize, I removed new();
 
 
 				if( bバッファ入力を使用する )
@@ -168,20 +168,20 @@ namespace FDK
                                 STInputEvent e = new STInputEvent();
                                 if ( nPovDegree == -1 || nPovDegree == 0xFFFF)
                                 {
-                                    e.nKey = 6 + 128 + this.nPovState[ p ];
+                                    e.PressedKeyIndex = 6 + 128 + this.nPovState[ p ];
                                     this.nPovState[ p ] = -1;
-                                    e.b押された = false;
-                                    this.bButtonState[ e.nKey ] = false;
-                                    this.bButtonPullUp[ e.nKey ] = true;
+                                    e.IsPressed = false;
+                                    this.bButtonState[ e.PressedKeyIndex ] = false;
+                                    this.bButtonPullUp[ e.PressedKeyIndex ] = true;
                                 } else {
                                     this.nPovState[ p ] = nWay;
-                                    e.nKey = 6 + 128 + nWay;
-                                    e.b押された = true;
-                                    this.bButtonState[ e.nKey ] = true;
-                                    this.bButtonPushDown[ e.nKey ] = true;
+                                    e.PressedKeyIndex = 6 + 128 + nWay;
+                                    e.IsPressed = true;
+                                    this.bButtonState[ e.PressedKeyIndex ] = true;
+                                    this.bButtonPushDown[ e.PressedKeyIndex ] = true;
                                 }
-                                e.nTimeStamp = CSound管理.rc演奏用タイマ.nサウンドタイマーのシステム時刻msへの変換( rawBufferedData.Timestamp );
-                                this.list入力イベント.Add( e );
+                                e.TimeStamp = SoundManager.PlayTimer.TimeStampToSoundTimeMs( rawBufferedData.Timestamp );
+                                this.InputEvents.Add( e );
                                 break;
                             default:
                                 var buttonIndex = rawBufferedData.Offset - 48;
@@ -192,15 +192,15 @@ namespace FDK
 
                                     STInputEvent item = new STInputEvent()
                                     {
-                                        nKey = key,
-                                        b押された = wasPressed,
-                                        nTimeStamp = CSound管理.rc演奏用タイマ.nサウンドタイマーのシステム時刻msへの変換(rawBufferedData.Timestamp),
+                                        PressedKeyIndex = key,
+                                        IsPressed = wasPressed,
+                                        TimeStamp = SoundManager.PlayTimer.TimeStampToSoundTimeMs(rawBufferedData.Timestamp),
                                     };
-                                    this.list入力イベント.Add(item);
+                                    this.InputEvents.Add(item);
 
-                                    this.bButtonState[item.nKey] = wasPressed;
-                                    this.bButtonPushDown[item.nKey] = wasPressed;
-                                    this.bButtonPullUp[item.nKey] = !wasPressed;
+                                    this.bButtonState[item.PressedKeyIndex] = wasPressed;
+                                    this.bButtonPushDown[item.PressedKeyIndex] = wasPressed;
+                                    this.bButtonPullUp[item.PressedKeyIndex] = !wasPressed;
                                 }
 
                                 break;
@@ -225,11 +225,11 @@ namespace FDK
 							{
 								STInputEvent ev = new STInputEvent()
 								{
-									nKey = 0,
-									b押された = true,
-									nTimeStamp = CSound管理.rc演奏用タイマ.nシステム時刻,	// 演奏用タイマと同じタイマを使うことで、BGMと譜面、入力ずれを防ぐ。
+									PressedKeyIndex = 0,
+									IsPressed = true,
+									TimeStamp = SoundManager.PlayTimer.nシステム時刻,	// 演奏用タイマと同じタイマを使うことで、BGMと譜面、入力ずれを防ぐ。
 								};
-								this.list入力イベント.Add( ev );
+								this.InputEvents.Add( ev );
 
 								this.bButtonState[ 0 ] = true;
 								this.bButtonPushDown[ 0 ] = true;
@@ -241,11 +241,11 @@ namespace FDK
 							{
 								STInputEvent ev = new STInputEvent()
 								{
-									nKey = 0,
-									b押された = false,
-									nTimeStamp = CSound管理.rc演奏用タイマ.nシステム時刻,	// 演奏用タイマと同じタイマを使うことで、BGMと譜面、入力ずれを防ぐ。
+									PressedKeyIndex = 0,
+									IsPressed = false,
+									TimeStamp = SoundManager.PlayTimer.nシステム時刻,	// 演奏用タイマと同じタイマを使うことで、BGMと譜面、入力ずれを防ぐ。
 								};
-								this.list入力イベント.Add( ev );
+								this.InputEvents.Add( ev );
 
 								this.bButtonState[ 0 ] = false;
 								this.bButtonPullUp[ 0 ] = true;
@@ -261,11 +261,11 @@ namespace FDK
 							{
 								STInputEvent ev = new STInputEvent()
 								{
-									nKey = 1,
-									b押された = true,
-									nTimeStamp = CSound管理.rc演奏用タイマ.nシステム時刻,	// 演奏用タイマと同じタイマを使うことで、BGMと譜面、入力ずれを防ぐ。
+									PressedKeyIndex = 1,
+									IsPressed = true,
+									TimeStamp = SoundManager.PlayTimer.nシステム時刻,	// 演奏用タイマと同じタイマを使うことで、BGMと譜面、入力ずれを防ぐ。
 								};
-								this.list入力イベント.Add( ev );
+								this.InputEvents.Add( ev );
 
 								this.bButtonState[ 1 ] = true;
 								this.bButtonPushDown[ 1 ] = true;
@@ -277,11 +277,11 @@ namespace FDK
 							{
 								STInputEvent event7 = new STInputEvent()
 								{
-									nKey = 1,
-									b押された = false,
-									nTimeStamp = CSound管理.rc演奏用タイマ.nシステム時刻,	// 演奏用タイマと同じタイマを使うことで、BGMと譜面、入力ずれを防ぐ。
+									PressedKeyIndex = 1,
+									IsPressed = false,
+									TimeStamp = SoundManager.PlayTimer.nシステム時刻,	// 演奏用タイマと同じタイマを使うことで、BGMと譜面、入力ずれを防ぐ。
 								};
-								this.list入力イベント.Add( event7 );
+								this.InputEvents.Add( event7 );
 
 								this.bButtonState[ 1 ] = false;
 								this.bButtonPullUp[ 1 ] = true;
@@ -297,11 +297,11 @@ namespace FDK
 							{
 								STInputEvent ev = new STInputEvent()
 								{
-									nKey = 2,
-									b押された = true,
-									nTimeStamp = CSound管理.rc演奏用タイマ.nシステム時刻,	// 演奏用タイマと同じタイマを使うことで、BGMと譜面、入力ずれを防ぐ。
+									PressedKeyIndex = 2,
+									IsPressed = true,
+									TimeStamp = SoundManager.PlayTimer.nシステム時刻,	// 演奏用タイマと同じタイマを使うことで、BGMと譜面、入力ずれを防ぐ。
 								};
-								this.list入力イベント.Add( ev );
+								this.InputEvents.Add( ev );
 
 								this.bButtonState[ 2 ] = true;
 								this.bButtonPushDown[ 2 ] = true;
@@ -313,11 +313,11 @@ namespace FDK
 							{
 								STInputEvent ev = new STInputEvent()
 								{
-									nKey = 2,
-									b押された = false,
-									nTimeStamp = CSound管理.rc演奏用タイマ.nシステム時刻,	// 演奏用タイマと同じタイマを使うことで、BGMと譜面、入力ずれを防ぐ。
+									PressedKeyIndex = 2,
+									IsPressed = false,
+									TimeStamp = SoundManager.PlayTimer.nシステム時刻,	// 演奏用タイマと同じタイマを使うことで、BGMと譜面、入力ずれを防ぐ。
 								};
-								this.list入力イベント.Add( ev );
+								this.InputEvents.Add( ev );
 
 								this.bButtonState[ 2 ] = false;
 								this.bButtonPullUp[ 2 ] = true;
@@ -333,11 +333,11 @@ namespace FDK
 							{
 								STInputEvent ev = new STInputEvent()
 								{
-									nKey = 3,
-									b押された = true,
-									nTimeStamp = CSound管理.rc演奏用タイマ.nシステム時刻,	// 演奏用タイマと同じタイマを使うことで、BGMと譜面、入力ずれを防ぐ。
+									PressedKeyIndex = 3,
+									IsPressed = true,
+									TimeStamp = SoundManager.PlayTimer.nシステム時刻,	// 演奏用タイマと同じタイマを使うことで、BGMと譜面、入力ずれを防ぐ。
 								};
-								this.list入力イベント.Add( ev );
+								this.InputEvents.Add( ev );
 
 								this.bButtonState[ 3 ] = true;
 								this.bButtonPushDown[ 3 ] = true;
@@ -349,11 +349,11 @@ namespace FDK
 							{
 								STInputEvent ev = new STInputEvent()
 								{
-									nKey = 3,
-									b押された = false,
-									nTimeStamp = CSound管理.rc演奏用タイマ.nシステム時刻,	// 演奏用タイマと同じタイマを使うことで、BGMと譜面、入力ずれを防ぐ。
+									PressedKeyIndex = 3,
+									IsPressed = false,
+									TimeStamp = SoundManager.PlayTimer.nシステム時刻,	// 演奏用タイマと同じタイマを使うことで、BGMと譜面、入力ずれを防ぐ。
 								};
-								this.list入力イベント.Add( ev );
+								this.InputEvents.Add( ev );
 
 								this.bButtonState[ 3 ] = false;
 								this.bButtonPullUp[ 3 ] = true;
@@ -369,11 +369,11 @@ namespace FDK
 							{
 								STInputEvent ev = new STInputEvent()
 								{
-									nKey = 4,
-									b押された = true,
-									nTimeStamp = CSound管理.rc演奏用タイマ.nシステム時刻,	// 演奏用タイマと同じタイマを使うことで、BGMと譜面、入力ずれを防ぐ。
+									PressedKeyIndex = 4,
+									IsPressed = true,
+									TimeStamp = SoundManager.PlayTimer.nシステム時刻,	// 演奏用タイマと同じタイマを使うことで、BGMと譜面、入力ずれを防ぐ。
 								};
-								this.list入力イベント.Add( ev );
+								this.InputEvents.Add( ev );
 
 								this.bButtonState[ 4 ] = true;
 								this.bButtonPushDown[ 4 ] = true;
@@ -385,11 +385,11 @@ namespace FDK
 							{
 								STInputEvent ev = new STInputEvent()
 								{
-									nKey = 4,
-									b押された = false,
-									nTimeStamp = CSound管理.rc演奏用タイマ.nシステム時刻,	// 演奏用タイマと同じタイマを使うことで、BGMと譜面、入力ずれを防ぐ。
+									PressedKeyIndex = 4,
+									IsPressed = false,
+									TimeStamp = SoundManager.PlayTimer.nシステム時刻,	// 演奏用タイマと同じタイマを使うことで、BGMと譜面、入力ずれを防ぐ。
 								};
-								this.list入力イベント.Add( ev );
+								this.InputEvents.Add( ev );
 
 								this.bButtonState[ 4 ] = false;
 								this.bButtonPullUp[ 4 ] = true;
@@ -405,11 +405,11 @@ namespace FDK
 							{
 								STInputEvent ev = new STInputEvent()
 								{
-									nKey = 5,
-									b押された = true,
-									nTimeStamp = CSound管理.rc演奏用タイマ.nシステム時刻,	// 演奏用タイマと同じタイマを使うことで、BGMと譜面、入力ずれを防ぐ。
+									PressedKeyIndex = 5,
+									IsPressed = true,
+									TimeStamp = SoundManager.PlayTimer.nシステム時刻,	// 演奏用タイマと同じタイマを使うことで、BGMと譜面、入力ずれを防ぐ。
 								};
-								this.list入力イベント.Add( ev );
+								this.InputEvents.Add( ev );
 
 								this.bButtonState[ 5 ] = true;
 								this.bButtonPushDown[ 5 ] = true;
@@ -421,11 +421,11 @@ namespace FDK
 							{
 								STInputEvent event15 = new STInputEvent()
 								{
-									nKey = 5,
-									b押された = false,
-									nTimeStamp = CSound管理.rc演奏用タイマ.nシステム時刻,	// 演奏用タイマと同じタイマを使うことで、BGMと譜面、入力ずれを防ぐ。
+									PressedKeyIndex = 5,
+									IsPressed = false,
+									TimeStamp = SoundManager.PlayTimer.nシステム時刻,	// 演奏用タイマと同じタイマを使うことで、BGMと譜面、入力ずれを防ぐ。
 								};
-								this.list入力イベント.Add( event15 );
+								this.InputEvents.Add( event15 );
 
 								this.bButtonState[ 5 ] = false;
 								this.bButtonPullUp[ 5 ] = true;
@@ -443,11 +443,11 @@ namespace FDK
 							{
 								STInputEvent item = new STInputEvent()
 								{
-									nKey = 6 + j,
-									b押された = true,
-									nTimeStamp = CSound管理.rc演奏用タイマ.nシステム時刻,	// 演奏用タイマと同じタイマを使うことで、BGMと譜面、入力ずれを防ぐ。
+									PressedKeyIndex = 6 + j,
+									IsPressed = true,
+									TimeStamp = SoundManager.PlayTimer.nシステム時刻,	// 演奏用タイマと同じタイマを使うことで、BGMと譜面、入力ずれを防ぐ。
 								};
-								this.list入力イベント.Add( item );
+								this.InputEvents.Add( item );
 
 								this.bButtonState[ 6 + j ] = true;
 								this.bButtonPushDown[ 6 + j ] = true;
@@ -457,11 +457,11 @@ namespace FDK
 							{
 								STInputEvent item = new STInputEvent()
 								{
-									nKey = 6 + j,
-									b押された = false,
-									nTimeStamp = CSound管理.rc演奏用タイマ.nシステム時刻,	// 演奏用タイマと同じタイマを使うことで、BGMと譜面、入力ずれを防ぐ。
+									PressedKeyIndex = 6 + j,
+									IsPressed = false,
+									TimeStamp = SoundManager.PlayTimer.nシステム時刻,	// 演奏用タイマと同じタイマを使うことで、BGMと譜面、入力ずれを防ぐ。
 								};
-								this.list入力イベント.Add( item );
+								this.InputEvents.Add( item );
 
 								this.bButtonState[ 6 + j ] = false;
 								this.bButtonPullUp[ 6 + j ] = true;
@@ -485,15 +485,15 @@ namespace FDK
 								{
 									STInputEvent stevent = new STInputEvent()
 									{
-										nKey = 6 + 128 + nWay,
+										PressedKeyIndex = 6 + 128 + nWay,
 										//Debug.WriteLine( "POVS:" + povs[ 0 ].ToString( CultureInfo.CurrentCulture ) + ", " +stevent.nKey );
-										b押された = true,
-										nTimeStamp = CSound管理.rc演奏用タイマ.nシステム時刻,	// 演奏用タイマと同じタイマを使うことで、BGMと譜面、入力ずれを防ぐ。
+										IsPressed = true,
+										TimeStamp = SoundManager.PlayTimer.nシステム時刻,	// 演奏用タイマと同じタイマを使うことで、BGMと譜面、入力ずれを防ぐ。
 									};
-									this.list入力イベント.Add( stevent );
+									this.InputEvents.Add( stevent );
 
-									this.bButtonState[ stevent.nKey ] = true;
-									this.bButtonPushDown[ stevent.nKey ] = true;
+									this.bButtonState[ stevent.PressedKeyIndex ] = true;
+									this.bButtonPushDown[ stevent.PressedKeyIndex ] = true;
 								}
 							}
 							else if ( bIsButtonPressedReleased == false )	// #xxxxx 2011.12.3 yyagi 他のボタンが何も押され/離されてない＝POVが離された
@@ -511,11 +511,11 @@ namespace FDK
 								{
 									STInputEvent stevent = new STInputEvent()
 									{
-										nKey = nWay,
-										b押された = false,
-										nTimeStamp = CSound管理.rc演奏用タイマ.nシステム時刻,	// 演奏用タイマと同じタイマを使うことで、BGMと譜面、入力ずれを防ぐ。
+										PressedKeyIndex = nWay,
+										IsPressed = false,
+										TimeStamp = SoundManager.PlayTimer.nシステム時刻,	// 演奏用タイマと同じタイマを使うことで、BGMと譜面、入力ずれを防ぐ。
 									};
-									this.list入力イベント.Add( stevent );
+									this.InputEvents.Add( stevent );
 
 									this.bButtonState[ nWay ] = false;
 									this.bButtonPullUp[ nWay ] = true;
@@ -530,19 +530,19 @@ namespace FDK
 			}
 		}
 
-		public bool bキーが押された( int nButton )
+		public bool GetKeyPressed( int nButton )
 		{
 			return this.bButtonPushDown[ nButton ];
 		}
-		public bool bキーが押されている( int nButton )
+		public bool GetKeyKeepPressed( int nButton )
 		{
 			return this.bButtonState[ nButton ];
 		}
-		public bool bキーが離された( int nButton )
+		public bool GetKeyReleased( int nButton )
 		{
 			return this.bButtonPullUp[ nButton ];
 		}
-		public bool bキーが離されている( int nButton )
+		public bool GetNoKeyPressed( int nButton )
 		{
 			return !this.bButtonState[ nButton ];
 		}
@@ -565,9 +565,9 @@ namespace FDK
 				//    this.timer.Dispose();
 				//    this.timer = null;
 				//}
-				if ( this.list入力イベント != null )
+				if ( this.InputEvents != null )
 				{
-					this.list入力イベント = null;
+					this.InputEvents = null;
 				}
 				this.bDispose完了済み = true;
 			}
@@ -633,11 +633,11 @@ namespace FDK
 			{
 				STInputEvent e = new STInputEvent()
 				{
-					nKey = target,
-					b押された = !lastMode,
-					nTimeStamp = CSound管理.rc演奏用タイマ.nサウンドタイマーのシステム時刻msへの変換( data.Timestamp ),
+					PressedKeyIndex = target,
+					IsPressed = !lastMode,
+					TimeStamp = SoundManager.PlayTimer.TimeStampToSoundTimeMs( data.Timestamp ),
 				};
-				this.list入力イベント.Add( e );
+				this.InputEvents.Add( e );
 
 				this.bButtonState[ target ] = !lastMode;
 				if ( lastMode )

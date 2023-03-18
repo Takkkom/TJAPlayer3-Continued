@@ -17,7 +17,7 @@ namespace TJAPlayer3
             base.NotActivated = true;
         }
 
-        public void Start(int Player, bool IsMiss, CDTX.CChip pChip)
+        public void Start(int Player, bool IsMiss, Chart.CChip pChip)
         {
             if (TJAPlayer3.Tx.Runner != null)
             {

@@ -19,7 +19,7 @@ namespace TJAPlayer3
 	internal class CAct演奏ゲージ共通 : Activity
 	{
 		// プロパティ
-		public CActLVLNFont actLVLNFont { get; protected set; }
+		public LVLNFontManager actLVLNFont { get; protected set; }
 
 		// コンストラクタ
 		public CAct演奏ゲージ共通()
@@ -32,7 +32,7 @@ namespace TJAPlayer3
 
 		public override void Activate()
 		{
-			actLVLNFont = new CActLVLNFont();
+			actLVLNFont = new LVLNFontManager();
 			actLVLNFont.Activate();
 			base.Activate();
 		}

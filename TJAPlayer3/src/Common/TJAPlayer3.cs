@@ -48,7 +48,7 @@ namespace TJAPlayer3
 			get; 
 			private set;
 		}
-		public static CDTX DTX
+		public static Chart DTX
 		{
 			get
 			{
@@ -68,7 +68,7 @@ namespace TJAPlayer3
 				}
 			}
 		}
-		public static CDTX DTX_2P
+		public static Chart DTX_2P
 		{
 			get
 			{
@@ -108,8 +108,8 @@ namespace TJAPlayer3
 			{
 				if( stage選曲.r確定された曲 != null )
 				{
-					C曲リストノード c曲リストノード = stage選曲.r確定された曲.r親ノード;
-					if( ( ( c曲リストノード != null ) && ( c曲リストノード.eノード種別 == C曲リストノード.Eノード種別.BOX ) ) && ( c曲リストノード.nPerfect範囲ms >= 0 ) )
+					SongInfoNode c曲リストノード = stage選曲.r確定された曲.r親ノード;
+					if( ( ( c曲リストノード != null ) && ( c曲リストノード.NowNodeType == SongInfoNode.NodeType.BOX ) ) && ( c曲リストノード.nPerfect範囲ms >= 0 ) )
 					{
 						return c曲リストノード.nPerfect範囲ms;
 					}
@@ -123,8 +123,8 @@ namespace TJAPlayer3
 			{
 				if( stage選曲.r確定された曲 != null )
 				{
-					C曲リストノード c曲リストノード = stage選曲.r確定された曲.r親ノード;
-					if( ( ( c曲リストノード != null ) && ( c曲リストノード.eノード種別 == C曲リストノード.Eノード種別.BOX ) ) && ( c曲リストノード.nGreat範囲ms >= 0 ) )
+					SongInfoNode c曲リストノード = stage選曲.r確定された曲.r親ノード;
+					if( ( ( c曲リストノード != null ) && ( c曲リストノード.NowNodeType == SongInfoNode.NodeType.BOX ) ) && ( c曲リストノード.nGreat範囲ms >= 0 ) )
 					{
 						return c曲リストノード.nGreat範囲ms;
 					}
@@ -138,8 +138,8 @@ namespace TJAPlayer3
 			{
 				if( stage選曲.r確定された曲 != null )
 				{
-					C曲リストノード c曲リストノード = stage選曲.r確定された曲.r親ノード;
-					if( ( ( c曲リストノード != null ) && ( c曲リストノード.eノード種別 == C曲リストノード.Eノード種別.BOX ) ) && ( c曲リストノード.nGood範囲ms >= 0 ) )
+					SongInfoNode c曲リストノード = stage選曲.r確定された曲.r親ノード;
+					if( ( ( c曲リストノード != null ) && ( c曲リストノード.NowNodeType == SongInfoNode.NodeType.BOX ) ) && ( c曲リストノード.nGood範囲ms >= 0 ) )
 					{
 						return c曲リストノード.nGood範囲ms;
 					}
@@ -153,8 +153,8 @@ namespace TJAPlayer3
 			{
 				if( stage選曲.r確定された曲 != null )
 				{
-					C曲リストノード c曲リストノード = stage選曲.r確定された曲.r親ノード;
-					if( ( ( c曲リストノード != null ) && ( c曲リストノード.eノード種別 == C曲リストノード.Eノード種別.BOX ) ) && ( c曲リストノード.nPoor範囲ms >= 0 ) )
+					SongInfoNode c曲リストノード = stage選曲.r確定された曲.r親ノード;
+					if( ( ( c曲リストノード != null ) && ( c曲リストノード.NowNodeType == SongInfoNode.NodeType.BOX ) ) && ( c曲リストノード.nPoor範囲ms >= 0 ) )
 					{
 						return c曲リストノード.nPoor範囲ms;
 					}
@@ -163,7 +163,7 @@ namespace TJAPlayer3
 			}
 		}
 		#endregion
-		public static CPad Pad 
+		public static PadManager Pad 
 		{
 			get;
 			private set;
@@ -173,12 +173,12 @@ namespace TJAPlayer3
 			get;
 			private set;
 		}
-		public static CSkin Skin
+		public static SkinManager Skin
 		{
 			get; 
 			private set;
 		}
-		public static CSongs管理 Songs管理 
+		public static SongsManager Songs管理 
 		{
 			get;
 			set;	// 2012.1.26 yyagi private解除 CStage起動でのdesirialize読み込みのため
@@ -198,13 +198,13 @@ namespace TJAPlayer3
 			get;
 			private set;
 		}
-		public static CActFlushGPU actFlushGPU
+		public static FlushGPU actFlushGPU
 		{
 			get;
 			private set;
 		}
 
-		public static CSound管理 Sound管理
+		public static SoundManager _SoundManager
 		{
 			get;
 			private set;
@@ -222,12 +222,12 @@ namespace TJAPlayer3
 	        private set;
 	    }
 
-		public static CStage起動 stage起動 
+		public static StartUpScene stage起動 
 		{
 			get; 
 			private set;
 		}
-		public static CStageタイトル stageタイトル
+		public static TitleScene stageタイトル
 		{
 			get;
 			private set;
@@ -237,17 +237,17 @@ namespace TJAPlayer3
 //			get;
 //			private set;
 //		}
-		public static CStageコンフィグ stageコンフィグ 
+		public static ConfigScene stageコンフィグ 
 		{ 
 			get; 
 			private set;
 		}
-		public static CStage選曲 stage選曲
+		public static SongSelectScene stage選曲
 		{
 			get;
 			private set;
 		}
-		public static CStage曲読み込み stage曲読み込み
+		public static SongLoadingScene stage曲読み込み
 		{
 			get;
 			private set;
@@ -257,24 +257,24 @@ namespace TJAPlayer3
 			get;
 			private set;
 		}
-		public static CStage結果 stage結果
+		public static ResultScene stage結果
 		{
 			get;
 			private set;
 		}
-		public static CStageChangeSkin stageChangeSkin
+		public static ChangeSkinScene stageChangeSkin
 		{
 			get;
 			private set;
 		}
-		public static CStage終了 stage終了
+		public static EndingScene stage終了
 		{
 			get;
 			private set;
 		}
-		public static CStage r現在のステージ = null;
-		public static CStage r直前のステージ = null;
-		public static string strEXEのあるフォルダ 
+		public static BaseScene r現在のステージ = null;
+		public static BaseScene r直前のステージ = null;
+		public static string DirectoryWithThisEXE 
 		{
 			get;
 			private set;
@@ -284,13 +284,13 @@ namespace TJAPlayer3
 			get; 
 			private set;
 		}
-		public static FDK.Timer Timer
+		public static FDKTimer Timer
 		{
 			get;
 			private set;
 		}
 		public static Format TextureFormat = Format.A8R8G8B8;
-		internal static IPluginActivity act現在入力を占有中のプラグイン = null;
+		internal static IPluginActivity CurrentOccupyingInputPlugin = null;
 		public bool bApplicationActive
 		{
 			get; 
@@ -310,16 +310,16 @@ namespace TJAPlayer3
 		{
 			get { return base.GraphicsDeviceManager.Direct3D9.Device; }
 		}
-		public CPluginHost PluginHost
+		public PluginHost PluginHost
 		{
 			get;
 			private set;
 		}
-		public List<STPlugin> listプラグイン = new List<STPlugin>();
+		public List<STPlugin> Plugins = new List<STPlugin>();
 		public struct STPlugin
 		{
 			public IPluginActivity plugin;
-			public string strプラグインフォルダ;
+			public string PluginDir;
 			public string strアセンブリ簡易名;
 			public Version Version;
 		}
@@ -346,7 +346,7 @@ namespace TJAPlayer3
         public TJAPlayer3()
 		{
 			TJAPlayer3.app = this;
-			this.t起動処理();
+			this.StartUp();
 		}
 
 
@@ -424,11 +424,11 @@ namespace TJAPlayer3
 					activity.ManagedCreateResources();
 			}
 
-			foreach( STPlugin st in this.listプラグイン )
+			foreach( STPlugin st in this.Plugins )
 			{
-				Directory.SetCurrentDirectory( st.strプラグインフォルダ );
+				Directory.SetCurrentDirectory( st.PluginDir );
 				st.plugin.OnManagedリソースの作成();
-				Directory.SetCurrentDirectory( TJAPlayer3.strEXEのあるフォルダ );
+				Directory.SetCurrentDirectory( TJAPlayer3.DirectoryWithThisEXE );
 			}
 		}
 		protected override void LoadContent()
@@ -472,11 +472,11 @@ namespace TJAPlayer3
 					activity.UnmanagedCreateResources();
 			}
 
-			foreach( STPlugin st in this.listプラグイン )
+			foreach( STPlugin st in this.Plugins )
 			{
-				Directory.SetCurrentDirectory( st.strプラグインフォルダ );
+				Directory.SetCurrentDirectory( st.PluginDir );
 				st.plugin.OnUnmanagedリソースの作成();
-				Directory.SetCurrentDirectory( TJAPlayer3.strEXEのあるフォルダ );
+				Directory.SetCurrentDirectory( TJAPlayer3.DirectoryWithThisEXE );
 			}
 		}
 		protected override void UnloadContent()
@@ -487,17 +487,17 @@ namespace TJAPlayer3
 					activity.UnmanagedReleaseResources();
 			}
 
-			foreach( STPlugin st in this.listプラグイン )
+			foreach( STPlugin st in this.Plugins )
 			{
-				Directory.SetCurrentDirectory( st.strプラグインフォルダ );
+				Directory.SetCurrentDirectory( st.PluginDir );
 				st.plugin.OnUnmanagedリソースの解放();
-				Directory.SetCurrentDirectory( TJAPlayer3.strEXEのあるフォルダ );
+				Directory.SetCurrentDirectory( TJAPlayer3.DirectoryWithThisEXE );
 			}
 		}
 		protected override void Exiting( EventArgs e )
 		{
 			PowerManagement.EnableMonitorSuspend();		// スリープ抑止状態を解除
-			this.t終了処理();
+			this.Terminate();
 			base.Exiting( e );
 		}
 		protected override void Update( GameTime gameTime )
@@ -505,10 +505,10 @@ namespace TJAPlayer3
 		}
 		protected override void Draw( GameTime gameTime )
 		{
-			Sound管理?.t再生中の処理をする();
+			_SoundManager?.t再生中の処理をする();
             Timer?.Update();
-            CSound管理.rc演奏用タイマ?.Update();
-            Input管理?.tポーリング( this.bApplicationActive, TJAPlayer3._MainConfig.bバッファ入力を行う );
+            SoundManager.PlayTimer?.Update();
+            Input管理?.Polling( this.bApplicationActive, TJAPlayer3._MainConfig.bバッファ入力を行う );
             FPS?.Update();
 
 			if( this.Device == null )
@@ -548,18 +548,18 @@ namespace TJAPlayer3
 							{
 								if ( this.previewSound != null )
 								{
-									this.previewSound.tサウンドを停止する();
+									this.previewSound.StopFDKSound();
 									this.previewSound.Dispose();
 									this.previewSound = null;
 								}
-								this.previewSound = TJAPlayer3.Sound管理.tサウンドを生成する( strPreviewFilename, ESoundGroup.SongPlayback );
+								this.previewSound = TJAPlayer3._SoundManager.CreateFDKSound( strPreviewFilename, SoundGroup.SongPlayback );
 
 							    // 2018-08-23 twopointzero: DTXVmode previewVolume will always set
 							    // Gain since in this mode it should override the application of
 							    // SONGVOL or any other Gain source regardless of configuration.
 								this.previewSound.SetGain(DTXVmode.previewVolume);
 
-								this.previewSound.n位置 = DTXVmode.previewPan;
+								this.previewSound.NowPan = DTXVmode.previewPan;
 								this.previewSound.t再生を開始する();
 								Trace.TraceInformation( "DTXCからの指示で、サウンドを生成しました。({0})", strPreviewFilename );
 							}
@@ -588,22 +588,22 @@ namespace TJAPlayer3
 
 				#region [ プラグインの進行描画 ]
 				//---------------------
-				foreach( STPlugin sp in this.listプラグイン )
+				foreach( STPlugin sp in this.Plugins )
 				{
-					Directory.SetCurrentDirectory( sp.strプラグインフォルダ );
+					Directory.SetCurrentDirectory( sp.PluginDir );
 
-					if( TJAPlayer3.act現在入力を占有中のプラグイン == null || TJAPlayer3.act現在入力を占有中のプラグイン == sp.plugin )
+					if( TJAPlayer3.CurrentOccupyingInputPlugin == null || TJAPlayer3.CurrentOccupyingInputPlugin == sp.plugin )
 						sp.plugin.On進行描画(TJAPlayer3.Pad, TJAPlayer3.Input管理.Keyboard );
 					else
 						sp.plugin.On進行描画( null, null );
 
-					Directory.SetCurrentDirectory( TJAPlayer3.strEXEのあるフォルダ );
+					Directory.SetCurrentDirectory( TJAPlayer3.DirectoryWithThisEXE );
 				}
 				//---------------------
 				#endregion
 
 
-				CScoreIni scoreIni = null;
+				ScoreIni scoreIni = null;
 
 				if ( Control.IsKeyLocked( Keys.CapsLock ) )				// #30925 2013.3.11 yyagi; capslock=ON時は、EnumSongsしないようにして、起動負荷とASIOの音切れの関係を確認する
 				{														// → songs.db等の書き込み時だと音切れするっぽい
@@ -618,16 +618,16 @@ namespace TJAPlayer3
 				}
 				switch ( r現在のステージ.eステージID )
 				{
-					case CStage.Eステージ.タイトル:
-					case CStage.Eステージ.コンフィグ:
-					case CStage.Eステージ.選曲:
-					case CStage.Eステージ.曲読み込み:
+					case BaseScene.Eステージ.タイトル:
+					case BaseScene.Eステージ.コンフィグ:
+					case BaseScene.Eステージ.選曲:
+					case BaseScene.Eステージ.曲読み込み:
 						if ( EnumSongs != null )
 						{
 							#region [ (特定条件時) 曲検索スレッドの起動_開始 ]
-							if ( r現在のステージ.eステージID == CStage.Eステージ.タイトル &&
-								 r直前のステージ.eステージID == CStage.Eステージ.起動 &&
-								 this.n進行描画の戻り値 == (int) CStageタイトル.E戻り値.継続 &&
+							if ( r現在のステージ.eステージID == BaseScene.Eステージ.タイトル &&
+								 r直前のステージ.eステージID == BaseScene.Eステージ.起動 &&
+								 this.n進行描画の戻り値 == (int) TitleScene.E戻り値.継続 &&
 								 !EnumSongs.IsSongListEnumStarted )
 							{
 								actEnumSongs.Activate();
@@ -642,7 +642,7 @@ namespace TJAPlayer3
 							#endregion
 							
 							#region [ 曲検索の中断と再開 ]
-							if ( r現在のステージ.eステージID == CStage.Eステージ.選曲 && !EnumSongs.IsSongListEnumCompletelyDone )
+							if ( r現在のステージ.eステージID == BaseScene.Eステージ.選曲 && !EnumSongs.IsSongListEnumCompletelyDone )
 							{
 								switch ( this.n進行描画の戻り値 )
 								{
@@ -670,7 +670,7 @@ namespace TJAPlayer3
 							#endregion
 
 							#region [ 曲探索中断待ち待機 ]
-							if ( r現在のステージ.eステージID == CStage.Eステージ.曲読み込み && !EnumSongs.IsSongListEnumCompletelyDone &&
+							if ( r現在のステージ.eステージID == BaseScene.Eステージ.曲読み込み && !EnumSongs.IsSongListEnumCompletelyDone &&
 								EnumSongs.thDTXFileEnumerate != null )							// #28700 2012.6.12 yyagi; at Compact mode, enumerating thread does not exist.
 							{
 								EnumSongs.WaitUntilSuspended();									// 念のため、曲検索が一時中断されるまで待機
@@ -684,7 +684,7 @@ namespace TJAPlayer3
 								actEnumSongs.Deactivate();
 								TJAPlayer3.stage選曲.bIsEnumeratingSongs = false;
 
-								bool bRemakeSongTitleBar = ( r現在のステージ.eステージID == CStage.Eステージ.選曲 ) ? true : false;
+								bool bRemakeSongTitleBar = ( r現在のステージ.eステージID == BaseScene.Eステージ.選曲 ) ? true : false;
 								TJAPlayer3.stage選曲.Refresh( EnumSongs.Songs管理, bRemakeSongTitleBar );
 								EnumSongs.SongListEnumCompletelyDone();
 							}
@@ -696,10 +696,10 @@ namespace TJAPlayer3
 
 				switch ( r現在のステージ.eステージID )
 				{
-					case CStage.Eステージ.何もしない:
+					case BaseScene.Eステージ.何もしない:
 						break;
 
-					case CStage.Eステージ.起動:
+					case BaseScene.Eステージ.起動:
 						#region [ *** ]
 						//-----------------------------
 						if( this.n進行描画の戻り値 != 0 )
@@ -723,11 +723,11 @@ namespace TJAPlayer3
 								r現在のステージ = stage曲読み込み;
 
 							}
-							foreach( STPlugin pg in this.listプラグイン )
+							foreach( STPlugin pg in this.Plugins )
 							{
-								Directory.SetCurrentDirectory( pg.strプラグインフォルダ );
+								Directory.SetCurrentDirectory( pg.PluginDir );
 								pg.plugin.Onステージ変更();
-								Directory.SetCurrentDirectory( TJAPlayer3.strEXEのあるフォルダ );
+								Directory.SetCurrentDirectory( TJAPlayer3.DirectoryWithThisEXE );
 							}
 
 							this.tガベージコレクションを実行する();
@@ -736,12 +736,12 @@ namespace TJAPlayer3
 						#endregion
 						break;
 
-					case CStage.Eステージ.タイトル:
+					case BaseScene.Eステージ.タイトル:
 						#region [ *** ]
 						//-----------------------------
 						switch( this.n進行描画の戻り値 )
 						{
-							case (int)CStageタイトル.E戻り値.GAMESTART:
+							case (int)TitleScene.E戻り値.GAMESTART:
 								#region [ 選曲処理へ ]
 								//-----------------------------
 								r現在のステージ.Deactivate();
@@ -769,7 +769,7 @@ namespace TJAPlayer3
 							//								break;
 							#endregion
 
-							case (int)CStageタイトル.E戻り値.CONFIG:
+							case (int)TitleScene.E戻り値.CONFIG:
 								#region [ *** ]
 								//-----------------------------
 								r現在のステージ.Deactivate();
@@ -782,7 +782,7 @@ namespace TJAPlayer3
 								#endregion
 								break;
 
-							case (int)CStageタイトル.E戻り値.EXIT:
+							case (int)TitleScene.E戻り値.EXIT:
 								#region [ *** ]
 								//-----------------------------
 								r現在のステージ.Deactivate();
@@ -796,11 +796,11 @@ namespace TJAPlayer3
 								break;
 						}
 
-						foreach( STPlugin pg in this.listプラグイン )
+						foreach( STPlugin pg in this.Plugins )
 						{
-							Directory.SetCurrentDirectory( pg.strプラグインフォルダ );
+							Directory.SetCurrentDirectory( pg.PluginDir );
 							pg.plugin.Onステージ変更();
-							Directory.SetCurrentDirectory( TJAPlayer3.strEXEのあるフォルダ );
+							Directory.SetCurrentDirectory( TJAPlayer3.DirectoryWithThisEXE );
 						}
 
 						//this.tガベージコレクションを実行する();		// #31980 2013.9.3 yyagi タイトル画面でだけ、毎フレームGCを実行して重くなっていた問題の修正
@@ -864,14 +864,14 @@ namespace TJAPlayer3
 						#endregion
 //						break;
 
-					case CStage.Eステージ.コンフィグ:
+					case BaseScene.Eステージ.コンフィグ:
 						#region [ *** ]
 						//-----------------------------
 						if( this.n進行描画の戻り値 != 0 )
 						{
 							switch( r直前のステージ.eステージID )
 							{
-								case CStage.Eステージ.タイトル:
+								case BaseScene.Eステージ.タイトル:
 									#region [ *** ]
 									//-----------------------------
 									r現在のステージ.Deactivate();
@@ -881,11 +881,11 @@ namespace TJAPlayer3
 									r直前のステージ = r現在のステージ;
 									r現在のステージ = stageタイトル;
 
-									foreach( STPlugin pg in this.listプラグイン )
+									foreach( STPlugin pg in this.Plugins )
 									{
-										Directory.SetCurrentDirectory( pg.strプラグインフォルダ );
+										Directory.SetCurrentDirectory( pg.PluginDir );
 										pg.plugin.Onステージ変更();
-										Directory.SetCurrentDirectory( TJAPlayer3.strEXEのあるフォルダ );
+										Directory.SetCurrentDirectory( TJAPlayer3.DirectoryWithThisEXE );
 									}
 
 									this.tガベージコレクションを実行する();
@@ -893,7 +893,7 @@ namespace TJAPlayer3
 								//-----------------------------
 									#endregion
 
-								case CStage.Eステージ.選曲:
+								case BaseScene.Eステージ.選曲:
 									#region [ *** ]
 									//-----------------------------
 									r現在のステージ.Deactivate();
@@ -903,11 +903,11 @@ namespace TJAPlayer3
 									r直前のステージ = r現在のステージ;
 									r現在のステージ = stage選曲;
 
-									foreach( STPlugin pg in this.listプラグイン )
+									foreach( STPlugin pg in this.Plugins )
 									{
-										Directory.SetCurrentDirectory( pg.strプラグインフォルダ );
+										Directory.SetCurrentDirectory( pg.PluginDir );
 										pg.plugin.Onステージ変更();
-										Directory.SetCurrentDirectory( TJAPlayer3.strEXEのあるフォルダ );
+										Directory.SetCurrentDirectory( TJAPlayer3.DirectoryWithThisEXE );
 									}
 
 									this.tガベージコレクションを実行する();
@@ -920,12 +920,12 @@ namespace TJAPlayer3
 						#endregion
 						break;
 
-					case CStage.Eステージ.選曲:
+					case BaseScene.Eステージ.選曲:
 						#region [ *** ]
 						//-----------------------------
 						switch( this.n進行描画の戻り値 )
 						{
-							case (int) CStage選曲.E戻り値.タイトルに戻る:
+							case (int) SongSelectScene.E戻り値.タイトルに戻る:
 								#region [ *** ]
 								//-----------------------------
 								r現在のステージ.Deactivate();
@@ -935,11 +935,11 @@ namespace TJAPlayer3
 								r直前のステージ = r現在のステージ;
 								r現在のステージ = stageタイトル;
 
-								foreach( STPlugin pg in this.listプラグイン )
+								foreach( STPlugin pg in this.Plugins )
 								{
-									Directory.SetCurrentDirectory( pg.strプラグインフォルダ );
+									Directory.SetCurrentDirectory( pg.PluginDir );
 									pg.plugin.Onステージ変更();
-									Directory.SetCurrentDirectory( TJAPlayer3.strEXEのあるフォルダ );
+									Directory.SetCurrentDirectory( TJAPlayer3.DirectoryWithThisEXE );
 								}
 
 								this.tガベージコレクションを実行する();
@@ -947,7 +947,7 @@ namespace TJAPlayer3
 							//-----------------------------
 								#endregion
 
-							case (int) CStage選曲.E戻り値.選曲した:
+							case (int) SongSelectScene.E戻り値.選曲した:
 								#region [ *** ]
 								//-----------------------------
 								r現在のステージ.Deactivate();
@@ -957,11 +957,11 @@ namespace TJAPlayer3
 								r直前のステージ = r現在のステージ;
 								r現在のステージ = stage曲読み込み;
 
-								foreach( STPlugin pg in this.listプラグイン )
+								foreach( STPlugin pg in this.Plugins )
 								{
-									Directory.SetCurrentDirectory( pg.strプラグインフォルダ );
+									Directory.SetCurrentDirectory( pg.PluginDir );
 									pg.plugin.Onステージ変更();
-									Directory.SetCurrentDirectory( TJAPlayer3.strEXEのあるフォルダ );
+									Directory.SetCurrentDirectory( TJAPlayer3.DirectoryWithThisEXE );
 								}
 
 								this.tガベージコレクションを実行する();
@@ -991,7 +991,7 @@ namespace TJAPlayer3
 //							//-----------------------------
 								#endregion
 
-							case (int) CStage選曲.E戻り値.コンフィグ呼び出し:
+							case (int) SongSelectScene.E戻り値.コンフィグ呼び出し:
 								#region [ *** ]
 								//-----------------------------
 								r現在のステージ.Deactivate();
@@ -1001,11 +1001,11 @@ namespace TJAPlayer3
 								r直前のステージ = r現在のステージ;
 								r現在のステージ = stageコンフィグ;
 
-								foreach( STPlugin pg in this.listプラグイン )
+								foreach( STPlugin pg in this.Plugins )
 								{
-									Directory.SetCurrentDirectory( pg.strプラグインフォルダ );
+									Directory.SetCurrentDirectory( pg.PluginDir );
 									pg.plugin.Onステージ変更();
-									Directory.SetCurrentDirectory( TJAPlayer3.strEXEのあるフォルダ );
+									Directory.SetCurrentDirectory( TJAPlayer3.DirectoryWithThisEXE );
 								}
 
 								this.tガベージコレクションを実行する();
@@ -1013,7 +1013,7 @@ namespace TJAPlayer3
 							//-----------------------------
 								#endregion
 
-							case (int) CStage選曲.E戻り値.スキン変更:
+							case (int) SongSelectScene.E戻り値.スキン変更:
 
 								#region [ *** ]
 								//-----------------------------
@@ -1031,7 +1031,7 @@ namespace TJAPlayer3
 						#endregion
 						break;
 
-					case CStage.Eステージ.曲読み込み:
+					case BaseScene.Eステージ.曲読み込み:
 						#region [ *** ]
 						//-----------------------------
 						DTXVmode.Refreshed = false;		// 曲のリロード中に発生した再リロードは、無視する。
@@ -1052,11 +1052,11 @@ namespace TJAPlayer3
 								stage選曲.Activate();
 								r直前のステージ = r現在のステージ;
 								r現在のステージ = stage選曲;
-								foreach ( STPlugin pg in this.listプラグイン )
+								foreach ( STPlugin pg in this.Plugins )
 								{
-									Directory.SetCurrentDirectory( pg.strプラグインフォルダ );
+									Directory.SetCurrentDirectory( pg.PluginDir );
 									pg.plugin.Onステージ変更();
-									Directory.SetCurrentDirectory( TJAPlayer3.strEXEのあるフォルダ );
+									Directory.SetCurrentDirectory( TJAPlayer3.DirectoryWithThisEXE );
 								}
 								break;
 							}
@@ -1078,11 +1078,11 @@ for (int i = 0; i < 3; i++) {
 #endif
 							r直前のステージ = r現在のステージ;
 							r現在のステージ = stage演奏ドラム画面;
-							foreach( STPlugin pg in this.listプラグイン )
+							foreach( STPlugin pg in this.Plugins )
 							{
-								Directory.SetCurrentDirectory( pg.strプラグインフォルダ );
+								Directory.SetCurrentDirectory( pg.PluginDir );
 								pg.plugin.Onステージ変更();
-								Directory.SetCurrentDirectory( TJAPlayer3.strEXEのあるフォルダ );
+								Directory.SetCurrentDirectory( TJAPlayer3.DirectoryWithThisEXE );
 							}
 
 							this.tガベージコレクションを実行する();
@@ -1091,7 +1091,7 @@ for (int i = 0; i < 3; i++) {
 						#endregion
 						break;
 
-					case CStage.Eステージ.演奏:
+					case BaseScene.Eステージ.演奏:
 						#region [ *** ]
 						//-----------------------------
 						//long n1 = FDK.CSound管理.rc演奏用タイマ.nシステム時刻ms;
@@ -1116,7 +1116,7 @@ for (int i = 0; i < 3; i++) {
 								TJAPlayer3.stage演奏ドラム画面.t停止();
 								if ( previewSound != null )
 								{
-									this.previewSound.tサウンドを停止する();
+									this.previewSound.StopFDKSound();
 									this.previewSound.Dispose();
 									this.previewSound = null;
 								}
@@ -1159,7 +1159,7 @@ for (int i = 0; i < 3; i++) {
 									TJAPlayer3.stage演奏ドラム画面.t再読込();
 
 									TJAPlayer3._MainConfig.bTimeStretch = DTXVmode.TimeStretch;
-									CSound管理.bIsTimeStretch = DTXVmode.TimeStretch;
+									SoundManager.bIsTimeStretch = DTXVmode.TimeStretch;
 									if ( TJAPlayer3._MainConfig.b垂直帰線待ちを行う != DTXVmode.VSyncWait )
 									{
 										TJAPlayer3._MainConfig.b垂直帰線待ちを行う = DTXVmode.VSyncWait;
@@ -1230,11 +1230,11 @@ for (int i = 0; i < 3; i++) {
 		
 								#region [ プラグイン On演奏キャンセル() の呼び出し ]
 								//---------------------
-								foreach( STPlugin pg in this.listプラグイン )
+								foreach( STPlugin pg in this.Plugins )
 								{
-									Directory.SetCurrentDirectory( pg.strプラグインフォルダ );
+									Directory.SetCurrentDirectory( pg.PluginDir );
 									pg.plugin.On演奏キャンセル( scoreIni );
-									Directory.SetCurrentDirectory( TJAPlayer3.strEXEのあるフォルダ );
+									Directory.SetCurrentDirectory( TJAPlayer3.DirectoryWithThisEXE );
 								}
 								//---------------------
 								#endregion
@@ -1256,11 +1256,11 @@ for (int i = 0; i < 3; i++) {
 
 									#region [ プラグイン Onステージ変更() の呼び出し ]
 									//---------------------
-									foreach( STPlugin pg in this.listプラグイン )
+									foreach( STPlugin pg in this.Plugins )
 									{
-										Directory.SetCurrentDirectory( pg.strプラグインフォルダ );
+										Directory.SetCurrentDirectory( pg.PluginDir );
 										pg.plugin.Onステージ変更();
-										Directory.SetCurrentDirectory( TJAPlayer3.strEXEのあるフォルダ );
+										Directory.SetCurrentDirectory( TJAPlayer3.DirectoryWithThisEXE );
 									}
 									//---------------------
 									#endregion
@@ -1279,11 +1279,11 @@ for (int i = 0; i < 3; i++) {
 
 								#region [ プラグイン On演奏失敗() の呼び出し ]
 								//---------------------
-								foreach( STPlugin pg in this.listプラグイン )
+								foreach( STPlugin pg in this.Plugins )
 								{
-									Directory.SetCurrentDirectory( pg.strプラグインフォルダ );
+									Directory.SetCurrentDirectory( pg.PluginDir );
 									pg.plugin.On演奏失敗( scoreIni );
-									Directory.SetCurrentDirectory( TJAPlayer3.strEXEのあるフォルダ );
+									Directory.SetCurrentDirectory( TJAPlayer3.DirectoryWithThisEXE );
 								}
 								//---------------------
 								#endregion
@@ -1305,11 +1305,11 @@ for (int i = 0; i < 3; i++) {
 
 									#region [ プラグイン Onステージ変更() の呼び出し ]
 									//---------------------
-									foreach( STPlugin pg in this.listプラグイン )
+									foreach( STPlugin pg in this.Plugins )
 									{
-										Directory.SetCurrentDirectory( pg.strプラグインフォルダ );
+										Directory.SetCurrentDirectory( pg.PluginDir );
 										pg.plugin.Onステージ変更();
-										Directory.SetCurrentDirectory( TJAPlayer3.strEXEのあるフォルダ );
+										Directory.SetCurrentDirectory( TJAPlayer3.DirectoryWithThisEXE );
 									}
 									//---------------------
 									#endregion
@@ -1323,7 +1323,7 @@ for (int i = 0; i < 3; i++) {
 							case (int) E演奏画面の戻り値.ステージクリア:
 								#region [ 演奏クリア ]
 								//-----------------------------
-								CScoreIni.C演奏記録 c演奏記録_Drums;
+								ScoreIni.C演奏記録 c演奏記録_Drums;
 								stage演奏ドラム画面.t演奏結果を格納する( out c演奏記録_Drums );
 
                                 double ps = 0.0, gs = 0.0;
@@ -1332,37 +1332,37 @@ for (int i = 0; i < 3; i++) {
 									gs = c演奏記録_Drums.dbゲーム型スキル値;
 								}
 								string str = "Cleared";
-								switch( CScoreIni.t総合ランク値を計算して返す( c演奏記録_Drums, null, null ) )
+								switch( ScoreIni.t総合ランク値を計算して返す( c演奏記録_Drums, null, null ) )
 								{
-									case (int)CScoreIni.ERANK.SS:
+									case (int)ScoreIni.ERANK.SS:
 										str = string.Format( "Cleared (SS: {0:F2})", ps );
 										break;
 
-									case (int) CScoreIni.ERANK.S:
+									case (int) ScoreIni.ERANK.S:
 										str = string.Format( "Cleared (S: {0:F2})", ps );
 										break;
 
-									case (int) CScoreIni.ERANK.A:
+									case (int) ScoreIni.ERANK.A:
 										str = string.Format( "Cleared (A: {0:F2})", ps );
 										break;
 
-									case (int) CScoreIni.ERANK.B:
+									case (int) ScoreIni.ERANK.B:
 										str = string.Format( "Cleared (B: {0:F2})", ps );
 										break;
 
-									case (int) CScoreIni.ERANK.C:
+									case (int) ScoreIni.ERANK.C:
 										str = string.Format( "Cleared (C: {0:F2})", ps );
 										break;
 
-									case (int) CScoreIni.ERANK.D:
+									case (int) ScoreIni.ERANK.D:
 										str = string.Format( "Cleared (D: {0:F2})", ps );
 										break;
 
-									case (int) CScoreIni.ERANK.E:
+									case (int) ScoreIni.ERANK.E:
 										str = string.Format( "Cleared (E: {0:F2})", ps );
 										break;
 
-									case (int)CScoreIni.ERANK.UNKNOWN:	// #23534 2010.10.28 yyagi add: 演奏チップが0個のとき
+									case (int)ScoreIni.ERANK.UNKNOWN:	// #23534 2010.10.28 yyagi add: 演奏チップが0個のとき
 										str = "Cleared (No chips)";
 										break;
 								}
@@ -1371,11 +1371,11 @@ for (int i = 0; i < 3; i++) {
 
 								#region [ プラグイン On演奏クリア() の呼び出し ]
 								//---------------------
-								foreach( STPlugin pg in this.listプラグイン )
+								foreach( STPlugin pg in this.Plugins )
 								{
-									Directory.SetCurrentDirectory( pg.strプラグインフォルダ );
+									Directory.SetCurrentDirectory( pg.PluginDir );
 									pg.plugin.On演奏クリア( scoreIni );
-									Directory.SetCurrentDirectory( TJAPlayer3.strEXEのあるフォルダ );
+									Directory.SetCurrentDirectory( TJAPlayer3.DirectoryWithThisEXE );
 								}
 								//---------------------
 								#endregion
@@ -1390,11 +1390,11 @@ for (int i = 0; i < 3; i++) {
 
 								#region [ プラグイン Onステージ変更() の呼び出し ]
 								//---------------------
-								foreach( STPlugin pg in this.listプラグイン )
+								foreach( STPlugin pg in this.Plugins )
 								{
-									Directory.SetCurrentDirectory( pg.strプラグインフォルダ );
+									Directory.SetCurrentDirectory( pg.PluginDir );
 									pg.plugin.Onステージ変更();
-									Directory.SetCurrentDirectory( TJAPlayer3.strEXEのあるフォルダ );
+									Directory.SetCurrentDirectory( TJAPlayer3.DirectoryWithThisEXE );
 								}
 								//---------------------
 								#endregion
@@ -1407,7 +1407,7 @@ for (int i = 0; i < 3; i++) {
 						#endregion
 						break;
 
-					case CStage.Eステージ.結果:
+					case BaseScene.Eステージ.結果:
 						#region [ *** ]
 						//-----------------------------
 						if( this.n進行描画の戻り値 != 0 )
@@ -1425,11 +1425,11 @@ for (int i = 0; i < 3; i++) {
 								r直前のステージ = r現在のステージ;
 								r現在のステージ = stage選曲;
 
-								foreach( STPlugin pg in this.listプラグイン )
+								foreach( STPlugin pg in this.Plugins )
 								{
-									Directory.SetCurrentDirectory( pg.strプラグインフォルダ );
+									Directory.SetCurrentDirectory( pg.PluginDir );
 									pg.plugin.Onステージ変更();
-									Directory.SetCurrentDirectory( TJAPlayer3.strEXEのあるフォルダ );
+									Directory.SetCurrentDirectory( TJAPlayer3.DirectoryWithThisEXE );
 								}
 
 								this.tガベージコレクションを実行する();
@@ -1443,7 +1443,7 @@ for (int i = 0; i < 3; i++) {
 						#endregion
 						break;
 
-					case CStage.Eステージ.ChangeSkin:
+					case BaseScene.Eステージ.ChangeSkin:
 						#region [ *** ]
 						//-----------------------------
 						if ( this.n進行描画の戻り値 != 0 )
@@ -1460,7 +1460,7 @@ for (int i = 0; i < 3; i++) {
 						#endregion
 						break;
 
-					case CStage.Eステージ.終了:
+					case BaseScene.Eステージ.終了:
 						#region [ *** ]
 						//-----------------------------
 						if( this.n進行描画の戻り値 != 0 )
@@ -1475,7 +1475,7 @@ for (int i = 0; i < 3; i++) {
 			    actScanningLoudness.Draw();
 
                 // オーバレイを描画する(テクスチャの生成されていない起動ステージは例外
-                if(r現在のステージ != null && r現在のステージ.eステージID != CStage.Eステージ.起動 && TJAPlayer3.Tx.Overlay != null)
+                if(r現在のステージ != null && r現在のステージ.eステージID != BaseScene.Eステージ.起動 && TJAPlayer3.Tx.Overlay != null)
                 {
                     TJAPlayer3.Tx.Overlay.Draw2D(app.Device, 0, 0);
                 }
@@ -1485,9 +1485,9 @@ for (int i = 0; i < 3; i++) {
 #if !GPUFlushAfterPresent
 			actFlushGPU?.Draw();		// Flush GPU	// EndScene()～Present()間 (つまりVSync前) でFlush実行
 #endif
-			if ( Sound管理?.GetCurrentSoundDeviceType() != "DirectSound" )
+			if ( _SoundManager?.GetCurrentSoundDeviceType() != "DirectSound" )
 			{
-				Sound管理?.t再生中の処理をする();	// サウンドバッファの更新; 画面描画と同期させることで、スクロールをスムーズにする
+				_SoundManager?.t再生中の処理をする();	// サウンドバッファの更新; 画面描画と同期させることで、スクロールをスムーズにする
 			}
 
 
@@ -1535,7 +1535,7 @@ for (int i = 0; i < 3; i++) {
 			{
 				return new FDKTexture( app.Device, fileName, TextureFormat, b黒を透過する );
 			}
-			catch ( CTextureCreateFailedException e )
+			catch ( TextureCreateFailedException e )
 			{
 				Trace.TraceError( e.ToString() );
 				Trace.TraceError( "テクスチャの生成に失敗しました。({0})", fileName );
@@ -1551,7 +1551,7 @@ for (int i = 0; i < 3; i++) {
 		{
 			TJAPlayer3.t安全にDisposeする( ref tx );
 		}
-        public static void tテクスチャの解放( ref CTextureAf tx )
+        public static void tテクスチャの解放( ref FDKTextureAf tx )
 		{
 			TJAPlayer3.t安全にDisposeする( ref tx );
 		}
@@ -1569,7 +1569,7 @@ for (int i = 0; i < 3; i++) {
 			{
 				return new FDKTexture( app.Device, txData, TextureFormat, b黒を透過する );
 			}
-			catch ( CTextureCreateFailedException e )
+			catch ( TextureCreateFailedException e )
 			{
 				Trace.TraceError( e.ToString() );
 				Trace.TraceError( "テクスチャの生成に失敗しました。(txData)" );
@@ -1595,7 +1595,7 @@ for (int i = 0; i < 3; i++) {
 			{
 				return new FDKTexture( app.Device, bitmap, TextureFormat, b黒を透過する );
 			}
-			catch ( CTextureCreateFailedException e )
+			catch ( TextureCreateFailedException e )
 			{
 				Trace.TraceError( e.ToString() );
 				Trace.TraceError( "テクスチャの生成に失敗しました。(txData)" );
@@ -1603,11 +1603,11 @@ for (int i = 0; i < 3; i++) {
 			}
 		}
 
-        public static CTextureAf tテクスチャの生成Af( string fileName )
+        public static FDKTextureAf tテクスチャの生成Af( string fileName )
 		{
 			return tテクスチャの生成Af( fileName, false );
 		}
-		public static CTextureAf tテクスチャの生成Af( string fileName, bool b黒を透過する )
+		public static FDKTextureAf tテクスチャの生成Af( string fileName, bool b黒を透過する )
 		{
 			if ( app == null )
 			{
@@ -1615,9 +1615,9 @@ for (int i = 0; i < 3; i++) {
 			}
 			try
 			{
-				return new CTextureAf( app.Device, fileName, TextureFormat, b黒を透過する );
+				return new FDKTextureAf( app.Device, fileName, TextureFormat, b黒を透過する );
 			}
-			catch ( CTextureCreateFailedException e )
+			catch ( TextureCreateFailedException e )
 			{
 				Trace.TraceError( e.ToString() );
 				Trace.TraceError( "テクスチャの生成に失敗しました。({0})", fileName );
@@ -1738,7 +1738,7 @@ for (int i = 0; i < 3; i++) {
         //-----------------
         private bool bマウスカーソル表示中 = true;
 		private bool b終了処理完了済み;
-		private static CDTX[] dtx = new CDTX[ 4 ];
+		private static Chart[] dtx = new Chart[ 4 ];
 
         public static TextureLoader Tx = new TextureLoader();
 
@@ -1759,20 +1759,20 @@ for (int i = 0; i < 3; i++) {
 				}
 			}
 		}
-		private CSound previewSound;
+		private FDKSound previewSound;
         public static long StartupTime
         {
             get;
             private set;
         }
 
-        private void t起動処理()
+        private void StartUp()
 		{
 			#region [ strEXEのあるフォルダを決定する ]
 			//-----------------
 // BEGIN #23629 2010.11.13 from: デバッグ時は Application.ExecutablePath が ($SolutionDir)/bin/x86/Debug/ などになり System/ の読み込みに失敗するので、カレントディレクトリを採用する。（プロジェクトのプロパティ→デバッグ→作業ディレクトリが有効になる）
 #if DEBUG
-			strEXEのあるフォルダ = Environment.CurrentDirectory + @"\";
+			DirectoryWithThisEXE = Environment.CurrentDirectory + @"\";
 #else
 			strEXEのあるフォルダ = Path.GetDirectoryName( Application.ExecutablePath ) + @"\";	// #23629 2010.11.9 yyagi: set correct pathname where DTXManiaGR.exe is.
 #endif
@@ -1783,7 +1783,7 @@ for (int i = 0; i < 3; i++) {
 			#region [ Config.ini の読込み ]
 			//---------------------
 			_MainConfig = new MainConfig();
-			string path = strEXEのあるフォルダ + "Config.ini";
+			string path = DirectoryWithThisEXE + "Config.ini";
 			if( File.Exists( path ) )
 			{
 				try
@@ -1809,7 +1809,7 @@ for (int i = 0; i < 3; i++) {
 			{
 				try
 				{
-					Trace.Listeners.Add( new TraceLogListener( new StreamWriter( System.IO.Path.Combine( strEXEのあるフォルダ, "TJAPlayer3.log" ), false, Encoding.GetEncoding( "Shift_JIS" ) ) ) );
+					Trace.Listeners.Add( new TraceLogListener( new StreamWriter( System.IO.Path.Combine( DirectoryWithThisEXE, "TJAPlayer3.log" ), false, Encoding.GetEncoding( "Shift_JIS" ) ) ) );
 				}
 				catch ( System.UnauthorizedAccessException )			// #24481 2011.2.20 yyagi
 				{
@@ -1923,7 +1923,7 @@ for (int i = 0; i < 3; i++) {
 #if WindowedFullscreen
 			this.t全画面_ウィンドウモード切り替え();				// #30666 2013.2.2 yyagi: finalize settings for "Maximized window mode"
 #endif
-			actFlushGPU = new CActFlushGPU();
+			actFlushGPU = new FlushGPU();
 			//---------------------
 			#endregion
 
@@ -1935,7 +1935,7 @@ for (int i = 0; i < 3; i++) {
 			Trace.Indent();
 			try
 			{
-				Skin = new CSkin( TJAPlayer3._MainConfig.strSystemSkinSubfolderFullName, false);
+				Skin = new SkinManager( TJAPlayer3._MainConfig.strSystemSkinSubfolderFullName, false);
 				TJAPlayer3._MainConfig.strSystemSkinSubfolderFullName = TJAPlayer3.Skin.GetCurrentSkinSubfolderFullName( true );	// 旧指定のSkinフォルダが消滅していた場合に備える
 				Trace.TraceInformation( "スキンの初期化を完了しました。" );
 			}
@@ -1957,7 +1957,7 @@ for (int i = 0; i < 3; i++) {
 			Trace.Indent();
 			try
 			{
-                Timer = new FDK.Timer(FDK.Timer.TimerType.MultiMedia );
+                Timer = new FDK.FDKTimer(FDK.FDKTimer.TimerType.MultiMedia );
 				Trace.TraceInformation( "タイマの初期化を完了しました。" );
 			}
 			finally
@@ -2014,9 +2014,9 @@ for (int i = 0; i < 3; i++) {
 			{
 				bool bUseMIDIIn = !DTXVmode.Enabled;
 				Input管理 = new InputManager( base.Window.Handle, bUseMIDIIn );
-				foreach( IInputDevice device in Input管理.list入力デバイス )
+				foreach( IInputDevice device in Input管理.InputDevices )
 				{
-					if( ( device.e入力デバイス種別 == InputTypes.Joystick ) && !_MainConfig.dicJoystick.ContainsValue( device.GUID ) )
+					if( ( device.NowInputDeviceType == InputTypes.Joystick ) && !_MainConfig.dicJoystick.ContainsValue( device.GUID ) )
 					{
 						int key = 0;
 						while( _MainConfig.dicJoystick.ContainsKey( key ) )
@@ -2026,9 +2026,9 @@ for (int i = 0; i < 3; i++) {
 						_MainConfig.dicJoystick.Add( key, device.GUID );
 					}
 				}
-				foreach( IInputDevice device2 in Input管理.list入力デバイス )
+				foreach( IInputDevice device2 in Input管理.InputDevices )
 				{
-					if( device2.e入力デバイス種別 == InputTypes.Joystick )
+					if( device2.NowInputDeviceType == InputTypes.Joystick )
 					{
 						foreach( KeyValuePair<int, string> pair in _MainConfig.dicJoystick )
 						{
@@ -2060,7 +2060,7 @@ for (int i = 0; i < 3; i++) {
 			Trace.Indent();
 			try
 			{
-				Pad = new CPad( _MainConfig, Input管理 );
+				Pad = new PadManager( _MainConfig, Input管理 );
 				Trace.TraceInformation( "パッドの初期化を完了しました。" );
 			}
 			catch( Exception exception3 )
@@ -2080,8 +2080,8 @@ for (int i = 0; i < 3; i++) {
 			Trace.Indent();
 			try
 			{
-				Sound管理 = new CSound管理(base.Window.Handle,
-					(ESoundDeviceType)TJAPlayer3._MainConfig.nSoundDeviceType,
+				_SoundManager = new SoundManager(base.Window.Handle,
+					(SoundDeviceType)TJAPlayer3._MainConfig.nSoundDeviceType,
 					TJAPlayer3._MainConfig.nWASAPIBufferSizeMs,
 					// CDTXMania.ConfigIni.nASIOBufferSizeMs,
 					0,
@@ -2105,7 +2105,7 @@ for (int i = 0; i < 3; i++) {
 					SongGainController = new SongGainController();
 					ConfigIniToSongGainControllerBinder.Bind(_MainConfig, SongGainController);
 
-					SoundGroupLevelController = new SoundGroupLevelController(CSound.listインスタンス);
+					SoundGroupLevelController = new SoundGroupLevelController(FDKSound.FDKSounds);
 					ConfigIniToSoundGroupLevelControllerBinder.Bind(_MainConfig, SoundGroupLevelController);
 				}
 				finally
@@ -2115,8 +2115,8 @@ for (int i = 0; i < 3; i++) {
 				}
 
 				ShowWindowTitleWithSoundType();
-				FDK.CSound管理.bIsTimeStretch = TJAPlayer3._MainConfig.bTimeStretch;
-				Sound管理.nMasterVolume = TJAPlayer3._MainConfig.nMasterVolume;
+				FDK.SoundManager.bIsTimeStretch = TJAPlayer3._MainConfig.bTimeStretch;
+				_SoundManager.nMasterVolume = TJAPlayer3._MainConfig.nMasterVolume;
 				//FDK.CSound管理.bIsMP3DecodeByWindowsCodec = CDTXMania.ConfigIni.bNoMP3Streaming;
 				Trace.TraceInformation( "サウンドデバイスの初期化を完了しました。" );
 			}
@@ -2136,7 +2136,7 @@ for (int i = 0; i < 3; i++) {
 			Trace.Indent();
 			try
 			{
-				Songs管理 = new CSongs管理();
+				Songs管理 = new SongsManager();
 //				Songs管理_裏読 = new CSongs管理();
 				EnumSongs = new CEnumSongs();
 				actEnumSongs = new CActEnumSongs();
@@ -2155,7 +2155,7 @@ for (int i = 0; i < 3; i++) {
 			#endregion
 			#region [ CAvi の初期化 ]
 			//---------------------
-			CAvi.t初期化();
+			FDKAvi.t初期化();
 			//---------------------
 			#endregion
 			#region [ Random の初期化 ]
@@ -2167,16 +2167,16 @@ for (int i = 0; i < 3; i++) {
 			//---------------------
 			r現在のステージ = null;
 			r直前のステージ = null;
-			stage起動 = new CStage起動();
-			stageタイトル = new CStageタイトル();
+			stage起動 = new StartUpScene();
+			stageタイトル = new TitleScene();
 //			stageオプション = new CStageオプション();
-			stageコンフィグ = new CStageコンフィグ();
-			stage選曲 = new CStage選曲();
-			stage曲読み込み = new CStage曲読み込み();
+			stageコンフィグ = new ConfigScene();
+			stage選曲 = new SongSelectScene();
+			stage曲読み込み = new SongLoadingScene();
 			stage演奏ドラム画面 = new CStage演奏ドラム画面();
-			stage結果 = new CStage結果();
-			stageChangeSkin = new CStageChangeSkin();
-			stage終了 = new CStage終了();
+			stage結果 = new ResultScene();
+			stageChangeSkin = new ChangeSkinScene();
+			stage終了 = new EndingScene();
 			this.Activities = new List<Activity>();
 			this.Activities.Add( actEnumSongs );
 			this.Activities.Add( _ConsoleText );
@@ -2195,7 +2195,7 @@ for (int i = 0; i < 3; i++) {
 			#endregion
 			#region [ プラグインの検索と生成 ]
 			//---------------------
-			PluginHost = new CPluginHost();
+			PluginHost = new PluginHost();
 
 			Trace.TraceInformation( "プラグインの検索と生成を行います。" );
 			Trace.Indent();
@@ -2212,19 +2212,19 @@ for (int i = 0; i < 3; i++) {
 			#endregion
 			#region [ プラグインの初期化 ]
 			//---------------------
-			if( this.listプラグイン != null && this.listプラグイン.Count > 0 )
+			if( this.Plugins != null && this.Plugins.Count > 0 )
 			{
 				Trace.TraceInformation( "プラグインの初期化を行います。" );
 				Trace.Indent();
 				try
 				{
-					foreach( STPlugin st in this.listプラグイン )
+					foreach( STPlugin st in this.Plugins )
 					{
-						Directory.SetCurrentDirectory( st.strプラグインフォルダ );
+						Directory.SetCurrentDirectory( st.PluginDir );
 						st.plugin.On初期化( this.PluginHost );
 						st.plugin.OnManagedリソースの作成();
 						st.plugin.OnUnmanagedリソースの作成();
-						Directory.SetCurrentDirectory( TJAPlayer3.strEXEのあるフォルダ );
+						Directory.SetCurrentDirectory( TJAPlayer3.DirectoryWithThisEXE );
 					}
 					Trace.TraceInformation( "すべてのプラグインの初期化を完了しました。" );
 				}
@@ -2274,15 +2274,15 @@ for (int i = 0; i < 3; i++) {
 		public void ShowWindowTitleWithSoundType()
 		{
 			string delay = "";
-			if ( Sound管理.GetCurrentSoundDeviceType() != "DirectSound" )
+			if ( _SoundManager.GetCurrentSoundDeviceType() != "DirectSound" )
 			{
-				delay = "(" + Sound管理.GetSoundDelay() + "ms)";
+				delay = "(" + _SoundManager.GetSoundDelay() + "ms)";
 			}
             AssemblyName asmApp = Assembly.GetExecutingAssembly().GetName();
-            base.Window.Text = asmApp.Name + " Ver." + VERSION + " (" + Sound管理.GetCurrentSoundDeviceType() + delay + ")";
+            base.Window.Text = asmApp.Name + " Ver." + VERSION + " (" + _SoundManager.GetCurrentSoundDeviceType() + delay + ")";
 		}
 
-		private void t終了処理()
+		private void Terminate()
 		{
 			if( !this.b終了処理完了済み )
 			{
@@ -2332,19 +2332,19 @@ for (int i = 0; i < 3; i++) {
 				#endregion
 				#region [ プラグインの終了処理 ]
 				//---------------------
-				if (this.listプラグイン != null && this.listプラグイン.Count > 0)
+				if (this.Plugins != null && this.Plugins.Count > 0)
 				{
 					Trace.TraceInformation( "すべてのプラグインを終了します。" );
 					Trace.Indent();
 					try
 					{
-						foreach( STPlugin st in this.listプラグイン )
+						foreach( STPlugin st in this.Plugins )
 						{
-							Directory.SetCurrentDirectory( st.strプラグインフォルダ );
+							Directory.SetCurrentDirectory( st.PluginDir );
 							st.plugin.OnUnmanagedリソースの解放();
 							st.plugin.OnManagedリソースの解放();
 							st.plugin.On終了();
-							Directory.SetCurrentDirectory( TJAPlayer3.strEXEのあるフォルダ );
+							Directory.SetCurrentDirectory( TJAPlayer3.DirectoryWithThisEXE );
 						}
 						PluginHost = null;
 						Trace.TraceInformation( "すべてのプラグインの終了処理を完了しました。" );
@@ -2380,7 +2380,7 @@ for (int i = 0; i < 3; i++) {
 						Trace.Unindent();
 					}
 				}
-				CAvi.t終了();
+				FDKAvi.t終了();
                 //---------------------
                 #endregion
                 #region TextureLoaderの処理
@@ -2412,14 +2412,14 @@ for (int i = 0; i < 3; i++) {
 				#endregion
 				#region [ DirectSoundの終了処理 ]
 				//---------------------
-				if (Sound管理 != null)
+				if (_SoundManager != null)
 				{
 					Trace.TraceInformation( "DirectSound の終了処理を行います。" );
 					Trace.Indent();
 					try
 					{
-						Sound管理.Dispose();
-						Sound管理 = null;
+						_SoundManager.Dispose();
+						_SoundManager = null;
 						Trace.TraceInformation( "DirectSound の終了処理を完了しました。" );
 					}
 					catch( Exception exception3 )
@@ -2550,7 +2550,7 @@ for (int i = 0; i < 3; i++) {
 				//---------------------
 				Trace.TraceInformation("Config.ini を出力します。");
 //				if ( ConfigIni.bIsSwappedGuitarBass )			// #24063 2011.1.16 yyagi ギターベースがスワップしているときは元に戻す
-				string str = strEXEのあるフォルダ + "Config.ini";
+				string str = DirectoryWithThisEXE + "Config.ini";
 				Trace.Indent();
 				try
 				{
@@ -2626,16 +2626,16 @@ for (int i = 0; i < 3; i++) {
 				this.b終了処理完了済み = true;
 			}
 		}
-		private CScoreIni tScoreIniへBGMAdjustとHistoryとPlayCountを更新(string str新ヒストリ行)
+		private ScoreIni tScoreIniへBGMAdjustとHistoryとPlayCountを更新(string str新ヒストリ行)
 		{
 			bool bIsUpdatedDrums, bIsUpdatedGuitar, bIsUpdatedBass;
 			string strFilename = DTX.strファイル名の絶対パス + ".score.ini";
-			CScoreIni ini = new CScoreIni( strFilename );
+			ScoreIni ini = new ScoreIni( strFilename );
 			if( !File.Exists( strFilename ) )
 			{
 				ini.stファイル.Title = DTX.TITLE;
 				ini.stファイル.Name = DTX.strファイル名;
-				ini.stファイル.Hash = CScoreIni.tファイルのMD5を求めて返す( DTX.strファイル名の絶対パス );
+				ini.stファイル.Hash = ScoreIni.tファイルのMD5を求めて返す( DTX.strファイル名の絶対パス );
 				for( int i = 0; i < 6; i++ )
 				{
 					ini.stセクション[ i ].nPerfectになる範囲ms = nPerfect範囲ms;
@@ -2645,7 +2645,7 @@ for (int i = 0; i < 3; i++) {
 				}
 			}
 			ini.stファイル.BGMAdjust = DTX.nBGMAdjust;
-			CScoreIni.t更新条件を取得する( out bIsUpdatedDrums, out bIsUpdatedGuitar, out bIsUpdatedBass );
+			ScoreIni.t更新条件を取得する( out bIsUpdatedDrums, out bIsUpdatedGuitar, out bIsUpdatedBass );
 			if( bIsUpdatedDrums || bIsUpdatedGuitar || bIsUpdatedBass )
 			{
 				if( bIsUpdatedDrums )
@@ -2687,15 +2687,15 @@ for (int i = 0; i < 3; i++) {
 		}
 		private void tプラグイン検索と生成()
 		{
-			this.listプラグイン = new List<STPlugin>();
+			this.Plugins = new List<STPlugin>();
 
 			string strIPluginActivityの名前 = typeof( IPluginActivity ).FullName;
-			string strプラグインフォルダパス = strEXEのあるフォルダ + "Plugins\\";
+			string strプラグインフォルダパス = DirectoryWithThisEXE + "Plugins\\";
 
 			this.t指定フォルダ内でのプラグイン検索と生成( strプラグインフォルダパス, strIPluginActivityの名前 );
 
-			if( this.listプラグイン.Count > 0 )
-				Trace.TraceInformation( this.listプラグイン.Count + " 個のプラグインを読み込みました。" );
+			if( this.Plugins.Count > 0 )
+				Trace.TraceInformation( this.Plugins.Count + " 個のプラグインを読み込みました。" );
 		}
 
         public void RefleshSkin()
@@ -2706,7 +2706,7 @@ for (int i = 0; i < 3; i++) {
 
             TJAPlayer3.Skin.Dispose();
             TJAPlayer3.Skin = null;
-            TJAPlayer3.Skin = new CSkin(TJAPlayer3._MainConfig.strSystemSkinSubfolderFullName, false);
+            TJAPlayer3.Skin = new SkinManager(TJAPlayer3._MainConfig.strSystemSkinSubfolderFullName, false);
 
 
             TJAPlayer3.Tx.DisposeTexture();
@@ -2742,13 +2742,13 @@ for (int i = 0; i < 3; i++) {
 							// (1-4) クラス名からインスタンスを作成する
 							var st = new STPlugin() {
 								plugin = (IPluginActivity) asm.CreateInstance( t.FullName ),
-								strプラグインフォルダ = Path.GetDirectoryName( dllName ),
+								PluginDir = Path.GetDirectoryName( dllName ),
 								strアセンブリ簡易名 = asm.GetName().Name,
 								Version = asm.GetName().Version,
 							};
 
 							// (1-5) プラグインリストへ登録
-							this.listプラグイン.Add( st );
+							this.Plugins.Add( st );
 							Trace.TraceInformation( "プラグイン {0} ({1}, {2}, {3}) を読み込みました。", t.FullName, Path.GetFileName( dllName ), st.strアセンブリ簡易名, st.Version.ToString() );
 						}
 					}
@@ -2800,7 +2800,7 @@ for (int i = 0; i < 3; i++) {
 					{
 						// Debug.WriteLine( "capture: " + string.Format( "{0:2x}", (int) e.KeyCode ) + " " + (int) e.KeyCode );
 						string strFullPath =
-						   Path.Combine( TJAPlayer3.strEXEのあるフォルダ, "Capture_img" );
+						   Path.Combine( TJAPlayer3.DirectoryWithThisEXE, "Capture_img" );
 						strFullPath = Path.Combine( strFullPath, DateTime.Now.ToString( "yyyyMMddHHmmss" ) + ".png" );
 						SaveResultScreen( strFullPath );
 					}

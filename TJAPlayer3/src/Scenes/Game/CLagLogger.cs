@@ -15,7 +15,7 @@ namespace TJAPlayer3
 
         private static readonly List<int> LagValues = new List<int>(2000);
 
-        public static void Add(int nPlayer, CDTX.CChip pChip)
+        public static void Add(int nPlayer, Chart.CChip pChip)
         {
             if (nPlayer != 0)
             {

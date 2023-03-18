@@ -45,7 +45,7 @@ namespace TJAPlayer3
 				return this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す( this.r現在選択中の曲 );
 			}
 		}
-		public Cスコア r現在選択中のスコア
+		public ScoreInfo r現在選択中のスコア
 		{
 			get
 			{
@@ -56,7 +56,7 @@ namespace TJAPlayer3
 				return null;
 			}
 		}
-		public C曲リストノード r現在選択中の曲 
+		public SongInfoNode r現在選択中の曲 
 		{
 			get;
 			private set;
@@ -70,7 +70,7 @@ namespace TJAPlayer3
 
 		// t選択曲が変更された()内で使う、直前の選曲の保持
 		// (前と同じ曲なら選択曲変更に掛かる再計算を省略して高速化するため)
-		private C曲リストノード song_last = null;
+		private SongInfoNode song_last = null;
 
 		
 		// コンストラクタ
@@ -134,7 +134,7 @@ namespace TJAPlayer3
 
 		// メソッド
 
-		public int n現在のアンカ難易度レベルに最も近い難易度レベルを返す( C曲リストノード song )
+		public int n現在のアンカ難易度レベルに最も近い難易度レベルを返す( SongInfoNode song )
 		{
 			// 事前チェック。
 
@@ -144,7 +144,7 @@ namespace TJAPlayer3
 			if( song.arスコア[ this.n現在のアンカ難易度レベル ] != null )
 				return this.n現在のアンカ難易度レベル;	// 難易度ぴったりの曲があったよ
 
-			if( ( song.eノード種別 == C曲リストノード.Eノード種別.BOX ) || ( song.eノード種別 == C曲リストノード.Eノード種別.BACKBOX ) )
+			if( ( song.NowNodeType == SongInfoNode.NodeType.BOX ) || ( song.NowNodeType == SongInfoNode.NodeType.BACKBOX ) )
 				return 0;								// BOX と BACKBOX は関係無いよ
 
 
@@ -181,18 +181,18 @@ namespace TJAPlayer3
 
 			return n最も近いレベル;
 		}
-		public C曲リストノード r指定された曲が存在するリストの先頭の曲( C曲リストノード song )
+		public SongInfoNode r指定された曲が存在するリストの先頭の曲( SongInfoNode song )
 		{
-			List<C曲リストノード> songList = GetSongListWithinMe( song );
+			List<SongInfoNode> songList = GetSongListWithinMe( song );
 			return ( songList == null ) ? null : songList[ 0 ];
 		}
-		public C曲リストノード r指定された曲が存在するリストの末尾の曲( C曲リストノード song )
+		public SongInfoNode r指定された曲が存在するリストの末尾の曲( SongInfoNode song )
 		{
-			List<C曲リストノード> songList = GetSongListWithinMe( song );
+			List<SongInfoNode> songList = GetSongListWithinMe( song );
 			return ( songList == null ) ? null : songList[ songList.Count - 1 ];
 		}
 
-		private List<C曲リストノード> GetSongListWithinMe( C曲リストノード song )
+		private List<SongInfoNode> GetSongListWithinMe( SongInfoNode song )
 		{
 			if ( song.r親ノード == null )					// root階層のノートだったら
 			{
@@ -212,7 +212,7 @@ namespace TJAPlayer3
 		}
 
 
-		public delegate void DGSortFunc( List<C曲リストノード> songList, E楽器パート eInst, int order, params object[] p);
+		public delegate void DGSortFunc( List<SongInfoNode> songList, E楽器パート eInst, int order, params object[] p);
 		/// <summary>
 		/// 主にCSong管理.cs内にあるソート機能を、delegateで呼び出す。
 		/// </summary>
@@ -221,7 +221,7 @@ namespace TJAPlayer3
 		/// <param name="order">-1=降順, 1=昇順</param>
 		public void t曲リストのソート( DGSortFunc sf, E楽器パート eInst, int order, params object[] p )
 		{
-			List<C曲リストノード> songList = GetSongListWithinMe( this.r現在選択中の曲 );
+			List<SongInfoNode> songList = GetSongListWithinMe( this.r現在選択中の曲 );
 			if ( songList == null )
 			{
 				// 何もしない;
@@ -246,13 +246,13 @@ namespace TJAPlayer3
 //Trace.TraceInformation( "Skin指定: " + CSkin.GetSkinName( this.r現在選択中の曲.strSkinPath ) );
 //Trace.TraceInformation( "Skinpath: " + this.r現在選択中の曲.strSkinPath );
 			bool ret = false;
-			if ( CSkin.GetSkinName( TJAPlayer3.Skin.GetCurrentSkinSubfolderFullName( false ) ) != CSkin.GetSkinName( this.r現在選択中の曲.strSkinPath )
-				&& CSkin.bUseBoxDefSkin )
+			if ( SkinManager.GetSkinName( TJAPlayer3.Skin.GetCurrentSkinSubfolderFullName( false ) ) != SkinManager.GetSkinName( this.r現在選択中の曲.strSkinPath )
+				&& SkinManager.bUseBoxDefSkin )
 			{
 				ret = true;
 				// BOXに入るときは、スキン変更発生時のみboxdefスキン設定の更新を行う
 				TJAPlayer3.Skin.SetCurrentSkinSubfolderFullName(
-					TJAPlayer3.Skin.GetSkinSubfolderFullNameFromSkinName( CSkin.GetSkinName( this.r現在選択中の曲.strSkinPath ) ), false );
+					TJAPlayer3.Skin.GetSkinSubfolderFullNameFromSkinName( SkinManager.GetSkinName( this.r現在選択中の曲.strSkinPath ) ), false );
 			}
 
 //Trace.TraceInformation( "Skin変更: " + CSkin.GetSkinName( CDTXMania.Skin.GetCurrentSkinSubfolderFullName(false) ) );
@@ -280,8 +280,8 @@ namespace TJAPlayer3
 //Trace.TraceInformation( "Skin指定: " + CSkin.GetSkinName( this.r現在選択中の曲.strSkinPath ) );
 //Trace.TraceInformation( "Skinpath: " + this.r現在選択中の曲.strSkinPath );
 			bool ret = false;
-			if ( CSkin.GetSkinName( TJAPlayer3.Skin.GetCurrentSkinSubfolderFullName( false ) ) != CSkin.GetSkinName( this.r現在選択中の曲.strSkinPath )
-				&& CSkin.bUseBoxDefSkin )
+			if ( SkinManager.GetSkinName( TJAPlayer3.Skin.GetCurrentSkinSubfolderFullName( false ) ) != SkinManager.GetSkinName( this.r現在選択中の曲.strSkinPath )
+				&& SkinManager.bUseBoxDefSkin )
 			{
 				ret = true;
 			}
@@ -289,7 +289,7 @@ namespace TJAPlayer3
 			// (ユーザーがboxdefスキンをConfig指定している場合への対応のために必要)
 			// tBoxに入る()とは処理が微妙に異なるので注意
 			TJAPlayer3.Skin.SetCurrentSkinSubfolderFullName(
-				( this.r現在選択中の曲.strSkinPath == "" ) ? "" : TJAPlayer3.Skin.GetSkinSubfolderFullNameFromSkinName( CSkin.GetSkinName( this.r現在選択中の曲.strSkinPath ) ), false );
+				( this.r現在選択中の曲.strSkinPath == "" ) ? "" : TJAPlayer3.Skin.GetSkinSubfolderFullNameFromSkinName( SkinManager.GetSkinName( this.r現在選択中の曲.strSkinPath ) ), false );
 //Trace.TraceInformation( "SKIN変更: " + CSkin.GetSkinName( CDTXMania.Skin.GetCurrentSkinSubfolderFullName(false) ) );
 //Trace.TraceInformation( "SKIN変更Current : "+  CDTXMania.Skin.GetCurrentSkinSubfolderFullName(false) );
 //Trace.TraceInformation( "SKIN変更System  : "+  CSkin.strSystemSkinSubfolderFullName );
@@ -347,7 +347,7 @@ namespace TJAPlayer3
 
 			// 曲毎に表示しているスキル値を、新しい難易度レベルに合わせて取得し直す。（表示されている13曲全部。）
 
-			C曲リストノード song = this.r現在選択中の曲;
+			SongInfoNode song = this.r現在選択中の曲;
 			for( int i = 0; i < 5; i++ )
 				song = this.r前の曲( song );
 
@@ -410,7 +410,7 @@ namespace TJAPlayer3
 
 			// 曲毎に表示しているスキル値を、新しい難易度レベルに合わせて取得し直す。（表示されている13曲全部。）
 
-			C曲リストノード song = this.r現在選択中の曲;
+			SongInfoNode song = this.r現在選択中の曲;
 			for( int i = 0; i < 5; i++ )
 				song = this.r前の曲( song );
 
@@ -435,7 +435,7 @@ namespace TJAPlayer3
 		/// 曲リストをリセットする
 		/// </summary>
 		/// <param name="cs"></param>
-		public void Refresh(CSongs管理 cs, bool bRemakeSongTitleBar )		// #26070 2012.2.28 yyagi
+		public void Refresh(SongsManager cs, bool bRemakeSongTitleBar )		// #26070 2012.2.28 yyagi
 		{
 //			this.On非活性化();
 
@@ -477,9 +477,9 @@ namespace TJAPlayer3
 		/// <param name="ln">検索対象のList</param>
 		/// <param name="bc">検索するパンくずリスト(文字列)</param>
 		/// <returns></returns>
-		private C曲リストノード searchCurrentBreadcrumbsPosition( List<C曲リストノード> ln, string bc )
+		private SongInfoNode searchCurrentBreadcrumbsPosition( List<SongInfoNode> ln, string bc )
 		{
-			foreach (C曲リストノード n in ln)
+			foreach (SongInfoNode n in ln)
 			{
 				if ( n.strBreadcrumbs == bc )
 				{
@@ -487,7 +487,7 @@ namespace TJAPlayer3
 				}
 				else if ( n.list子リスト != null && n.list子リスト.Count > 0 )	// 子リストが存在するなら、再帰で探す
 				{
-					C曲リストノード r = searchCurrentBreadcrumbsPosition( n.list子リスト, bc );
+					SongInfoNode r = searchCurrentBreadcrumbsPosition( n.list子リスト, bc );
 					if ( r != null ) return r;
 				}
 			}
@@ -499,14 +499,14 @@ namespace TJAPlayer3
 		/// </summary>
 		public void t選択曲が変更された( bool bForce )	// #27648
 		{
-			C曲リストノード song = TJAPlayer3.stage選曲.r現在選択中の曲;
+			SongInfoNode song = TJAPlayer3.stage選曲.r現在選択中の曲;
 			if ( song == null )
 				return;
 			if ( song == song_last && bForce == false )
 				return;
 				
 			song_last = song;
-			List<C曲リストノード> list = ( song.r親ノード != null ) ? song.r親ノード.list子リスト : TJAPlayer3.Songs管理.list曲ルート;
+			List<SongInfoNode> list = ( song.r親ノード != null ) ? song.r親ノード.list子リスト : TJAPlayer3.Songs管理.list曲ルート;
 			int index = list.IndexOf( song ) + 1;
 			if ( index <= 0 )
 			{
@@ -533,13 +533,13 @@ namespace TJAPlayer3
 
             if (!string.IsNullOrEmpty(TJAPlayer3._MainConfig.FontName))
             {
-                this.pfMusicName = new CPrivateFastFont(new FontFamily(TJAPlayer3._MainConfig.FontName), 28);
-                this.pfSubtitle = new CPrivateFastFont(new FontFamily(TJAPlayer3._MainConfig.FontName), 20);
+                this.pfMusicName = new CachePrivateFont(new FontFamily(TJAPlayer3._MainConfig.FontName), 28);
+                this.pfSubtitle = new CachePrivateFont(new FontFamily(TJAPlayer3._MainConfig.FontName), 20);
             }
             else
             {
-                this.pfMusicName = new CPrivateFastFont(new FontFamily("MS UI Gothic"), 28);
-                this.pfSubtitle = new CPrivateFastFont(new FontFamily("MS UI Gothic"), 20);
+                this.pfMusicName = new CachePrivateFont(new FontFamily("MS UI Gothic"), 28);
+                this.pfSubtitle = new CachePrivateFont(new FontFamily("MS UI Gothic"), 20);
             }
 
 		    _titleTextures.ItemRemoved += OnTitleTexturesOnItemRemoved;
@@ -664,7 +664,7 @@ namespace TJAPlayer3
 					this.txSongNotFound.Scaling = new Vector3( 0.5f, 0.5f, 1f );	// 半分のサイズで表示する。
 				}
 			}
-			catch( CTextureCreateFailedException e )
+			catch( TextureCreateFailedException e )
 			{
 				Trace.TraceError( e.ToString() );
 				Trace.TraceError( "SoungNotFoundテクスチャの作成に失敗しました。" );
@@ -689,7 +689,7 @@ namespace TJAPlayer3
 					this.txEnumeratingSongs.Scaling = new Vector3( 0.5f, 0.5f, 1f );	// 半分のサイズで表示する。
 				}
 			}
-			catch ( CTextureCreateFailedException e )
+			catch ( TextureCreateFailedException e )
 			{
 				Trace.TraceError( e.ToString() );
 				Trace.TraceError( "txEnumeratingSongsテクスチャの作成に失敗しました。" );
@@ -766,10 +766,10 @@ namespace TJAPlayer3
 				for( int i = 0; i < 13; i++ )
 					this.ct登場アニメ用[ i ] = new Counter( -i * 10, 100, 3, TJAPlayer3.Timer );
 
-				this.nスクロールタイマ = CSound管理.rc演奏用タイマ.n現在時刻;
+				this.nスクロールタイマ = SoundManager.PlayTimer.n現在時刻;
 				TJAPlayer3.stage選曲.t選択曲変更通知();
 
-                this.n矢印スクロール用タイマ値 = CSound管理.rc演奏用タイマ.n現在時刻;
+                this.n矢印スクロール用タイマ値 = SoundManager.PlayTimer.n現在時刻;
 				this.ct三角矢印アニメ.Start( 0, 1000, 1, TJAPlayer3.Timer );
                     base.JustStartedUpdate = false;
 			}
@@ -823,7 +823,7 @@ namespace TJAPlayer3
 			{
 				#region [ (2) 通常フェーズの進行。]
 				//-----------------
-				long n現在時刻 = CSound管理.rc演奏用タイマ.n現在時刻;
+				long n現在時刻 = SoundManager.PlayTimer.n現在時刻;
 				
 				if( n現在時刻 < this.nスクロールタイマ )	// 念のため
 					this.nスクロールタイマ = n現在時刻;
@@ -892,7 +892,7 @@ namespace TJAPlayer3
 
 						// 選択曲から７つ下のパネル（＝新しく最下部に表示されるパネル。消えてしまう一番上のパネルを再利用する）に、新しい曲の情報を記載する。
 
-						C曲リストノード song = this.r現在選択中の曲;
+						SongInfoNode song = this.r現在選択中の曲;
 						for( int i = 0; i < 7; i++ )
 							song = this.r次の曲( song );
 
@@ -912,7 +912,7 @@ namespace TJAPlayer3
 
 						// stバー情報[] の内容を1行ずつずらす。
 						
-						C曲リストノード song2 = this.r現在選択中の曲;
+						SongInfoNode song2 = this.r現在選択中の曲;
 						for( int i = 0; i < 5; i++ )
 							song2 = this.r前の曲( song2 );
 
@@ -960,7 +960,7 @@ namespace TJAPlayer3
 
 						// 選択曲から５つ上のパネル（＝新しく最上部に表示されるパネル。消えてしまう一番下のパネルを再利用する）に、新しい曲の情報を記載する。
 
-						C曲リストノード song = this.r現在選択中の曲;
+						SongInfoNode song = this.r現在選択中の曲;
 						for( int i = 0; i < 5; i++ )
 							song = this.r前の曲( song );
 
@@ -979,7 +979,7 @@ namespace TJAPlayer3
 
 						// stバー情報[] の内容を1行ずつずらす。
 						
-						C曲リストノード song2 = this.r現在選択中の曲;
+						SongInfoNode song2 = this.r現在選択中の曲;
 						for( int i = 0; i < 5; i++ )
 							song2 = this.r前の曲( song2 );
 
@@ -1067,9 +1067,9 @@ namespace TJAPlayer3
                 {
                     if( TJAPlayer3.Tx.SongSelect_Bar_Center != null )
                         TJAPlayer3.Tx.SongSelect_Bar_Center.Draw2D( TJAPlayer3.app.Device, 448, TJAPlayer3.Skin.SongSelect_Overall_Y);
-                    switch (r現在選択中の曲.eノード種別)
+                    switch (r現在選択中の曲.NowNodeType)
                     {
-                        case C曲リストノード.Eノード種別.SCORE:
+                        case SongInfoNode.NodeType.SCORE:
                             {
                                 if (TJAPlayer3.Tx.SongSelect_Frame_Score != null)
                                 {
@@ -1162,17 +1162,17 @@ namespace TJAPlayer3
                             }
                             break;
 
-                        case C曲リストノード.Eノード種別.BOX:
+                        case SongInfoNode.NodeType.BOX:
                             if (TJAPlayer3.Tx.SongSelect_Frame_Box != null)
                                 TJAPlayer3.Tx.SongSelect_Frame_Box.Draw2D(TJAPlayer3.app.Device, 450, TJAPlayer3.Skin.SongSelect_Overall_Y);
                             break;
 
-                        case C曲リストノード.Eノード種別.BACKBOX:
+                        case SongInfoNode.NodeType.BACKBOX:
                             if (TJAPlayer3.Tx.SongSelect_Frame_BackBox != null)
                                 TJAPlayer3.Tx.SongSelect_Frame_BackBox.Draw2D(TJAPlayer3.app.Device, 450, TJAPlayer3.Skin.SongSelect_Overall_Y);
                             break;
 
-                        case C曲リストノード.Eノード種別.RANDOM:
+                        case SongInfoNode.NodeType.RANDOM:
                             if (TJAPlayer3.Tx.SongSelect_Frame_Random != null)
                                 TJAPlayer3.Tx.SongSelect_Frame_Random.Draw2D(TJAPlayer3.app.Device, 450, TJAPlayer3.Skin.SongSelect_Overall_Y);
                             break;
@@ -1314,9 +1314,9 @@ namespace TJAPlayer3
                 {
                     if( TJAPlayer3.Tx.SongSelect_Bar_Center != null )
                         TJAPlayer3.Tx.SongSelect_Bar_Center.Draw2D( TJAPlayer3.app.Device, 448, TJAPlayer3.Skin.SongSelect_Overall_Y);
-                    switch (r現在選択中の曲.eノード種別)
+                    switch (r現在選択中の曲.NowNodeType)
                     {
-                        case C曲リストノード.Eノード種別.SCORE:
+                        case SongInfoNode.NodeType.SCORE:
                             {
                                 if (TJAPlayer3.Tx.SongSelect_Frame_Score != null)
                                 {
@@ -1423,17 +1423,17 @@ namespace TJAPlayer3
                             }
                             break;
 
-                        case C曲リストノード.Eノード種別.BOX:
+                        case SongInfoNode.NodeType.BOX:
                             if (TJAPlayer3.Tx.SongSelect_Frame_Box != null)
                                 TJAPlayer3.Tx.SongSelect_Frame_Box.Draw2D(TJAPlayer3.app.Device, 450, TJAPlayer3.Skin.SongSelect_Overall_Y);
                             break;
 
-                        case C曲リストノード.Eノード種別.BACKBOX:
+                        case SongInfoNode.NodeType.BACKBOX:
                             if (TJAPlayer3.Tx.SongSelect_Frame_BackBox != null)
                                 TJAPlayer3.Tx.SongSelect_Frame_BackBox.Draw2D(TJAPlayer3.app.Device, 450, TJAPlayer3.Skin.SongSelect_Overall_Y);
                             break;
 
-                        case C曲リストノード.Eノード種別.RANDOM:
+                        case SongInfoNode.NodeType.RANDOM:
                             if (TJAPlayer3.Tx.SongSelect_Frame_Random != null)
                                 TJAPlayer3.Tx.SongSelect_Frame_Random.Draw2D(TJAPlayer3.app.Device, 450, TJAPlayer3.Skin.SongSelect_Overall_Y);
                             break;
@@ -1681,9 +1681,9 @@ namespace TJAPlayer3
 		private Counter[] ct登場アニメ用 = new Counter[ 13 ];
         private Counter ct三角矢印アニメ;
         private Counter counter;
-        private EFIFOモード mode;
-        private CPrivateFastFont pfMusicName;
-        private CPrivateFastFont pfSubtitle;
+        private FadeModeType mode;
+        private CachePrivateFont pfMusicName;
+        private CachePrivateFont pfSubtitle;
 
 	    // 2018-09-17 twopointzero: I can scroll through 2300 songs consuming approx. 200MB of memory.
 	    //                          I have set the title texture cache size to a nearby round number (2500.)
@@ -1743,29 +1743,29 @@ namespace TJAPlayer3
 		private int nNumOfItems = 0;
 
 		//private string strBoxDefSkinPath = "";
-		private Eバー種別 e曲のバー種別を返す( C曲リストノード song )
+		private Eバー種別 e曲のバー種別を返す( SongInfoNode song )
 		{
 			if( song != null )
 			{
-				switch( song.eノード種別 )
+				switch( song.NowNodeType )
 				{
-					case C曲リストノード.Eノード種別.SCORE:
-					case C曲リストノード.Eノード種別.SCORE_MIDI:
+					case SongInfoNode.NodeType.SCORE:
+					case SongInfoNode.NodeType.SCORE_MIDI:
 						return Eバー種別.Score;
 
-					case C曲リストノード.Eノード種別.BOX:
-					case C曲リストノード.Eノード種別.BACKBOX:
+					case SongInfoNode.NodeType.BOX:
+					case SongInfoNode.NodeType.BACKBOX:
 						return Eバー種別.Box;
 				}
 			}
 			return Eバー種別.Other;
 		}
-		private C曲リストノード r次の曲( C曲リストノード song )
+		private SongInfoNode r次の曲( SongInfoNode song )
 		{
 			if( song == null )
 				return null;
 
-			List<C曲リストノード> list = ( song.r親ノード != null ) ? song.r親ノード.list子リスト : TJAPlayer3.Songs管理.list曲ルート;
+			List<SongInfoNode> list = ( song.r親ノード != null ) ? song.r親ノード.list子リスト : TJAPlayer3.Songs管理.list曲ルート;
 	
 			int index = list.IndexOf( song );
 
@@ -1777,12 +1777,12 @@ namespace TJAPlayer3
 
 			return list[ index + 1 ];
 		}
-		private C曲リストノード r前の曲( C曲リストノード song )
+		private SongInfoNode r前の曲( SongInfoNode song )
 		{
 			if( song == null )
 				return null;
 
-			List<C曲リストノード> list = ( song.r親ノード != null ) ? song.r親ノード.list子リスト : TJAPlayer3.Songs管理.list曲ルート;
+			List<SongInfoNode> list = ( song.r親ノード != null ) ? song.r親ノード.list子リスト : TJAPlayer3.Songs管理.list曲ルート;
 
 			int index = list.IndexOf( song );
 	
@@ -1852,7 +1852,7 @@ namespace TJAPlayer3
 		}
 		private void tバーの初期化()
 		{
-			C曲リストノード song = this.r現在選択中の曲;
+			SongInfoNode song = this.r現在選択中の曲;
 			
 			if( song == null )
 				return;
@@ -2121,12 +2121,12 @@ namespace TJAPlayer3
 	    private sealed class TitleTextureKey
 	    {
 	        public readonly string str文字;
-	        public readonly CPrivateFastFont cPrivateFastFont;
+	        public readonly CachePrivateFont cPrivateFastFont;
 	        public readonly Color forecolor;
 	        public readonly Color backcolor;
 	        public readonly int maxHeight;
 
-	        public TitleTextureKey(string str文字, CPrivateFastFont cPrivateFastFont, Color forecolor, Color backcolor, int maxHeight)
+	        public TitleTextureKey(string str文字, CachePrivateFont cPrivateFastFont, Color forecolor, Color backcolor, int maxHeight)
 	        {
 	            this.str文字 = str文字;
 	            this.cPrivateFastFont = cPrivateFastFont;

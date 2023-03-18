@@ -183,7 +183,7 @@ namespace TJAPlayer3
 			}
 			if( this.sdDTXで指定されたフルコンボ音 != null )
 			{
-				TJAPlayer3.Sound管理.tサウンドを破棄する( this.sdDTXで指定されたフルコンボ音 );
+				TJAPlayer3._SoundManager.DisposeSound( this.sdDTXで指定されたフルコンボ音 );
 				this.sdDTXで指定されたフルコンボ音 = null;
 			}
 			base.Deactivate();
@@ -413,7 +413,7 @@ namespace TJAPlayer3
 		private bool bフルコンボ音再生済み;
 		private Counter ct表示用;
 		private readonly Point[] ptFullCombo位置;
-		private CSound sdDTXで指定されたフルコンボ音;
+		private FDKSound sdDTXで指定されたフルコンボ音;
 		private readonly ST文字位置[] st小文字位置;
 		private readonly ST文字位置[] st大文字位置;
         private ST文字位置[] stScoreFont;

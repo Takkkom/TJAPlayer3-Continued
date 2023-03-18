@@ -73,7 +73,7 @@ namespace TJAPlayer3
 			private set;
 		}
 
-		public ESoundDeviceType soundDeviceType
+		public SoundDeviceType soundDeviceType
 		{
 			get;
 			private set;
@@ -264,10 +264,10 @@ namespace TJAPlayer3
 						{
 							#region [ DirectSound ]
 							case 'D':
-								if ( this.soundDeviceType != ESoundDeviceType.DirectSound )
+								if ( this.soundDeviceType != SoundDeviceType.DirectSound )
 								{
 									this.ChangedSoundDevice = true;
-									this.soundDeviceType = ESoundDeviceType.DirectSound;
+									this.soundDeviceType = SoundDeviceType.DirectSound;
 								}
 								else
 								{
@@ -278,10 +278,10 @@ namespace TJAPlayer3
 							#endregion
 							#region [ WASAPI ]
 							case 'W':
-								if ( this.soundDeviceType != ESoundDeviceType.ExclusiveWASAPI )
+								if ( this.soundDeviceType != SoundDeviceType.ExclusiveWASAPI )
 								{
 									this.ChangedSoundDevice = true;
-									this.soundDeviceType = ESoundDeviceType.ExclusiveWASAPI;
+									this.soundDeviceType = SoundDeviceType.ExclusiveWASAPI;
 								}
 								else
 								{
@@ -292,10 +292,10 @@ namespace TJAPlayer3
 							#endregion
 							#region [ ASIO ]
 							case 'A':
-								if ( this.soundDeviceType != ESoundDeviceType.ASIO )
+								if ( this.soundDeviceType != SoundDeviceType.ASIO )
 								{
 									this.ChangedSoundDevice = true;
-									this.soundDeviceType = ESoundDeviceType.ASIO;
+									this.soundDeviceType = SoundDeviceType.ASIO;
 								}
 								else
 								{
@@ -381,7 +381,7 @@ Trace.TraceInformation( "Command: " + s[ (int) this.Command ] );
 		public void tUpdateConfigIni()
 		{
 			MainConfig cc = new MainConfig();
-			string path = TJAPlayer3.strEXEのあるフォルダ + "Config.ini";
+			string path = TJAPlayer3.DirectoryWithThisEXE + "Config.ini";
 			if ( File.Exists( path ) )
 			{
 				FileInfo fi = new FileInfo( path );

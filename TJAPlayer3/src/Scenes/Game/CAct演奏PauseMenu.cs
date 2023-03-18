@@ -22,10 +22,10 @@ namespace TJAPlayer3
         private void CAct演奏PauseMenuMain()
 		{
             this.bEsc有効 = false;
-			lci = new List<List<List<CItemBase>>>();									// この画面に来る度に、メニューを作り直す。
+			lci = new List<List<List<BaseItem>>>();									// この画面に来る度に、メニューを作り直す。
 			for ( int nConfSet = 0; nConfSet < 3; nConfSet++ )
 			{
-				lci.Add( new List<List<CItemBase>>() );									// ConfSet用の3つ分の枠。
+				lci.Add( new List<List<BaseItem>>() );									// ConfSet用の3つ分の枠。
 				for ( int nInst = 0; nInst < 3; nInst++ )
 				{
 					lci[ nConfSet ].Add( null );										// Drum/Guitar/Bassで3つ分、枠を作っておく
@@ -35,14 +35,14 @@ namespace TJAPlayer3
 			base.Initialize( lci[ nCurrentConfigSet ][ 0 ], true, QuickCfgTitle, 2 );	// ConfSet=0, nInst=Drums
 		}
 
-		private List<CItemBase> MakeListCItemBase( int nConfigSet, int nInst )
+		private List<BaseItem> MakeListCItemBase( int nConfigSet, int nInst )
 		{
-			List<CItemBase> l = new List<CItemBase>();
+			List<BaseItem> l = new List<BaseItem>();
 
 			#region [ 共通 SET切り替え/More/Return ]
-			l.Add( new CSwitchItemList( "続ける", CItemBase.Eパネル種別.通常, 0, "", "", new string[] { "" } ) );
-			l.Add( new CSwitchItemList( "やり直し", CItemBase.Eパネル種別.通常, 0, "", "", new string[] { "" } ) );
-			l.Add( new CSwitchItemList( "演奏中止", CItemBase.Eパネル種別.通常, 0, "", "", new string[] { "", "" } ) );
+			l.Add( new CSwitchItemList( "続ける", BaseItem.PanelType.Normal, 0, "", "", new string[] { "" } ) );
+			l.Add( new CSwitchItemList( "やり直し", BaseItem.PanelType.Normal, 0, "", "", new string[] { "" } ) );
+			l.Add( new CSwitchItemList( "演奏中止", BaseItem.PanelType.Normal, 0, "", "", new string[] { "", "" } ) );
 			#endregion
 
 			return l;
@@ -84,7 +84,7 @@ namespace TJAPlayer3
 				case (int) EOrder.Continue:
                     TJAPlayer3.stage演奏ドラム画面.bPAUSE = false;
 
-                    CSound管理.rc演奏用タイマ.Resume();
+                    SoundManager.PlayTimer.Resume();
 					TJAPlayer3.Timer.Resume();
 					TJAPlayer3.DTX.t全チップの再生再開();
                     TJAPlayer3.stage演奏ドラム画面.actAVI.tPauseControl();
@@ -97,7 +97,7 @@ namespace TJAPlayer3
 					break;
 
 				case (int) EOrder.Return:
-                    CSound管理.rc演奏用タイマ.Resume();
+                    SoundManager.PlayTimer.Resume();
 					TJAPlayer3.Timer.Resume();
                     TJAPlayer3.stage演奏ドラム画面.t演奏中止();
 					this.tDeativatePopupMenu();
@@ -127,7 +127,7 @@ namespace TJAPlayer3
 		{
 			if( !base.NotActivated )
 			{
-				string pathパネル本体 = CSkin.Path( @"Graphics\ScreenSelect popup auto settings.png" );
+				string pathパネル本体 = SkinManager.Path( @"Graphics\ScreenSelect popup auto settings.png" );
 				if ( File.Exists( pathパネル本体 ) )
 				{
 					this.txパネル本体 = TJAPlayer3.tテクスチャの生成( pathパネル本体, true );
@@ -150,7 +150,7 @@ namespace TJAPlayer3
 		//-----------------
 		private int nCurrentTarget = 0;
 		private int nCurrentConfigSet = 0;
-		private List<List<List<CItemBase>>> lci;
+		private List<List<List<BaseItem>>> lci;
 		private enum EOrder : int
 		{
 			Continue,

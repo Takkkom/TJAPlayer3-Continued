@@ -35,29 +35,29 @@ namespace FDK
     /// </summary>
     public sealed class SoundGroupLevelController
     {
-        private readonly Dictionary<ESoundGroup, int> _levelBySoundGroup = new Dictionary<ESoundGroup, int>
+        private readonly Dictionary<SoundGroup, int> _levelBySoundGroup = new Dictionary<SoundGroup, int>
         {
-            [ESoundGroup.SoundEffect] = CSound.MaximumGroupLevel,
-            [ESoundGroup.Voice] = CSound.MaximumGroupLevel,
-            [ESoundGroup.SongPreview] = CSound.MaximumGroupLevel,
-            [ESoundGroup.SongPlayback] = CSound.MaximumGroupLevel,
-            [ESoundGroup.Unknown] = CSound.MaximumGroupLevel
+            [SoundGroup.SoundEffect] = FDKSound.MaximumGroupLevel,
+            [SoundGroup.Voice] = FDKSound.MaximumGroupLevel,
+            [SoundGroup.SongPreview] = FDKSound.MaximumGroupLevel,
+            [SoundGroup.SongPlayback] = FDKSound.MaximumGroupLevel,
+            [SoundGroup.Unknown] = FDKSound.MaximumGroupLevel
         };
 
-        private readonly ObservableCollection<CSound> _sounds;
+        private readonly ObservableCollection<FDKSound> _sounds;
 
         private int _keyboardSoundLevelIncrement;
 
-        public SoundGroupLevelController(ObservableCollection<CSound> sounds)
+        public SoundGroupLevelController(ObservableCollection<FDKSound> sounds)
         {
             _sounds = sounds;
 
             _sounds.CollectionChanged += SoundsOnCollectionChanged;
         }
 
-        public void SetLevel(ESoundGroup soundGroup, int level)
+        public void SetLevel(SoundGroup soundGroup, int level)
         {
-            var clampedLevel = level.Clamp(CSound.MinimumGroupLevel, CSound.MaximumGroupLevel);
+            var clampedLevel = level.Clamp(FDKSound.MinimumGroupLevel, FDKSound.MaximumGroupLevel);
 
             if (_levelBySoundGroup[soundGroup] == clampedLevel)
             {
@@ -82,7 +82,7 @@ namespace FDK
             _keyboardSoundLevelIncrement = keyboardSoundLevelIncrement;
         }
 
-        public void AdjustLevel(ESoundGroup soundGroup, bool isAdjustmentPositive)
+        public void AdjustLevel(SoundGroup soundGroup, bool isAdjustmentPositive)
         {
             var adjustmentIncrement = isAdjustmentPositive
                 ? _keyboardSoundLevelIncrement
@@ -91,7 +91,7 @@ namespace FDK
             SetLevel(soundGroup, _levelBySoundGroup[soundGroup] + adjustmentIncrement);
         }
 
-        private void SetLevel(CSound sound)
+        private void SetLevel(FDKSound sound)
         {
             sound.GroupLevel = _levelBySoundGroup[sound.SoundGroup];
         }
@@ -102,7 +102,7 @@ namespace FDK
             {
                 case NotifyCollectionChangedAction.Add:
                 case NotifyCollectionChangedAction.Replace:
-                    foreach (CSound sound in e.NewItems)
+                    foreach (FDKSound sound in e.NewItems)
                     {
                         SetLevel(sound);
                     }
@@ -110,20 +110,20 @@ namespace FDK
             }
         }
 
-        private void RaiseLevelChanged(ESoundGroup soundGroup, int level)
+        private void RaiseLevelChanged(SoundGroup soundGroup, int level)
         {
             LevelChanged?.Invoke(this, new LevelChangedEventArgs(soundGroup, level));
         }
 
         public class LevelChangedEventArgs : EventArgs
         {
-            public LevelChangedEventArgs(ESoundGroup soundGroup, int level)
+            public LevelChangedEventArgs(SoundGroup soundGroup, int level)
             {
                 SoundGroup = soundGroup;
                 Level = level;
             }
 
-            public ESoundGroup SoundGroup { get; private set; }
+            public SoundGroup SoundGroup { get; private set; }
             public int Level { get; private set; }
         }
 
