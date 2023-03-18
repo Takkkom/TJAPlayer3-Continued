@@ -20,7 +20,7 @@ namespace TJAPlayer3
 			{
 				this.sound.t再生を停止する();
 				TJAPlayer3._SoundManager.DisposeSound( this.sound );
-				this.sound = null;
+				TJAPlayer3.t安全にDisposeする(ref this.sound);
 			}
 		}
 		public void t選択曲が変更された()

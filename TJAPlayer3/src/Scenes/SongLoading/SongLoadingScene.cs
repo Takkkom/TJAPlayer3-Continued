@@ -98,7 +98,7 @@ namespace TJAPlayer3
 			        str曲タイトル == "Input Calibration" &&
 			        strサブタイトル == "TJAPlayer3 Developers";
 
-				this.strSTAGEFILE = SkinManager.Path(@"Graphics\4_SongLoading\Background.png");
+				this.strSTAGEFILE = SkinManager.Path(@"Graphics\SongLoading\Background.png");
 
 				base.Activate();
 			}
