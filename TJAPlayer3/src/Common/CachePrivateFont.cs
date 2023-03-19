@@ -140,7 +140,14 @@ namespace TJAPlayer3
 		/// <returns>描画済テクスチャ</returns>
 		public Bitmap DrawPrivateFont( string drawstr, Color fontColor, Color edgeColor, bool bVertical )
 		{
-			return DrawPrivateFont_V( drawstr, fontColor, edgeColor, bVertical );
+			if (bVertical)
+			{
+				return DrawPrivateFont_V(drawstr, fontColor, edgeColor, bVertical);
+			}
+			else
+			{
+				return DrawPrivateFont(drawstr, fontColor, edgeColor);
+			}
 		}
 
 #if こちらは使わない // (Bitmapではなく、CTextureを返す版)

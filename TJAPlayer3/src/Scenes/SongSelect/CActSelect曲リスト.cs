@@ -279,6 +279,10 @@ namespace TJAPlayer3
 				this.t現在選択中の曲を元に曲バーを再構成する();
 				this.t選択曲が変更された(false);                                 // #27648 項目数変更を反映させる
 				this.b選択曲が変更された = true;
+
+				SelectedSongTitleKey = null;
+				SelectedSongSubTitleKey = null;
+				SelectedSongBoxTitleKey = null;
 			}
 			return ret;
 		}
@@ -313,6 +317,10 @@ namespace TJAPlayer3
 				this.t現在選択中の曲を元に曲バーを再構成する();
 				this.t選択曲が変更された(false);                                 // #27648 項目数変更を反映させる
 				this.b選択曲が変更された = true;
+
+				SelectedSongTitleKey = null;
+				SelectedSongSubTitleKey = null;
+				SelectedSongBoxTitleKey = null;
 			}
 			return ret;
 		}
@@ -337,8 +345,8 @@ namespace TJAPlayer3
 
 			// 選択曲と選択行を１つ下の行に移動。
 
-			this.r現在選択中の曲 = this.r次の曲(this.r現在選択中の曲);
-			this.n現在の選択行 = (this.n現在の選択行 + 1) % TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Count;
+			r現在選択中の曲 = r次の曲(this.r現在選択中の曲);
+			n現在の選択行 = (n現在の選択行 + 1) % TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Count;
 
 
 			// 選択曲から７つ下のパネル（＝新しく最下部に表示されるパネル。消えてしまう一番上のパネルを再利用する）に、新しい曲の情報を記載する。
@@ -348,10 +356,11 @@ namespace TJAPlayer3
 
 			// 1行(100カウント)移動完了。
 
-			this.t選択曲が変更された(false);             // スクロールバー用に今何番目を選択しているかを更新
+			t選択曲が変更された(false);             // スクロールバー用に今何番目を選択しているかを更新
 
-			this.ttk選択している曲の曲名 = null;
-			this.ttk選択している曲のサブタイトル = null;
+			SelectedSongTitleKey = null;
+			SelectedSongSubTitleKey = null;
+			SelectedSongBoxTitleKey = null;
 
 			TJAPlayer3.stage選曲.t選択曲変更通知();      // スクロール完了＝選択曲変更！
 
@@ -361,7 +370,7 @@ namespace TJAPlayer3
 		public void t前に移動()
 		{
 			NowChangeCount = -1;
-			this.b選択曲が変更された = true;
+			b選択曲が変更された = true;
 
 			ScrollCounter = new Counter(0, 1700, 0.13, TJAPlayer3.Timer);
 			BarCenterOpen = new Counter(-1700, 1000, 0.13, TJAPlayer3.Timer);
@@ -371,8 +380,8 @@ namespace TJAPlayer3
 
 			// 選択曲と選択行を１つ上の行に移動。
 
-			this.r現在選択中の曲 = this.r前の曲(this.r現在選択中の曲);
-			this.n現在の選択行 = ((this.n現在の選択行 - 1) + TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Count) % TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Count;
+			r現在選択中の曲 = this.r前の曲(this.r現在選択中の曲);
+			n現在の選択行 = ((this.n現在の選択行 - 1) + TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Count) % TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Count;
 
 
 			// 選択曲から５つ上のパネル（＝新しく最上部に表示されるパネル。消えてしまう一番下のパネルを再利用する）に、新しい曲の情報を記載する。
@@ -384,8 +393,9 @@ namespace TJAPlayer3
 
 			this.t選択曲が変更された(false);             // スクロールバー用に今何番目を選択しているかを更新
 
-			this.ttk選択している曲の曲名 = null;
-			this.ttk選択している曲のサブタイトル = null;
+			SelectedSongTitleKey = null;
+			SelectedSongSubTitleKey = null;
+			SelectedSongBoxTitleKey = null;
 
 			TJAPlayer3.stage選曲.t選択曲変更通知();      // スクロール完了＝選択曲変更！
 												//-----------------
@@ -609,6 +619,9 @@ namespace TJAPlayer3
 			_titleTextures.ItemRemoved += OnTitleTexturesOnItemRemoved;
 			_titleTextures.ItemUpdated += OnTitleTexturesOnItemUpdated;
 
+			_titleTextures_V.ItemRemoved += OnTitleTexturesOnItemRemoved;
+			_titleTextures_V.ItemUpdated += OnTitleTexturesOnItemUpdated;
+
 			this.e楽器パート = E楽器パート.DRUMS;
 			this.b登場アニメ全部完了 = false;
 			ScrollCounter = new Counter(0, 1700, 1, TJAPlayer3.Timer);
@@ -654,6 +667,9 @@ namespace TJAPlayer3
 			_titleTextures.ItemRemoved -= OnTitleTexturesOnItemRemoved;
 			_titleTextures.ItemUpdated -= OnTitleTexturesOnItemUpdated;
 
+			_titleTextures_V.ItemRemoved -= OnTitleTexturesOnItemRemoved;
+			_titleTextures_V.ItemUpdated -= OnTitleTexturesOnItemUpdated;
+
 			TJAPlayer3.t安全にDisposeする(ref pfMusicName);
 			TJAPlayer3.t安全にDisposeする(ref pfSubtitle);
 
@@ -685,11 +701,14 @@ namespace TJAPlayer3
 
 			BranchFlag = TJAPlayer3.CreateFDKTexture(SkinManager.Path(@"Graphics\SongSelect\Branch.png"));
 			Branch_Text = TJAPlayer3.CreateFDKTexture(SkinManager.Path(@"Graphics\SongSelect\Branch_Text.png"));
-			GenreText = TJAPlayer3.CreateFDKTexture(SkinManager.Path(@"Graphics\SongSelect\GenreText.png"));
 
 			for (int i = 0; i < 9; i++)
 			{
 				Bar_Genres[i] = TJAPlayer3.CreateFDKTexture(SkinManager.Path($@"Graphics\SongSelect\Bar_Genre_{i}.png"));
+				Bar_Genre_Box_Flag[i] = TJAPlayer3.CreateFDKTexture(SkinManager.Path($@"Graphics\SongSelect\Bar_Genre_Box_Flag_{i}.png"));
+				Bar_Center_Genres[i] = TJAPlayer3.CreateFDKTexture(SkinManager.Path($@"Graphics\SongSelect\Bar_Center_Genre_{i}.png"));
+				Bar_Center_Genre_Box_Flags[i] = TJAPlayer3.CreateFDKTexture(SkinManager.Path($@"Graphics\SongSelect\Bar_Center_Genre_Box_Flag_{i}.png"));
+				Bar_Center_Mob[i] = TJAPlayer3.CreateFDKTexture(SkinManager.Path($@"Graphics\SongSelect\Bar_Center_Mob_{i}.png"));
 			}
 
 			//this.tx曲名バー.Score = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_bar score.png" ), false );
@@ -730,7 +749,7 @@ namespace TJAPlayer3
 			for (int i = 0; i < TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Count; i++)
 			{
 				//this.t曲名バーの生成(i, this.stバー情報[i].strタイトル文字列, this.stバー情報[i].ForeColor, this.stバー情報[i].BackColor);
-				this.stバー情報[i].ttkタイトル = this.ttk曲名テクスチャを生成する(this.stバー情報[i].strタイトル文字列, this.stバー情報[i].ForeColor, this.stバー情報[i].BackColor);
+				this.stバー情報[i].ttkタイトル = this.GenerateTitleKey(this.stバー情報[i].strタイトル文字列, this.stバー情報[i].ForeColor, this.stバー情報[i].BackColor);
 			}
 
 			int c = (CultureInfo.CurrentCulture.TwoLetterISOLanguageName == "ja") ? 0 : 1;
@@ -825,7 +844,15 @@ namespace TJAPlayer3
 
 			TJAPlayer3.DisposeFDKTexture(ref BranchFlag);
 			TJAPlayer3.DisposeFDKTexture(ref Branch_Text);
-			TJAPlayer3.DisposeFDKTexture(ref GenreText);
+
+			for (int i = 0; i < 9; i++)
+			{
+				TJAPlayer3.DisposeFDKTexture(ref Bar_Genres[i]);
+				TJAPlayer3.DisposeFDKTexture(ref Bar_Genre_Box_Flag[i]);
+				TJAPlayer3.DisposeFDKTexture(ref Bar_Center_Genres[i]);
+				TJAPlayer3.DisposeFDKTexture(ref Bar_Center_Genre_Box_Flags[i]);
+				TJAPlayer3.DisposeFDKTexture(ref Bar_Center_Mob[i]);
+			}
 			//CDTXMania.t安全にDisposeする( ref this.tx曲名バー.Score );
 			//CDTXMania.t安全にDisposeする( ref this.tx曲名バー.Box );
 			//CDTXMania.t安全にDisposeする( ref this.tx曲名バー.Other );
@@ -1003,7 +1030,7 @@ namespace TJAPlayer3
 					#region [ タイトル名テクスチャを描画。]
 
 					if (!IsEndScrollCounter || n見た目の行番号 != center)
-						ResolveTitleTexture(this.stバー情報[i].ttkタイトル).Draw2D(TJAPlayer3.app.Device, x + 28, y + 23);
+						ResolveTitleTexture(this.stバー情報[i].ttkタイトル, true).Draw2D(TJAPlayer3.app.Device, x + 28, y + 23);
 
 					#endregion
 
@@ -1021,20 +1048,7 @@ namespace TJAPlayer3
 
 			if (IsEndScrollCounter)
 			{
-				Bar_Center.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Center_X[0] - barCenterMoveX, TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Center_Y[0],
-					new Rectangle(TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Center_Rect[0][0], TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Center_Rect[0][1],
-					TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Center_Rect[0][2], TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Center_Rect[0][3]));
-
-				Bar_Center.Scaling.X = barCenterScale;
-				Bar_Center.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Center_X[1] - barCenterMoveX, TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Center_Y[1],
-					new Rectangle(TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Center_Rect[1][0], TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Center_Rect[1][1],
-					TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Center_Rect[1][2], TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Center_Rect[1][3]));
-				Bar_Center.Scaling.X = 1;
-
-				Bar_Center.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Center_X[2] + barCenterMoveX, TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Center_Y[2],
-					new Rectangle(TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Center_Rect[2][0], TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Center_Rect[2][1],
-					TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Center_Rect[2][2], TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Center_Rect[2][3]));
-
+				DrawBarCenter(barCenterMoveX, barCenterScale);
 
 				switch (r現在選択中の曲.NowNodeType)
 				{
@@ -1142,7 +1156,18 @@ namespace TJAPlayer3
 						break;
 
 					case SongInfoNode.NodeType.BOX:
-						Frame_Box?.Draw2D(TJAPlayer3.app.Device, 450, TJAPlayer3.Skin.SkinValue.SongSelect_Overall_Y);
+                        {
+							Frame_Box?.Draw2D(TJAPlayer3.app.Device, 450, TJAPlayer3.Skin.SkinValue.SongSelect_Overall_Y);
+
+							Bar_Center_Mob[StringToGenreNum.GenreBar(r現在選択中の曲.strジャンル)]?.Draw2D(TJAPlayer3.app.Device, 450, TJAPlayer3.Skin.SkinValue.SongSelect_Overall_Y);
+
+							if (this.SelectedSongBoxTitleKey != null)
+							{
+								var boxTitle = ResolveTitleTexture(this.SelectedSongBoxTitleKey, false);
+								boxTitle.Opacity = (int)(barCenterScale * 255);
+								boxTitle.t2D拡大率考慮中央基準描画(TJAPlayer3.app.Device, TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Center_Box_Title_X, TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Center_Box_Title_Y);
+							}
+						}
 						break;
 
 					case SongInfoNode.NodeType.BACKBOX:
@@ -1196,29 +1221,30 @@ namespace TJAPlayer3
 
 				#region [ タイトル名テクスチャを描画。]
 				//-----------------
-				if (this.stバー情報[index].strタイトル文字列 != "" && this.ttk選択している曲の曲名 == null)
-					this.ttk選択している曲の曲名 = this.ttk曲名テクスチャを生成する(this.stバー情報[index].strタイトル文字列, Color.White, Color.Black);
-				if (this.stバー情報[index].strサブタイトル != "" && this.ttk選択している曲のサブタイトル == null)
-					this.ttk選択している曲のサブタイトル = this.ttkサブタイトルテクスチャを生成する(this.stバー情報[index].strサブタイトル);
+				if (this.stバー情報[index].strタイトル文字列 != "" && this.SelectedSongTitleKey == null)
+					this.SelectedSongTitleKey = this.GenerateTitleKey(this.stバー情報[index].strタイトル文字列, Color.White, Color.Black);
+				if (this.stバー情報[index].strサブタイトル != "" && this.SelectedSongSubTitleKey == null)
+					this.SelectedSongSubTitleKey = this.GenerateSubTitleKey(this.stバー情報[index].strサブタイトル);
+				if (this.stバー情報[index].strタイトル文字列 != "" && this.SelectedSongBoxTitleKey == null)
+					this.SelectedSongBoxTitleKey = this.GenerateBoxTitleKey(this.stバー情報[index].strタイトル文字列, Color.White, Color.Black);
 
 				//サブタイトルがあったら700
 
-				if (this.ttk選択している曲のサブタイトル != null)
+				if (r現在選択中の曲.NowNodeType != SongInfoNode.NodeType.BOX)
 				{
-					var tx選択している曲のサブタイトル = ResolveTitleTexture(ttk選択している曲のサブタイトル);
-					tx選択している曲のサブタイトル.Opacity = (int)(barCenterScale * 255);
-					int nサブタイY = (int)(TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Center_SubTitle_Y - (tx選択している曲のサブタイトル.ImageSize.Height * tx選択している曲のサブタイトル.Scaling.Y));
-					tx選択している曲のサブタイトル.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Center_SubTitle_X + barCenterMoveX, nサブタイY);
-				}
-				if (this.ttk選択している曲の曲名 != null)
-				{
-					ResolveTitleTexture(this.ttk選択している曲の曲名).Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Center_Title_X + barCenterMoveX, TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Center_Title_Y);
+					if (this.SelectedSongSubTitleKey != null)
+					{
+						var subTitleTexture = ResolveTitleTexture(SelectedSongSubTitleKey, true);
+						subTitleTexture.Opacity = (int)(barCenterScale * 255);
+						int subTitleY = (int)(TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Center_SubTitle_Y - (subTitleTexture.ImageSize.Height * subTitleTexture.Scaling.Y));
+						subTitleTexture.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Center_SubTitle_X + barCenterMoveX, subTitleY);
+					}
+					if (this.SelectedSongTitleKey != null)
+					{
+						ResolveTitleTexture(this.SelectedSongTitleKey, true).Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Center_Title_X + barCenterMoveX, TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Center_Title_Y);
+					}
 				}
 
-				//if( this.stバー情報[ nパネル番号 ].txタイトル名 != null )
-				//	this.stバー情報[ nパネル番号 ].txタイトル名.t2D描画( CDTXMania.app.Device, i選択曲バーX座標 + 65, y選曲 + 6 );
-
-				//CDTXMania.act文字コンソール.tPrint( i選曲バーX座標 - 20, y選曲 + 6, C文字コンソール.Eフォント種別.白, this.r現在選択中のスコア.譜面情報.b譜面分岐[3].ToString() );
 				//-----------------
 				#endregion
 			}
@@ -1246,12 +1272,6 @@ namespace TJAPlayer3
 			#region [ アイテム数の描画 #27648 ]
 			tアイテム数の描画();
 			#endregion
-
-			if (this.e曲のバー種別を返す(this.r現在選択中の曲) == Eバー種別.Score)
-			{
-				GenreText?.Draw2D(TJAPlayer3.app.Device, 496, TJAPlayer3.Skin.SkinValue.SongSelect_Overall_Y - 64, new Rectangle(0, 60 * StringToGenreNum.GenreBar(this.r現在選択中の曲.strジャンル), 288, 60));
-			}
-
 
 
 
@@ -1384,6 +1404,8 @@ namespace TJAPlayer3
 		//                          then a cache size of 1000 would be roughly correct.
 		private readonly LurchTable<TitleTextureKey, FDKTexture> _titleTextures =
 			new LurchTable<TitleTextureKey, FDKTexture>(LurchTableOrder.Access, 2500);
+		private readonly LurchTable<TitleTextureKey, FDKTexture> _titleTextures_V =
+			new LurchTable<TitleTextureKey, FDKTexture>(LurchTableOrder.Access, 2500);
 
 		private E楽器パート e楽器パート;
 		private Font ft曲リスト用フォント;
@@ -1404,8 +1426,9 @@ namespace TJAPlayer3
 		//private STバー tx曲名バー;
 		//private ST選曲バー tx選曲バー;
 		//      private CTexture txバー中央;
-		private TitleTextureKey ttk選択している曲の曲名;
-		private TitleTextureKey ttk選択している曲のサブタイトル;
+		private TitleTextureKey SelectedSongTitleKey;
+		private TitleTextureKey SelectedSongSubTitleKey;
+		private TitleTextureKey SelectedSongBoxTitleKey;
 
 		//private CTexture tx曲バー_アニメ;
 		//private CTexture tx曲バー_JPOP;
@@ -1418,18 +1441,23 @@ namespace TJAPlayer3
 		//private CTexture tx曲バー;
 
 		private FDKTexture Bar_Center;
+
 		private FDKTexture Cursor_Left;
 		private FDKTexture Cursor_Right;
 		private FDKTexture BranchFlag;
 		private FDKTexture Branch_Text;
-		private FDKTexture GenreText;
 		private FDKTexture Frame_Score;
 		private FDKTexture Frame_Box;
 		private FDKTexture Frame_BackBox;
 		private FDKTexture Frame_Random;
 		private FDKTexture LevelStar;
 		private FDKTexture Score_Select;
+
 		private FDKTexture[] Bar_Genres = new FDKTexture[9];
+		private FDKTexture[] Bar_Genre_Box_Flag = new FDKTexture[9];
+		private FDKTexture[] Bar_Center_Genres = new FDKTexture[9];
+		private FDKTexture[] Bar_Center_Genre_Box_Flags = new FDKTexture[9];
+		private FDKTexture[] Bar_Center_Mob = new FDKTexture[9];
 
 		private FDKTexture Bar_Back;
 		private FDKTexture Bar_Random;
@@ -1593,7 +1621,7 @@ namespace TJAPlayer3
 				for (int j = 0; j < 3; j++)
 					this.stバー情報[i].nスキル値[j] = (int)song.arスコア[this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す(song)].譜面情報.最大スキル[j];
 
-				this.stバー情報[i].ttkタイトル = this.ttk曲名テクスチャを生成する(this.stバー情報[i].strタイトル文字列, this.stバー情報[i].ForeColor, this.stバー情報[i].BackColor);
+				this.stバー情報[i].ttkタイトル = this.GenerateTitleKey(this.stバー情報[i].strタイトル文字列, this.stバー情報[i].ForeColor, this.stバー情報[i].BackColor);
 
 				song = this.r次の曲(song);
 			}
@@ -1655,12 +1683,13 @@ namespace TJAPlayer3
 			{
 				case SongInfoNode.NodeType.BOX:
 					Bar_Genres[genre]?.Draw2D(TJAPlayer3.app.Device, x, y);
+					Bar_Genre_Box_Flag[genre]?.Draw2D(TJAPlayer3.app.Device, x + TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Genre_Box_Flag_Offset_X, y + TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Genre_Box_Flag_Offset_Y);
 					break;
 				case SongInfoNode.NodeType.BACKBOX:
 					Bar_Back?.Draw2D(TJAPlayer3.app.Device, x, y);
 					break;
 				case SongInfoNode.NodeType.RANDOM:
-					Bar_Genres[genre]?.Draw2D(TJAPlayer3.app.Device, x, y);
+					Bar_Random?.Draw2D(TJAPlayer3.app.Device, x, y);
 					break;
 				case SongInfoNode.NodeType.SCORE:
 					Bar_Genres[genre]?.Draw2D(TJAPlayer3.app.Device, x, y);
@@ -1668,39 +1697,106 @@ namespace TJAPlayer3
 			}
 		}
 
-		private TitleTextureKey ttk曲名テクスチャを生成する(string str文字, Color forecolor, Color backcolor)
+		private void DrawBarCenter(int barCenterMoveX, float barCenterScale)
+        {
+			void drawCenter(FDKTexture tex)
+			{
+				if (tex != null)
+				{
+					tex.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Center_X[0] - barCenterMoveX, TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Center_Y[0],
+						new Rectangle(TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Center_Rect[0][0], TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Center_Rect[0][1],
+						TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Center_Rect[0][2], TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Center_Rect[0][3]));
+
+					tex.Scaling.X = barCenterScale;
+					tex.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Center_X[1] - barCenterMoveX, TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Center_Y[1],
+						new Rectangle(TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Center_Rect[1][0], TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Center_Rect[1][1],
+						TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Center_Rect[1][2], TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Center_Rect[1][3]));
+					tex.Scaling.X = 1;
+
+					tex.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Center_X[2] + barCenterMoveX, TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Center_Y[2],
+						new Rectangle(TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Center_Rect[2][0], TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Center_Rect[2][1],
+						TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Center_Rect[2][2], TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Center_Rect[2][3]));
+				}
+			}
+
+			switch (r現在選択中の曲.NowNodeType)
+			{
+				case SongInfoNode.NodeType.BOX:
+                    {
+						int genre = StringToGenreNum.GenreBar(r現在選択中の曲.strジャンル);
+						drawCenter(Bar_Center_Genres[genre]);
+
+						float scale = Math.Min(barCenterScale * 2, 1);
+						Bar_Center_Genre_Box_Flags[genre].Scaling.Y = scale;
+						Bar_Center_Genre_Box_Flags[genre].Draw2D(TJAPlayer3.app.Device, 
+							TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Center_Genre_Box_Flag_X, 
+							TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Center_Genre_Box_Flag_Y - (int)(Bar_Center_Genre_Box_Flags[genre].TextureSize.Height * scale));
+					}
+					break;
+				case SongInfoNode.NodeType.BACKBOX:
+					drawCenter(Bar_Center);
+					break;
+				case SongInfoNode.NodeType.RANDOM:
+					drawCenter(Bar_Center);
+					break;
+				case SongInfoNode.NodeType.SCORE:
+					drawCenter(Bar_Center);
+					break;
+			}
+
+
+		}
+
+		private TitleTextureKey GenerateTitleKey(string str文字, Color forecolor, Color backcolor)
 		{
 			return new TitleTextureKey(str文字, pfMusicName, forecolor, backcolor, 410);
 		}
 
-		private TitleTextureKey ttkサブタイトルテクスチャを生成する(string str文字)
+		private TitleTextureKey GenerateSubTitleKey(string str文字)
 		{
 			return new TitleTextureKey(str文字, pfSubtitle, Color.White, Color.Black, 390);
 		}
 
-		private FDKTexture ResolveTitleTexture(TitleTextureKey titleTextureKey)
+		private TitleTextureKey GenerateBoxTitleKey(string str文字, Color forecolor, Color backcolor)
 		{
-			if (!_titleTextures.TryGetValue(titleTextureKey, out var texture))
+			return new TitleTextureKey(str文字, pfMusicName, forecolor, backcolor, 250);
+		}
+
+		private FDKTexture ResolveTitleTexture(TitleTextureKey titleTextureKey, bool vertical)
+		{
+			var titleCaches = vertical ? _titleTextures_V : _titleTextures;
+			if (!titleCaches.TryGetValue(titleTextureKey, out var texture))
 			{
-				texture = GenerateTitleTexture(titleTextureKey);
-				_titleTextures.Add(titleTextureKey, texture);
+				texture = GenerateTitleTexture(titleTextureKey, vertical);
+				titleCaches.Add(titleTextureKey, texture);
 			}
 
 			return texture;
 		}
 
-		private static FDKTexture GenerateTitleTexture(TitleTextureKey titleTextureKey)
+		private static FDKTexture GenerateTitleTexture(TitleTextureKey titleTextureKey, bool vertical)
 		{
 			using (var bmp = new Bitmap(titleTextureKey.cPrivateFastFont.DrawPrivateFont(
-				titleTextureKey.str文字, titleTextureKey.forecolor, titleTextureKey.backcolor, true)))
+				titleTextureKey.str文字, titleTextureKey.forecolor, titleTextureKey.backcolor, vertical)))
 			{
-				FDKTexture tx文字テクスチャ = TJAPlayer3.CreateFDKTexture(bmp, false);
-				if (tx文字テクスチャ.TextureSize.Height > titleTextureKey.maxHeight)
+				FDKTexture titleTexture = TJAPlayer3.CreateFDKTexture(bmp, false);
+
+				if (vertical)
 				{
-					tx文字テクスチャ.Scaling.Y = (float)(((double)titleTextureKey.maxHeight) / tx文字テクスチャ.TextureSize.Height);
+					if (titleTexture.TextureSize.Height > titleTextureKey.maxHeight)
+					{
+						titleTexture.Scaling.Y = (float)(((double)titleTextureKey.maxHeight) / titleTexture.TextureSize.Height);
+					}
+				}
+				else
+                {
+					if (titleTexture.TextureSize.Width > titleTextureKey.maxHeight)
+					{
+						titleTexture.Scaling.X = (float)(((double)titleTextureKey.maxHeight) / titleTexture.TextureSize.Width);
+					}
 				}
 
-				return tx文字テクスチャ;
+				return titleTexture;
 			}
 		}
 
@@ -1724,6 +1820,13 @@ namespace TJAPlayer3
 			}
 
 			_titleTextures.Clear();
+
+			foreach (var titleTexture in _titleTextures_V.Values)
+			{
+				titleTexture.Dispose();
+			}
+
+			_titleTextures_V.Clear();
 		}
 
 		private sealed class TitleTextureKey

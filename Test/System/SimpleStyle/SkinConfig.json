@@ -56,6 +56,8 @@
     103,
     103
   ],
+  "SongSelect_Bar_Genre_Box_Flag_Offset_X": 0,
+  "SongSelect_Bar_Genre_Box_Flag_Offset_Y": -14,
   "SongSelect_Bar_Center_X": [
     448,
     473,
@@ -86,6 +88,8 @@
       540
     ]
   ],
+  "SongSelect_Bar_Center_Genre_Box_Flag_X": 448,
+  "SongSelect_Bar_Center_Genre_Box_Flag_Y": 109,
   "SongSelect_Bar_Center_Title_X": 750,
   "SongSelect_Bar_Center_Title_Y": 126,
   "SongSelect_Bar_Center_SubTitle_X": 707,

@@ -2503,6 +2503,9 @@ namespace TJAPlayer3
                 103, 
                 103, 103, 103, 103, 103, 103, 103 };
 
+            public int SongSelect_Bar_Genre_Box_Flag_Offset_X { get; set; } = 0;
+            public int SongSelect_Bar_Genre_Box_Flag_Offset_Y { get; set; } = -14;
+
             public int[] SongSelect_Bar_Center_X { get; set; } = new int[] { 448, 473, 809 };
             public int[] SongSelect_Bar_Center_Y { get; set; } = new int[] { 103, 103, 103 };
             public int[][] SongSelect_Bar_Center_Rect { get; set; } = new int[][] {
@@ -2511,11 +2514,17 @@ namespace TJAPlayer3
                 new int[] { 361, 0, 39, 540 }
             };
 
+            public int SongSelect_Bar_Center_Genre_Box_Flag_X { get; set; } = 448;
+            public int SongSelect_Bar_Center_Genre_Box_Flag_Y { get; set; } = 109;
+
             public int SongSelect_Bar_Center_Title_X { get; set; } = 750;
             public int SongSelect_Bar_Center_Title_Y { get; set; } = 126;
 
             public int SongSelect_Bar_Center_SubTitle_X { get; set; } = 707;
             public int SongSelect_Bar_Center_SubTitle_Y { get; set; } = 543;
+
+            public int SongSelect_Bar_Center_Box_Title_X { get; set; } = 640;
+            public int SongSelect_Bar_Center_Box_Title_Y { get; set; } = 78;
 
             public SkinConfigColor SongSelect_ForeColor_JPOP { get; set; } = new SkinConfigColor("#FFFFFF");
             public SkinConfigColor SongSelect_ForeColor_Anime { get; set; } = new SkinConfigColor("#FFFFFF");
