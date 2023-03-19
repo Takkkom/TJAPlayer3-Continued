@@ -48,7 +48,7 @@ namespace TJAPlayer3
         {
             get
             {
-                return this.act曲リスト.bスクロール中;
+                return this.act曲リスト.IsScroll;
             }
         }
         public int n確定された曲の難易度
@@ -220,6 +220,17 @@ namespace TJAPlayer3
 			if (this.NotActivated)
 				return;
 
+			Background = TJAPlayer3.CreateFDKTexture(SkinManager.Path(@"Graphics\SongSelect\Background.png"));
+			Header = TJAPlayer3.CreateFDKTexture(SkinManager.Path(@"Graphics\SongSelect\Header.png"));
+			Footer = TJAPlayer3.CreateFDKTexture(SkinManager.Path(@"Graphics\SongSelect\Footer.png"));
+			AutoIcon = TJAPlayer3.CreateFDKTexture(SkinManager.Path(@"Graphics\SongSelect\Auto.png"));
+			DifficultyTexts = TJAPlayer3.CreateFDKTexture(SkinManager.Path(@"Graphics\SongSelect\Difficulty.png"));
+
+			for (int i = 0; i < 9; i++)
+            {
+				GenreBacks[i] = TJAPlayer3.CreateFDKTexture(SkinManager.Path($@"Graphics\SongSelect\GenreBackground_{i}.png"));
+			}
+
 			//this.tx背景 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_background.jpg" ), false );
 			//this.tx上部パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_header_panel.png" ), false );
 			//this.tx下部パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_footer panel.png" ) );
@@ -242,13 +253,25 @@ namespace TJAPlayer3
 			//this.tx難易度別背景[3] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_background_Master.png" ) );
 			//this.tx難易度別背景[4] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_background_Edit.png" ) );
 			//this.tx下部テキスト = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_footer text.png" ) );
-			this.ct背景スクロール用タイマー = new Counter(0, TJAPlayer3.Tx.SongSelect_Background.TextureSize.Width, 30, TJAPlayer3.Timer);
+			this.ct背景スクロール用タイマー = new Counter(0, Background.TextureSize.Width, 30, TJAPlayer3.Timer);
 			base.ManagedCreateResources();
 		}
 		public override void ManagedReleaseResources()
 		{
 			if (this.NotActivated)
 				return;
+
+			TJAPlayer3.DisposeFDKTexture(ref Background);
+			TJAPlayer3.DisposeFDKTexture(ref Header);
+			TJAPlayer3.DisposeFDKTexture(ref Footer);
+			TJAPlayer3.DisposeFDKTexture(ref AutoIcon);
+			TJAPlayer3.DisposeFDKTexture(ref DifficultyTexts);
+
+
+			for (int i = 0; i < 9; i++)
+			{
+				TJAPlayer3.DisposeFDKTexture(ref GenreBacks[i]);
+			}
 
 			//CDTXMania.tテクスチャの解放( ref this.tx背景 );
 			//CDTXMania.tテクスチャの解放( ref this.tx上部パネル );
@@ -295,20 +318,17 @@ namespace TJAPlayer3
 
 			this.ct登場時アニメ用共通.Tick();
 
-			if (TJAPlayer3.Tx.SongSelect_Background != null)
-				TJAPlayer3.Tx.SongSelect_Background.Draw2D(TJAPlayer3.app.Device, 0, 0);
+			Background?.Draw2D(TJAPlayer3.app.Device, 0, 0);
 
 			if (this.r現在選択中の曲 != null)
 			{
-				if ( r現在選択中の曲.NowNodeType == SongInfoNode.NodeType.BOX || r現在選択中の曲.NowNodeType == SongInfoNode.NodeType.SCORE)
+				nGenreBack = StringToGenreNum.GenreBar(this.r現在選択中の曲.strジャンル);
+				if (GenreBacks[nGenreBack] != null)
 				{
-					nGenreBack = StringToGenreNum.GenreBar(this.r現在選択中の曲.strジャンル);
-				}
-				if (TJAPlayer3.Tx.SongSelect_GenreBack[nGenreBack] != null)
-				{
-					for (int i = 0; i < (1280 / TJAPlayer3.Tx.SongSelect_Background.TextureSize.Width) + 2; i++)
-						if (TJAPlayer3.Tx.SongSelect_GenreBack[nGenreBack] != null)
-							TJAPlayer3.Tx.SongSelect_GenreBack[nGenreBack].Draw2D(TJAPlayer3.app.Device, -ct背景スクロール用タイマー.NowValue + TJAPlayer3.Tx.SongSelect_Background.TextureSize.Width * i, 0);
+					for (int i = 0; i < (1280 / GenreBacks[nGenreBack].TextureSize.Width) + 2; i++)
+                    {
+						GenreBacks[nGenreBack]?.Draw2D(TJAPlayer3.app.Device, -ct背景スクロール用タイマー.NowValue + GenreBacks[nGenreBack].TextureSize.Width * i, 0);
+					}
 				}
 			}
 
@@ -322,35 +342,19 @@ namespace TJAPlayer3
 			{
 				double db登場割合 = ((double)this.ct登場時アニメ用共通.NowValue) / 100.0;    // 100が最終値
 				double dbY表示割合 = Math.Sin(Math.PI / 2 * db登場割合);
-				y = ((int)(TJAPlayer3.Tx.SongSelect_Header.ImageSize.Height * dbY表示割合)) - TJAPlayer3.Tx.SongSelect_Header.ImageSize.Height;
+				y = ((int)(Header.ImageSize.Height * dbY表示割合)) - Header.ImageSize.Height;
 			}
-			if (TJAPlayer3.Tx.SongSelect_Header != null)
-				TJAPlayer3.Tx.SongSelect_Header.Draw2D(TJAPlayer3.app.Device, 0, 0);
+			Header?.Draw2D(TJAPlayer3.app.Device, 0, 0);
 
 			this.actInformation.Draw();
-			if (TJAPlayer3.Tx.SongSelect_Footer != null)
-				TJAPlayer3.Tx.SongSelect_Footer.Draw2D(TJAPlayer3.app.Device, 0, 720 - TJAPlayer3.Tx.SongSelect_Footer.ImageSize.Height);
+			Footer?.Draw2D(TJAPlayer3.app.Device, 0, 720 - Footer.ImageSize.Height);
 
-			#region ネームプレート
-			for (int i = 0; i < TJAPlayer3._MainConfig.nPlayerCount; i++)
+			for (int player = 0; player < TJAPlayer3._MainConfig.nPlayerCount; player++)
 			{
-				if (TJAPlayer3.Tx.NamePlate[i] != null)
+				TJAPlayer3.Tx.NamePlate[player]?.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.SkinValue.SongSelect_NamePlate_X[player], TJAPlayer3.Skin.SkinValue.SongSelect_NamePlate_Y[player]);
+				if (TJAPlayer3._MainConfig.AutoPlay[player])
 				{
-					TJAPlayer3.Tx.NamePlate[i].Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.SkinValue.SongSelect_NamePlate_X[i], TJAPlayer3.Skin.SkinValue.SongSelect_NamePlate_Y[i]);
-				}
-			}
-			#endregion
-
-			#region[ 下部テキスト ]
-			if (TJAPlayer3.Tx.SongSelect_Auto != null)
-			{
-				if (TJAPlayer3._MainConfig.b太鼓パートAutoPlay)
-				{
-					TJAPlayer3.Tx.SongSelect_Auto.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.SkinValue.SongSelect_Auto_X[0], TJAPlayer3.Skin.SkinValue.SongSelect_Auto_Y[0]);
-				}
-				if (TJAPlayer3._MainConfig.nPlayerCount > 1 && TJAPlayer3._MainConfig.b太鼓パートAutoPlay2P)
-				{
-					TJAPlayer3.Tx.SongSelect_Auto.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.SkinValue.SongSelect_Auto_X[1], TJAPlayer3.Skin.SkinValue.SongSelect_Auto_Y[1]);
+					AutoIcon?.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.SkinValue.SongSelect_Auto_X[player], TJAPlayer3.Skin.SkinValue.SongSelect_Auto_Y[player]);
 				}
 			}
 			if (TJAPlayer3._MainConfig.eGameMode == EGame.完走叩ききりまショー)
@@ -363,7 +367,6 @@ namespace TJAPlayer3
 				TJAPlayer3._ConsoleText.tPrint(0, 32, ConsoleText.FontType.Red, "BMSCROLL : ON");
 			else if (TJAPlayer3._MainConfig.eScrollMode == EScrollMode.HBSCROLL)
 				TJAPlayer3._ConsoleText.tPrint(0, 32, ConsoleText.FontType.Red, "HBSCROLL : ON");
-			#endregion
 
 			//this.actステータスパネル.On進行描画();
 
@@ -378,7 +381,7 @@ namespace TJAPlayer3
 			this.actShowCurrentPosition.Draw();                             // #27648 2011.3.28 yyagi
 
 			//CDTXMania.act文字コンソール.tPrint( 0, 0, C文字コンソール.Eフォント種別.白, this.n現在選択中の曲の難易度.ToString() );
-			TJAPlayer3.Tx.SongSelect_Difficulty.Draw2D(TJAPlayer3.app.Device, 980, 30, new Rectangle(0, 70 * this.n現在選択中の曲の難易度, 260, 70));
+			DifficultyTexts?.Draw2D(TJAPlayer3.app.Device, 980, 30, new Rectangle(0, 70 * this.n現在選択中の曲の難易度, 260, 70));
 
 			if (!this.bBGM再生済み && (base.eフェーズID == BaseScene.Eフェーズ.共通_通常状態))
 			{
@@ -411,6 +414,7 @@ namespace TJAPlayer3
 				{
 					#region [ ESC ]
 					if (TJAPlayer3.Input管理.Keyboard.GetKeyPressed((int)SlimDX.DirectInput.Key.Escape) && (this.act曲リスト.r現在選択中の曲 != null))// && (  ) ) )
+                    {
 						if (this.act曲リスト.r現在選択中の曲.r親ノード == null)
 						{   // [ESC]
 							TJAPlayer3.Skin.sound取消音.t再生する();
@@ -425,6 +429,7 @@ namespace TJAPlayer3
 							bool bNeedChangeSkin = this.act曲リスト.tBOXを出る();
 							this.actPresound.tサウンド停止();
 						}
+					}
 					#endregion
 					#region [ Shift-F1: CONFIG画面 ]
 					if ((TJAPlayer3.Input管理.Keyboard.GetKeyKeepPressed((int)SlimDX.DirectInput.Key.RightShift) || TJAPlayer3.Input管理.Keyboard.GetKeyKeepPressed((int)SlimDX.DirectInput.Key.LeftShift)) &&
@@ -490,13 +495,13 @@ namespace TJAPlayer3
 					}
 					#endregion
 
-					if (this.act曲リスト.r現在選択中の曲 != null)
+					if (this.act曲リスト.r現在選択中の曲 != null && !bスクロール中)
 					{
 						#region [ Decide ]
 						if ((TJAPlayer3.Pad.b押されたDGB(Eパッド.Decide) || (TJAPlayer3.Pad.b押されたDGB(Eパッド.LRed) || TJAPlayer3.Pad.b押されたDGB(Eパッド.RRed)) ||
 								((TJAPlayer3._MainConfig.bEnterがキー割り当てのどこにも使用されていない && TJAPlayer3.Input管理.Keyboard.GetKeyPressed((int)SlimDX.DirectInput.Key.Return)))))
 						{
-							if (this.act曲リスト.r現在選択中の曲 != null)
+							if (this.act曲リスト.r現在選択中の曲 != null && act曲リスト.IsEndScrollCounter)
 							{
 								switch (this.act曲リスト.r現在選択中の曲.NowNodeType)
 								{
@@ -750,6 +755,13 @@ namespace TJAPlayer3
   //      private CTexture tx難易度名;
   //      private CTexture tx下部テキスト;
         private Counter ctDiffSelect移動待ち;
+
+		private FDKTexture Background;
+		private FDKTexture[] GenreBacks = new FDKTexture[9];
+		private FDKTexture Header;
+		private FDKTexture Footer;
+		private FDKTexture AutoIcon;
+		private FDKTexture DifficultyTexts;
 
 		private struct STCommandTime		// #24063 2011.1.16 yyagi コマンド入力時刻の記録用
 		{

@@ -2495,6 +2495,28 @@ namespace TJAPlayer3
             public int[] SongSelect_NamePlate_Y { get; set; } = new int[] { 650, 650 };
             public int[] SongSelect_Auto_X { get; set; } = new int[] { 60, 950 };
             public int[] SongSelect_Auto_Y { get; set; } = new int[] { 650, 650 };
+            public int SongSelect_Bar_Count { get; set; } = 15;
+            public int[] SongSelect_Bar_X { get; set; } = new int[] { -160, -260, -60, 40, 140, 241, 341, 
+                590, 
+                840, 941, 1041, 1142, 1242, 1343, 1443 };
+            public int[] SongSelect_Bar_Y { get; set; } = new int[] { 103, 103, 103, 103, 103, 103, 103,
+                103, 
+                103, 103, 103, 103, 103, 103, 103 };
+
+            public int[] SongSelect_Bar_Center_X { get; set; } = new int[] { 448, 473, 809 };
+            public int[] SongSelect_Bar_Center_Y { get; set; } = new int[] { 103, 103, 103 };
+            public int[][] SongSelect_Bar_Center_Rect { get; set; } = new int[][] {
+                new int[] { 0, 0, 25, 540 },
+                new int[] { 25, 0, 336, 540 },
+                new int[] { 361, 0, 39, 540 }
+            };
+
+            public int SongSelect_Bar_Center_Title_X { get; set; } = 750;
+            public int SongSelect_Bar_Center_Title_Y { get; set; } = 126;
+
+            public int SongSelect_Bar_Center_SubTitle_X { get; set; } = 707;
+            public int SongSelect_Bar_Center_SubTitle_Y { get; set; } = 543;
+
             public SkinConfigColor SongSelect_ForeColor_JPOP { get; set; } = new SkinConfigColor("#FFFFFF");
             public SkinConfigColor SongSelect_ForeColor_Anime { get; set; } = new SkinConfigColor("#FFFFFF");
             public SkinConfigColor SongSelect_ForeColor_VOCALOID { get; set; } = new SkinConfigColor("#FFFFFF");

@@ -37,7 +37,7 @@ namespace FDK
 			get;
 			set;
 		}
-		public long NowElapsedTimeMs
+		public double NowElapsedTimeMs
 		{
 			get;
 			set;
@@ -128,7 +128,7 @@ namespace FDK
 		}
 
 		/// <summary>生成と同時に開始する。</summary>
-		public Counter( int start, int end, int interval, FDKTimer timer )
+		public Counter( int start, int end, double interval, FDKTimer timer )
 			: this()
 		{
 			this.Start( start, end, interval, timer );
@@ -151,7 +151,7 @@ namespace FDK
 		/// <param name="n終了値">最後のカウント値。</param>
 		/// <param name="n間隔ms">カウント値を１増加させるのにかける時間（ミリ秒単位）。</param>
 		/// <param name="timer">カウントに使用するタイマ。</param>
-		public void Start( int n開始値, int n終了値, int n間隔ms, FDKTimer timer )
+		public void Start( int n開始値, int n終了値, double n間隔ms, FDKTimer timer )
 		{
 			this.StartValue = n開始値;
 			this.EndValue = n終了値;
@@ -340,7 +340,7 @@ namespace FDK
 		//-----------------
 		private FDKTimer timer;
         private FDKSoundTimer timerdb;
-		private int IntervalMs;
+		private double IntervalMs;
         private double Interval_Double;
 		//-----------------
 		#endregion

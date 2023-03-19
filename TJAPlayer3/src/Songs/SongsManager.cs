@@ -955,8 +955,9 @@ namespace TJAPlayer3
 				itemRandom.strタイトル = "ランダムに曲をえらぶ";
 				itemRandom.nスコア数 = (int)Difficulty.Total;
 				itemRandom.r親ノード = ノードリスト[ 0 ].r親ノード;
-                
-                itemRandom.strBreadcrumbs = ( itemRandom.r親ノード == null ) ?
+				if (itemRandom.r親ノード != null) itemRandom.strジャンル = itemRandom.r親ノード.strジャンル;
+
+				itemRandom.strBreadcrumbs = ( itemRandom.r親ノード == null ) ?
 					itemRandom.strタイトル :  itemRandom.r親ノード.strBreadcrumbs + " > " + itemRandom.strタイトル;
 
 				for( int i = 0; i < (int)Difficulty.Total; i++ )
@@ -1008,6 +1009,7 @@ namespace TJAPlayer3
 					itemBack.strタイトル = "とじる";
 					itemBack.nスコア数 = 1;
 					itemBack.r親ノード = c曲リストノード;
+					if (itemBack.r親ノード != null) itemBack.strジャンル = itemBack.r親ノード.strジャンル;
 
 					itemBack.strSkinPath = ( c曲リストノード.r親ノード == null ) ?
 						"" : c曲リストノード.r親ノード.strSkinPath;

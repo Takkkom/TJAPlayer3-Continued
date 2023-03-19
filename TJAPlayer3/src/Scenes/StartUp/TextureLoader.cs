@@ -99,6 +99,7 @@ namespace TJAPlayer3
             #endregion
 
             #region 3_選曲画面
+            /*
             SongSelect_Background = TxC(SONGSELECT + @"Background.png");
             SongSelect_Header = TxC(SONGSELECT + @"Header.png");
             SongSelect_Footer = TxC(SONGSELECT + @"Footer.png");
@@ -131,6 +132,7 @@ namespace TJAPlayer3
                 SongSelect_GenreBack[i] = TxC(SONGSELECT + @"GenreBackground_" + i.ToString() + ".png");
             }
             SongSelect_ScoreWindow_Text = TxC(SONGSELECT + @"ScoreWindow_Text.png");
+            */
             #endregion
 
             #region 4_読み込み画面
@@ -548,6 +550,7 @@ namespace TJAPlayer3
             #endregion
 
             #region 3_選曲画面
+            /*
             TJAPlayer3.DisposeFDKTexture(ref SongSelect_Background);
             TJAPlayer3.DisposeFDKTexture(ref SongSelect_Header);
             TJAPlayer3.DisposeFDKTexture(ref SongSelect_Footer);
@@ -579,6 +582,7 @@ namespace TJAPlayer3
                 TJAPlayer3.DisposeFDKTexture(ref SongSelect_GenreBack[i]);
             }
             TJAPlayer3.DisposeFDKTexture(ref SongSelect_ScoreWindow_Text);
+            */
             #endregion
 
             #region 4_読み込み画面
@@ -864,6 +868,7 @@ namespace TJAPlayer3
         #endregion
 
         #region 3_選曲画面
+        /*
         public FDKTexture SongSelect_Background,
             SongSelect_Header,
             SongSelect_Footer,
@@ -886,6 +891,7 @@ namespace TJAPlayer3
             SongSelect_ScoreWindow = new FDKTexture[(int)Difficulty.Total],
             SongSelect_Bar_Genre = new FDKTexture[9],
             SongSelect_NamePlate = new FDKTexture[1];
+        */
         #endregion
 
         #region 4_読み込み画面

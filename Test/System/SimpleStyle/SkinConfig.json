@@ -21,6 +21,75 @@
     650,
     650
   ],
+  "SongSelect_Bar_Count": 15,
+  "SongSelect_Bar_X": [
+    -160,
+    -260,
+    -60,
+    40,
+    140,
+    241,
+    341,
+    590,
+    840,
+    941,
+    1041,
+    1142,
+    1242,
+    1343,
+    1443
+  ],
+  "SongSelect_Bar_Y": [
+    103,
+    103,
+    103,
+    103,
+    103,
+    103,
+    103,
+    103,
+    103,
+    103,
+    103,
+    103,
+    103,
+    103,
+    103
+  ],
+  "SongSelect_Bar_Center_X": [
+    448,
+    473,
+    809
+  ],
+  "SongSelect_Bar_Center_Y": [
+    103,
+    103,
+    103
+  ],
+  "SongSelect_Bar_Center_Rect": [
+    [
+      0,
+      0,
+      25,
+      540
+    ],
+    [
+      25,
+      0,
+      336,
+      540
+    ],
+    [
+      361,
+      0,
+      39,
+      540
+    ]
+  ],
+  "SongSelect_Bar_Center_Title_X": 750,
+  "SongSelect_Bar_Center_Title_Y": 126,
+  "SongSelect_Bar_Center_SubTitle_X": 707,
+  "SongSelect_Bar_Center_SubTitle_Y": 543,
   "SongSelect_ForeColor_JPOP": {
     "R": 255,
     "G": 255,
