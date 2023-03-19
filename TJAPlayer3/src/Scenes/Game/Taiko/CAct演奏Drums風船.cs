@@ -155,14 +155,14 @@ namespace TJAPlayer3
                     if (n残り打数[j] < n連打数)
                     {
                         if (TJAPlayer3.Tx.Balloon_Breaking[j] != null)
-                            TJAPlayer3.Tx.Balloon_Breaking[j].Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.Game_Balloon_Balloon_X[player] + (this.ct風船ふきだしアニメ.NowValue == 1 ? 3 : 0), TJAPlayer3.Skin.Game_Balloon_Balloon_Y[player]);
+                            TJAPlayer3.Tx.Balloon_Breaking[j].Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.SkinValue.Game_Balloon_Balloon_X[player] + (this.ct風船ふきだしアニメ.NowValue == 1 ? 3 : 0), TJAPlayer3.Skin.SkinValue.Game_Balloon_Balloon_Y[player]);
                         break;
                     }
                 }
                 //1P:31 2P:329
                 if (TJAPlayer3.Tx.Balloon_Balloon != null)
-                    TJAPlayer3.Tx.Balloon_Balloon.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.Game_Balloon_Balloon_Frame_X[player], TJAPlayer3.Skin.Game_Balloon_Balloon_Frame_Y[player]);
-                this.t文字表示(TJAPlayer3.Skin.Game_Balloon_Balloon_Number_X[player], TJAPlayer3.Skin.Game_Balloon_Balloon_Number_Y[player], n連打数.ToString(), n連打数, player);
+                    TJAPlayer3.Tx.Balloon_Balloon.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.SkinValue.Game_Balloon_Balloon_Frame_X[player], TJAPlayer3.Skin.SkinValue.Game_Balloon_Balloon_Frame_Y[player]);
+                this.t文字表示(TJAPlayer3.Skin.SkinValue.Game_Balloon_Balloon_Number_X[player], TJAPlayer3.Skin.SkinValue.Game_Balloon_Balloon_Number_Y[player], n連打数.ToString(), n連打数, player);
                 //CDTXMania.act文字コンソール.tPrint( 0, 0, C文字コンソール.Eフォント種別.白, n連打数.ToString() );
             }
             if (n連打数 == 0 && TJAPlayer3.stage演奏ドラム画面.actChara.b風船連打中)
@@ -271,19 +271,19 @@ namespace TJAPlayer3
                 {
                     if (this.st文字位置[i].ch == ch)
                     {
-                        Rectangle rectangle = new Rectangle(TJAPlayer3.Skin.Game_Balloon_Number_Size[0] * i, 0, TJAPlayer3.Skin.Game_Balloon_Number_Size[0], TJAPlayer3.Skin.Game_Balloon_Number_Size[1]);
+                        Rectangle rectangle = new Rectangle(TJAPlayer3.Skin.SkinValue.Game_Balloon_Number_Size[0] * i, 0, TJAPlayer3.Skin.SkinValue.Game_Balloon_Number_Size[0], TJAPlayer3.Skin.SkinValue.Game_Balloon_Number_Size[1]);
 
                         if (TJAPlayer3.Tx.Balloon_Number_Roll != null)
                         {
                             TJAPlayer3.Tx.Balloon_Number_Roll.Opacity = 255;
-                            TJAPlayer3.Tx.Balloon_Number_Roll.Scaling.X = TJAPlayer3.Skin.Game_Balloon_Balloon_Number_Scale;
-                            TJAPlayer3.Tx.Balloon_Number_Roll.Scaling.Y = TJAPlayer3.Skin.Game_Balloon_Balloon_Number_Scale + RollScale[this.ct風船アニメ[nPlayer].NowValue];
-                            TJAPlayer3.Tx.Balloon_Number_Roll.t2D拡大率考慮下基準描画(TJAPlayer3.app.Device, x - (((TJAPlayer3.Skin.Game_Balloon_Number_Padding + 2) * n桁数) / 2), y, rectangle);
+                            TJAPlayer3.Tx.Balloon_Number_Roll.Scaling.X = TJAPlayer3.Skin.SkinValue.Game_Balloon_Balloon_Number_Scale;
+                            TJAPlayer3.Tx.Balloon_Number_Roll.Scaling.Y = TJAPlayer3.Skin.SkinValue.Game_Balloon_Balloon_Number_Scale + RollScale[this.ct風船アニメ[nPlayer].NowValue];
+                            TJAPlayer3.Tx.Balloon_Number_Roll.t2D拡大率考慮下基準描画(TJAPlayer3.app.Device, x - (((TJAPlayer3.Skin.SkinValue.Game_Balloon_Number_Padding + 2) * n桁数) / 2), y, rectangle);
                         }
                         break;
                     }
                 }
-                x += (TJAPlayer3.Skin.Game_Balloon_Number_Padding - (n桁数 > 2 ? n桁数 * 2 : 0));
+                x += (TJAPlayer3.Skin.SkinValue.Game_Balloon_Number_Padding - (n桁数 > 2 ? n桁数 * 2 : 0));
             }
         }
 

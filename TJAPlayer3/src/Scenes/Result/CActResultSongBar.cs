@@ -32,13 +32,13 @@ namespace TJAPlayer3
 		{
             if( !string.IsNullOrEmpty( TJAPlayer3._MainConfig.FontName) )
             {
-                this.pfMusicName = new CachePrivateFont(new FontFamily(TJAPlayer3._MainConfig.FontName), TJAPlayer3.Skin.Result_MusicName_FontSize);
-                this.pfStageText = new CachePrivateFont(new FontFamily(TJAPlayer3._MainConfig.FontName), TJAPlayer3.Skin.Result_StageText_FontSize);
+                this.pfMusicName = new CachePrivateFont(new FontFamily(TJAPlayer3._MainConfig.FontName), TJAPlayer3.Skin.SkinValue.Result_MusicName_FontSize);
+                this.pfStageText = new CachePrivateFont(new FontFamily(TJAPlayer3._MainConfig.FontName), TJAPlayer3.Skin.SkinValue.Result_StageText_FontSize);
             }
             else
             {
-                this.pfMusicName = new CachePrivateFont(new FontFamily("MS UI Gothic"), TJAPlayer3.Skin.Result_MusicName_FontSize);
-                this.pfStageText = new CachePrivateFont(new FontFamily("MS UI Gothic"), TJAPlayer3.Skin.Result_StageText_FontSize);
+                this.pfMusicName = new CachePrivateFont(new FontFamily("MS UI Gothic"), TJAPlayer3.Skin.SkinValue.Result_MusicName_FontSize);
+                this.pfStageText = new CachePrivateFont(new FontFamily("MS UI Gothic"), TJAPlayer3.Skin.SkinValue.Result_StageText_FontSize);
             }
 
 		    // After performing calibration, inform the player that
@@ -50,14 +50,14 @@ namespace TJAPlayer3
 		        ? $"Calibration complete. InputAdjustTime is now {TJAPlayer3._MainConfig.nInputAdjustTimeMs}ms"
 		        : TJAPlayer3.DTX.TITLE;
 
-		    using (var bmpSongTitle = pfMusicName.DrawPrivateFont(title, TJAPlayer3.Skin.Result_MusicName_ForeColor, TJAPlayer3.Skin.Result_MusicName_BackColor))
+		    using (var bmpSongTitle = pfMusicName.DrawPrivateFont(title, TJAPlayer3.Skin.SkinValue.Result_MusicName_ForeColor.GetColor(), TJAPlayer3.Skin.SkinValue.Result_MusicName_BackColor.GetColor()))
 
 		    {
 		        this.txMusicName = TJAPlayer3.CreateFDKTexture(bmpSongTitle, false);
 		        txMusicName.Scaling.X = TJAPlayer3.GetSongNameXScaling(ref txMusicName);
 		    }
 
-		    using (var bmpStageText = pfStageText.DrawPrivateFont(TJAPlayer3.Skin.Game_StageText, TJAPlayer3.Skin.Result_StageText_ForeColor, TJAPlayer3.Skin.Result_StageText_BackColor))
+		    using (var bmpStageText = pfStageText.DrawPrivateFont(TJAPlayer3.Skin.SkinValue.Game_StageText, TJAPlayer3.Skin.SkinValue.Result_StageText_ForeColor.GetColor(), TJAPlayer3.Skin.SkinValue.Result_StageText_BackColor.GetColor()))
 		    {
 		        this.txStageText = TJAPlayer3.CreateFDKTexture(bmpStageText, false);
 		    }
@@ -104,32 +104,32 @@ namespace TJAPlayer3
 			}
 			this.ct登場用.Tick();
 
-            if (TJAPlayer3.Skin.Result_MusicName_ReferencePoint == SkinManager.ReferencePoint.Center)
+            if (TJAPlayer3.Skin.SkinValue.Result_MusicName_ReferencePoint == SkinManager.ReferencePoint.Center)
             {
-                this.txMusicName.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.Result_MusicName_X - ((this.txMusicName.TextureSize.Width * txMusicName.Scaling.X) / 2), TJAPlayer3.Skin.Result_MusicName_Y);
+                this.txMusicName.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.SkinValue.Result_MusicName_X - ((this.txMusicName.TextureSize.Width * txMusicName.Scaling.X) / 2), TJAPlayer3.Skin.SkinValue.Result_MusicName_Y);
             }
-            else if (TJAPlayer3.Skin.Result_MusicName_ReferencePoint == SkinManager.ReferencePoint.Left)
+            else if (TJAPlayer3.Skin.SkinValue.Result_MusicName_ReferencePoint == SkinManager.ReferencePoint.Left)
             {
-                this.txMusicName.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.Result_MusicName_X, TJAPlayer3.Skin.Result_MusicName_Y);
+                this.txMusicName.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.SkinValue.Result_MusicName_X, TJAPlayer3.Skin.SkinValue.Result_MusicName_Y);
             }
             else
             {
-                this.txMusicName.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.Result_MusicName_X - this.txMusicName.TextureSize.Width * txMusicName.Scaling.X, TJAPlayer3.Skin.Result_MusicName_Y);
+                this.txMusicName.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.SkinValue.Result_MusicName_X - this.txMusicName.TextureSize.Width * txMusicName.Scaling.X, TJAPlayer3.Skin.SkinValue.Result_MusicName_Y);
             }
 
             if(TJAPlayer3.stage選曲.n確定された曲の難易度 != (int)Difficulty.Dan)
             {
-                if (TJAPlayer3.Skin.Result_StageText_ReferencePoint == SkinManager.ReferencePoint.Center)
+                if (TJAPlayer3.Skin.SkinValue.Result_StageText_ReferencePoint == SkinManager.ReferencePoint.Center)
                 {
-                    this.txStageText.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.Result_StageText_X - ((this.txStageText.TextureSize.Width * txStageText.Scaling.X) / 2), TJAPlayer3.Skin.Result_StageText_Y);
+                    this.txStageText.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.SkinValue.Result_StageText_X - ((this.txStageText.TextureSize.Width * txStageText.Scaling.X) / 2), TJAPlayer3.Skin.SkinValue.Result_StageText_Y);
                 }
-                else if (TJAPlayer3.Skin.Result_StageText_ReferencePoint == SkinManager.ReferencePoint.Right)
+                else if (TJAPlayer3.Skin.SkinValue.Result_StageText_ReferencePoint == SkinManager.ReferencePoint.Right)
                 {
-                    this.txStageText.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.Result_StageText_X - this.txStageText.TextureSize.Width, TJAPlayer3.Skin.Result_StageText_Y);
+                    this.txStageText.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.SkinValue.Result_StageText_X - this.txStageText.TextureSize.Width, TJAPlayer3.Skin.SkinValue.Result_StageText_Y);
                 }
                 else
                 {
-                    this.txStageText.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.Result_StageText_X, TJAPlayer3.Skin.Result_StageText_Y);
+                    this.txStageText.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.SkinValue.Result_StageText_X, TJAPlayer3.Skin.SkinValue.Result_StageText_Y);
                 }
             }
 

@@ -6,6 +6,9 @@ using System.Diagnostics;
 using FDK;
 using System.Drawing;
 using System.Linq;
+using System.Text.Json;
+using System.Text.Encodings.Web;
+using System.Text.Unicode;
 
 namespace TJAPlayer3
 {
@@ -803,9 +806,7 @@ namespace TJAPlayer3
         /// <returns>妥当ならtrue</returns>
         public bool bIsValid(string skinPathFullName)
         {
-            string filePathTitle;
-            filePathTitle = System.IO.Path.Combine(skinPathFullName, @"SkinConfig.ini");
-            return (File.Exists(filePathTitle));
+            return (Directory.Exists(skinPathFullName));
         }
 
 
@@ -833,8 +834,34 @@ namespace TJAPlayer3
 
         public void tReadSkinConfig()
         {
-            var str = "";
-            LoadSkinConfigFromFile(Path(@"SkinConfig.ini"), ref str);
+            //var str = "";
+            //LoadSkinConfigFromFile(Path(@"SkinConfig.ini"), ref str);
+
+            var path = Path(@"SkinConfig.json");
+            if (File.Exists(path))
+            {
+                using (var streamReader = new StreamReader(path))
+                {
+                    SkinValue = JsonSerializer.Deserialize<SkinConfigInfo>(streamReader.ReadToEnd());
+                }
+            }
+            else
+            {
+                SkinValue = new SkinConfigInfo();
+                using (var streamReader = new StreamWriter(path))
+                {
+                    var options = new JsonSerializerOptions
+                    {
+                        Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
+                        WriteIndented = true
+                    };
+
+                    string jsonString = JsonSerializer.Serialize<SkinConfigInfo>(SkinValue, options);
+                    streamReader.Write(jsonString);
+                }
+            }
+
+            /*
             this.t文字列から読み込み(str);
 
             void LoadSkinConfigFromFile(string path, ref string work)
@@ -858,8 +885,10 @@ namespace TJAPlayer3
                     }
                 }
             }
+            */
         }
 
+        /*
         private void t文字列から読み込み(string strAllSettings)	// 2011.4.13 yyagi; refactored to make initial KeyConfig easier.
         {
             string[] delimiter = { "\n" };
@@ -2287,6 +2316,7 @@ namespace TJAPlayer3
                 }
             }
         }
+        */
 
         private void t座標の追従設定()
         {
@@ -2423,311 +2453,341 @@ namespace TJAPlayer3
             Right
         }
 
-        #region 新・SkinConfig
-        #region General
-        public string Skin_Name = "Unknown";
-        public string Skin_Version = "Unknown";
-        public string Skin_Creator = "Unknown";
-        #endregion
-        #region Config
-        public int Config_ItemText_Correction_X = 0;
-        public int Config_ItemText_Correction_Y = 0;
-        #endregion
-        #region SongSelect
-        public int SongSelect_Overall_Y = 103;
-        public int[] SongSelect_NamePlate_X = new int[] { 60, 950 };
-        public int[] SongSelect_NamePlate_Y = new int[] { 650, 650 };
-        public int[] SongSelect_Auto_X = new int[] { 60, 950 };
-        public int[] SongSelect_Auto_Y = new int[] { 650, 650 };
-        public Color SongSelect_ForeColor_JPOP = ColorTranslator.FromHtml("#FFFFFF");
-        public Color SongSelect_ForeColor_Anime = ColorTranslator.FromHtml("#FFFFFF");
-        public Color SongSelect_ForeColor_VOCALOID = ColorTranslator.FromHtml("#FFFFFF");
-        public Color SongSelect_ForeColor_Children = ColorTranslator.FromHtml("#FFFFFF");
-        public Color SongSelect_ForeColor_Variety = ColorTranslator.FromHtml("#FFFFFF");
-        public Color SongSelect_ForeColor_Classic = ColorTranslator.FromHtml("#FFFFFF");
-        public Color SongSelect_ForeColor_GameMusic = ColorTranslator.FromHtml("#FFFFFF");
-        public Color SongSelect_ForeColor_Namco = ColorTranslator.FromHtml("#FFFFFF");
-        public Color SongSelect_BackColor_JPOP = ColorTranslator.FromHtml("#01455B");
-        public Color SongSelect_BackColor_Anime = ColorTranslator.FromHtml("#9D3800");
-        public Color SongSelect_BackColor_VOCALOID = ColorTranslator.FromHtml("#5B6278");
-        public Color SongSelect_BackColor_Children = ColorTranslator.FromHtml("#99001F");
-        public Color SongSelect_BackColor_Variety = ColorTranslator.FromHtml("#366600");
-        public Color SongSelect_BackColor_Classic = ColorTranslator.FromHtml("#875600");
-        public Color SongSelect_BackColor_GameMusic = ColorTranslator.FromHtml("#412080");
-        public Color SongSelect_BackColor_Namco = ColorTranslator.FromHtml("#980E00");
-        public string[] SongSelect_CorrectionX_Chara = { "ここにX座標を補正したい文字をカンマで区切って記入" };
-        public string[] SongSelect_CorrectionY_Chara = { "ここにY座標を補正したい文字をカンマで区切って記入" };
-        public int SongSelect_CorrectionX_Chara_Value = 0;
-        public int SongSelect_CorrectionY_Chara_Value = 0;
-        public string[] SongSelect_Rotate_Chara = { "ここに90℃回転させたい文字をカンマで区切って記入" };
-        #endregion
-        #region SongLoading
-        public int SongLoading_Plate_X = 640;
-        public int SongLoading_Plate_Y = 360;
-        public int SongLoading_Title_X = 640;
-        public int SongLoading_Title_Y = 340;
-        public int SongLoading_SubTitle_X = 640;
-        public int SongLoading_SubTitle_Y = 390;
-        public int SongLoading_Title_FontSize = 30;
-        public int SongLoading_SubTitle_FontSize = 22;
-        public ReferencePoint SongLoading_Plate_ReferencePoint = ReferencePoint.Center;
-        public ReferencePoint SongLoading_Title_ReferencePoint = ReferencePoint.Center;
-        public ReferencePoint SongLoading_SubTitle_ReferencePoint = ReferencePoint.Center;
-        public Color SongLoading_Title_ForeColor = ColorTranslator.FromHtml("#FFFFFF");
-        public Color SongLoading_Title_BackColor = ColorTranslator.FromHtml("#000000");
-        public Color SongLoading_SubTitle_ForeColor = ColorTranslator.FromHtml("#FFFFFF");
-        public Color SongLoading_SubTitle_BackColor = ColorTranslator.FromHtml("#000000");
-        public bool SongLoading_Plate_ScreenBlend = true;
+        public class SkinConfigColor
+        {
+            public int R { get; set; }
+            public int G { get; set; }
+            public int B { get; set; }
 
-        #endregion
-        #region Game
-        public bool Game_Notes_Anime = false;
-        public string Game_StageText = "1曲目";
-        public RollColorMode Game_RollColorMode = RollColorMode.All;
-        public bool Game_JudgeFrame_AddBlend = true;
-        #region Chara
-        public int[] Game_Chara_X = new int[] { 0, 0 };
-        public int[] Game_Chara_Y = new int[] { 0, 537 };
-        public int[] Game_Chara_Balloon_X = new int[] { 240, 240, 0, 0 };
-        public int[] Game_Chara_Balloon_Y = new int[] { 0, 297, 0, 0 };
-        public int Game_Chara_Ptn_Normal,
-            Game_Chara_Ptn_GoGo,
-            Game_Chara_Ptn_Clear,
-            Game_Chara_Ptn_10combo,
-            Game_Chara_Ptn_10combo_Max,
-            Game_Chara_Ptn_GoGoStart,
-            Game_Chara_Ptn_GoGoStart_Max,
-            Game_Chara_Ptn_ClearIn,
-            Game_Chara_Ptn_SoulIn,
-            Game_Chara_Ptn_Balloon_Breaking,
-            Game_Chara_Ptn_Balloon_Broke,
-            Game_Chara_Ptn_Balloon_Miss;
-        public string Game_Chara_Motion_Normal,
-            Game_Chara_Motion_Clear,
-            Game_Chara_Motion_GoGo = "0";
-        public int Game_Chara_Beat_Normal = 1;
-        public int Game_Chara_Beat_Clear = 2;
-        public int Game_Chara_Beat_GoGo = 2;
-        public int Game_Chara_Balloon_Timer = 28;
-        public int Game_Chara_Balloon_Delay = 500;
-        public int Game_Chara_Balloon_FadeOut = 84;
-        #endregion
-        #region Dancer
-        public int[] Game_Dancer_X = new int[] { 640, 430, 856, 215, 1070 };
-        public int[] Game_Dancer_Y = new int[] { 500, 500, 500, 500, 500 };
-        public string Game_Dancer_Motion = "0";
-        public int Game_Dancer_Ptn = 0;
-        public int Game_Dancer_Beat = 8;
-        public int[] Game_Dancer_Gauge = new int[] { 0, 20, 40, 60, 80 };
-        #endregion
-        #region Mob
-        public int Game_Mob_Ptn = 0;
-        public int Game_Mob_Beat,
-            Game_Mob_Ptn_Beat = 1;
-        #endregion
-        #region CourseSymbol
-        public int[] Game_CourseSymbol_X = new int[] { 64, 64 };
-        public int[] Game_CourseSymbol_Y = new int[] { 232, 432 };
-        #endregion
-        #region PanelFont
-        public int Game_MusicName_X = 1254;
-        public int Game_MusicName_Y = 14;
-        public int Game_MusicName_FontSize = 30;
-        public ReferencePoint Game_MusicName_ReferencePoint = ReferencePoint.Right;
-        public int Game_Genre_X = 1114;
-        public int Game_Genre_Y = 74;
-        public int Game_Lyric_X = 640;
-        public int Game_Lyric_Y = 630;
-        public string Game_Lyric_FontName = "MS UI Gothic";
-        public int Game_Lyric_FontSize = 38;
-        public ReferencePoint Game_Lyric_ReferencePoint = ReferencePoint.Center;
+            public Color GetColor()
+            {
+                return Color.FromArgb(R, G, B);
+            }
 
-        public Color Game_MusicName_ForeColor = ColorTranslator.FromHtml("#FFFFFF");
-        public Color Game_StageText_ForeColor = ColorTranslator.FromHtml("#FFFFFF");
-        public Color Game_Lyric_ForeColor = ColorTranslator.FromHtml("#FFFFFF");
-        public Color Game_MusicName_BackColor = ColorTranslator.FromHtml("#000000");
-        public Color Game_StageText_BackColor = ColorTranslator.FromHtml("#000000");
-        public Color Game_Lyric_BackColor = ColorTranslator.FromHtml("#0000FF");
+            public SkinConfigColor(string htmlColor)
+            {
+                var color = ColorTranslator.FromHtml(htmlColor);
+                R = color.R;
+                G = color.G;
+                B = color.B;
+            }
 
-        #endregion
-        #region Score
-        public int[] Game_Score_X = new int[] { 20, 20, 0, 0 };
-        public int[] Game_Score_Y = new int[] { 226, 530, 0, 0 };
-        public int[] Game_Score_Add_X = new int[] { 20, 20, 0, 0 };
-        public int[] Game_Score_Add_Y = new int[] { 186, 570, 0, 0 };
-        public int[] Game_Score_AddBonus_X = new int[] { 20, 20, 0, 0 };
-        public int[] Game_Score_AddBonus_Y = new int[] { 136, 626, 0, 0 };
-        public int Game_Score_Padding = 20;
-        public int[] Game_Score_Size = new int[] { 24, 40 };
-        #endregion
-        #region Taiko
-        public int[] Game_Taiko_NamePlate_X = new int[] { 0, 0 };
-        public int[] Game_Taiko_NamePlate_Y = new int[] { 288, 368 };
-        public int[] Game_Taiko_PlayerNumber_X = new int[] { 4, 4 };
-        public int[] Game_Taiko_PlayerNumber_Y = new int[] { 233, 435 };
-        public int[] Game_Taiko_X = new int[] { 190, 190 };
-        public int[] Game_Taiko_Y = new int[] { 190, 366 };
-        public int[] Game_Taiko_Combo_X = new int[] { 268, 268 };
-        public int[] Game_Taiko_Combo_Y = new int[] { 270, 448 };
-        public int[] Game_Taiko_Combo_Ex_X = new int[] { 268, 268 };
-        public int[] Game_Taiko_Combo_Ex_Y = new int[] { 270, 448 };
-        public int[] Game_Taiko_Combo_Ex4_X = new int[] { 268, 268 };
-        public int[] Game_Taiko_Combo_Ex4_Y = new int[] { 270, 448 };
-        public int[] Game_Taiko_Combo_Padding = new int[] { 28, 30, 24 };
-        public int[] Game_Taiko_Combo_Size = new int[] { 42, 48 };
-        public int[] Game_Taiko_Combo_Size_Ex = new int[] { 42, 56 };
-        public float[] Game_Taiko_Combo_Scale = new float[] { 1.0f, 1.0f, 0.8f };
-        public int[] Game_Taiko_Combo_Text_X = new int[] { 268, 268 };
-        public int[] Game_Taiko_Combo_Text_Y = new int[] { 295, 472 };
-        public int[] Game_Taiko_Combo_Text_Size = new int[] { 100, 50 };
-        public bool Game_Taiko_Combo_Ex_IsJumping = true;
-        #endregion
-        #region Gauge
-        public int Game_Gauge_Rainbow_Ptn;
-        public int Game_Gauge_Rainbow_Timer = 50;
-        #endregion
-        #region Balloon
-        public int[] Game_Balloon_Combo_X = new int[] { 253, 253 };
-        public int[] Game_Balloon_Combo_Y = new int[] { -11, 498 };
-        public int[] Game_Balloon_Combo_Number_X = new int[] { 312, 312 };
-        public int[] Game_Balloon_Combo_Number_Y = new int[] { 34, 540 };
-        public int[] Game_Balloon_Combo_Number_Ex_X = new int[] { 335, 335 };
-        public int[] Game_Balloon_Combo_Number_Ex_Y = new int[] { 34, 540 };
-        public int[] Game_Balloon_Combo_Text_X = new int[] { 471, 471 };
-        public int[] Game_Balloon_Combo_Text_Y = new int[] { 55, 561 };
-        public int[] Game_Balloon_Combo_Text_Ex_X = new int[] { 491, 491 };
-        public int[] Game_Balloon_Combo_Text_Ex_Y = new int[] { 55, 561 };
+            public SkinConfigColor()
+            {
+            }
+        }
 
-        public int[] Game_Balloon_Balloon_X = new int[] { 382, 382 };
-        public int[] Game_Balloon_Balloon_Y = new int[] { 115, 290 };
-        public int[] Game_Balloon_Balloon_Frame_X = new int[] { 382, 382 };
-        public int[] Game_Balloon_Balloon_Frame_Y = new int[] { 80, 260 };
-        public int[] Game_Balloon_Balloon_Number_X = new int[] { 486, 486 };
-        public int[] Game_Balloon_Balloon_Number_Y = new int[] { 187, 373 };
-        public int[] Game_Balloon_Roll_Frame_X = new int[] { 218, 218 };
-        public int[] Game_Balloon_Roll_Frame_Y = new int[] { -3, 514 };
-        public int[] Game_Balloon_Roll_Number_X = new int[] { 392, 392 };
-        public int[] Game_Balloon_Roll_Number_Y = new int[] { 128, 639 };
-        public int[] Game_Balloon_Number_Size = new int[] { 62, 80 };
-        public int Game_Balloon_Number_Padding = 60;
-        public float Game_Balloon_Roll_Number_Scale = 1.000f;
-        public float Game_Balloon_Balloon_Number_Scale = 0.879f;
-        #endregion
-        #region Effects
-        public int[] Game_Effect_Roll_StartPoint_X = new int[] { 56, -10, 200, 345, 100, 451, 600, 260, -30, 534, 156, 363 };
-        public int[] Game_Effect_Roll_StartPoint_Y = new int[] { 720 };
-        public int[] Game_Effect_Roll_StartPoint_1P_X = new int[] { 56, -10, 200, 345, 100, 451, 600, 260, -30, 534, 156, 363 };
-        public int[] Game_Effect_Roll_StartPoint_1P_Y = new int[] { 240 };
-        public int[] Game_Effect_Roll_StartPoint_2P_X = new int[] { 56, -10, 200, 345, 100, 451, 600, 260, -30, 534, 156, 363 };
-        public int[] Game_Effect_Roll_StartPoint_2P_Y = new int[] { 360 };
-        public float[] Game_Effect_Roll_Speed_X = new float[] { 0.6f };
-        public float[] Game_Effect_Roll_Speed_Y = new float[] { -0.6f };
-        public float[] Game_Effect_Roll_Speed_1P_X = new float[] { 0.6f };
-        public float[] Game_Effect_Roll_Speed_1P_Y = new float[] { -0.6f };
-        public float[] Game_Effect_Roll_Speed_2P_X = new float[] { 0.6f };
-        public float[] Game_Effect_Roll_Speed_2P_Y = new float[] { 0.6f };
-        public int Game_Effect_Roll_Ptn;
-        public int[] Game_Effect_NotesFlash = new int[] { 180, 180, 12 }; // Width, Height, Ptn
-        public int Game_Effect_NotesFlash_Timer = 20;
-        public int[] Game_Effect_GoGoSplash = new int[] { 300, 400, 30 };
-        public int[] Game_Effect_GoGoSplash_X = new int[] { 120, 300, 520, 760, 980, 1160 };
-        public int[] Game_Effect_GoGoSplash_Y = new int[] { 740, 730, 720, 720, 730, 740 };
-        public bool Game_Effect_GoGoSplash_Rotate = true;
-        public int Game_Effect_GoGoSplash_Timer = 18;
-        // super-flying-notes AioiLight
-        public int[] Game_Effect_FlyingNotes_StartPoint_X = new int[] { 414, 414 };
-        public int[] Game_Effect_FlyingNotes_StartPoint_Y = new int[] { 260, 434 };
-        public int[] Game_Effect_FlyingNotes_EndPoint_X = new int[] { 1222, 1222 }; // 1P, 2P
-        public int[] Game_Effect_FlyingNotes_EndPoint_Y = new int[] { 164, 554 };
+        public class SkinConfigInfo
+        {
+            #region 新・SkinConfig
+            #region General
+            public string Skin_Name { get; set; } = "Unknown";
+            public string Skin_Version { get; set; } = "Unknown";
+            public string Skin_Creator { get; set; } = "Unknown";
+            #endregion
+            #region Config
+            public int Config_ItemText_Correction_X { get; set; } = 0;
+            public int Config_ItemText_Correction_Y { get; set; } = 0;
+            #endregion
+            #region SongSelect
+            public int SongSelect_Overall_Y { get; set; } = 103;
+            public int[] SongSelect_NamePlate_X { get; set; } = new int[] { 60, 950 };
+            public int[] SongSelect_NamePlate_Y { get; set; } = new int[] { 650, 650 };
+            public int[] SongSelect_Auto_X { get; set; } = new int[] { 60, 950 };
+            public int[] SongSelect_Auto_Y { get; set; } = new int[] { 650, 650 };
+            public SkinConfigColor SongSelect_ForeColor_JPOP { get; set; } = new SkinConfigColor("#FFFFFF");
+            public SkinConfigColor SongSelect_ForeColor_Anime { get; set; } = new SkinConfigColor("#FFFFFF");
+            public SkinConfigColor SongSelect_ForeColor_VOCALOID { get; set; } = new SkinConfigColor("#FFFFFF");
+            public SkinConfigColor SongSelect_ForeColor_Children { get; set; } = new SkinConfigColor("#FFFFFF");
+            public SkinConfigColor SongSelect_ForeColor_Variety { get; set; } = new SkinConfigColor("#FFFFFF");
+            public SkinConfigColor SongSelect_ForeColor_Classic { get; set; } = new SkinConfigColor("#FFFFFF");
+            public SkinConfigColor SongSelect_ForeColor_GameMusic { get; set; } = new SkinConfigColor("#FFFFFF");
+            public SkinConfigColor SongSelect_ForeColor_Namco { get; set; } = new SkinConfigColor("#FFFFFF");
+            public SkinConfigColor SongSelect_BackColor_JPOP { get; set; } = new SkinConfigColor("#01455B");
+            public SkinConfigColor SongSelect_BackColor_Anime { get; set; } = new SkinConfigColor("#9D3800");
+            public SkinConfigColor SongSelect_BackColor_VOCALOID { get; set; } = new SkinConfigColor("#5B6278");
+            public SkinConfigColor SongSelect_BackColor_Children { get; set; } = new SkinConfigColor("#99001F");
+            public SkinConfigColor SongSelect_BackColor_Variety { get; set; } = new SkinConfigColor("#366600");
+            public SkinConfigColor SongSelect_BackColor_Classic { get; set; } = new SkinConfigColor("#875600");
+            public SkinConfigColor SongSelect_BackColor_GameMusic { get; set; } = new SkinConfigColor("#412080");
+            public SkinConfigColor SongSelect_BackColor_Namco { get; set; } = new SkinConfigColor("#980E00");
+            public string[] SongSelect_CorrectionX_Chara { get; set; } = { "ここにX座標を補正したい文字をカンマで区切って記入" };
+            public string[] SongSelect_CorrectionY_Chara { get; set; } = { "ここにY座標を補正したい文字をカンマで区切って記入" };
+            public int SongSelect_CorrectionX_Chara_Value { get; set; } = 0;
+            public int SongSelect_CorrectionY_Chara_Value { get; set; } = 0;
+            public string[] SongSelect_Rotate_Chara { get; set; } = { "ここに90℃回転させたい文字をカンマで区切って記入" };
+            #endregion
+            #region SongLoading
+            public int SongLoading_Plate_X { get; set; } = 640;
+            public int SongLoading_Plate_Y { get; set; } = 360;
+            public int SongLoading_Title_X { get; set; } = 640;
+            public int SongLoading_Title_Y { get; set; } = 340;
+            public int SongLoading_SubTitle_X { get; set; } = 640;
+            public int SongLoading_SubTitle_Y { get; set; } = 390;
+            public int SongLoading_Title_FontSize { get; set; } = 30;
+            public int SongLoading_SubTitle_FontSize { get; set; } = 22;
+            public ReferencePoint SongLoading_Plate_ReferencePoint { get; set; } = ReferencePoint.Center;
+            public ReferencePoint SongLoading_Title_ReferencePoint { get; set; } = ReferencePoint.Center;
+            public ReferencePoint SongLoading_SubTitle_ReferencePoint { get; set; } = ReferencePoint.Center;
+            public SkinConfigColor SongLoading_Title_ForeColor { get; set; } = new SkinConfigColor("#FFFFFF");
+            public SkinConfigColor SongLoading_Title_BackColor { get; set; } = new SkinConfigColor("#000000");
+            public SkinConfigColor SongLoading_SubTitle_ForeColor { get; set; } = new SkinConfigColor("#FFFFFF");
+            public SkinConfigColor SongLoading_SubTitle_BackColor { get; set; } = new SkinConfigColor("#000000");
+            public bool SongLoading_Plate_ScreenBlend { get; set; } = true;
 
-        public int Game_Effect_FlyingNotes_Sine = 220;
-        public bool Game_Effect_FlyingNotes_IsUsingEasing = true;
-        public int Game_Effect_FlyingNotes_Timer = 4;
-        public int[] Game_Effect_FireWorks = new int[] { 180, 180, 30 };
-        public int Game_Effect_FireWorks_Timer = 5;
-        public int Game_Effect_Rainbow_Timer = 8;
+            #endregion
+            #region Game
+            public bool Game_Notes_Anime { get; set; } = false;
+            public string Game_StageText { get; set; } = "1曲目";
+            public RollColorMode Game_RollColorMode { get; set; } = RollColorMode.All;
+            public bool Game_JudgeFrame_AddBlend { get; set; } = true;
+            #region Chara
+            public int[] Game_Chara_X { get; set; } = new int[] { 0, 0 };
+            public int[] Game_Chara_Y { get; set; } = new int[] { 0, 537 };
+            public int[] Game_Chara_Balloon_X { get; set; } = new int[] { 240, 240, 0, 0 };
+            public int[] Game_Chara_Balloon_Y { get; set; } = new int[] { 0, 297, 0, 0 };
+            public int Game_Chara_Ptn_Normal { get; set; } = 0;
+            public int Game_Chara_Ptn_GoGo { get; set; } = 0;
+            public int Game_Chara_Ptn_Clear { get; set; } = 0;
+            public int Game_Chara_Ptn_10combo { get; set; } = 0;
+            public int Game_Chara_Ptn_10combo_Max { get; set; } = 0;
+            public int Game_Chara_Ptn_GoGoStart { get; set; } = 0;
+            public int Game_Chara_Ptn_GoGoStart_Max { get; set; } = 0;
+            public int Game_Chara_Ptn_ClearIn { get; set; } = 0;
+            public int Game_Chara_Ptn_SoulIn { get; set; } = 0;
+            public int Game_Chara_Ptn_Balloon_Breaking { get; set; } = 0;
+            public int Game_Chara_Ptn_Balloon_Broke { get; set; } = 0;
+            public int Game_Chara_Ptn_Balloon_Miss { get; set; } = 0;
+            public string Game_Chara_Motion_Normal { get; set; } = "";
+            public string Game_Chara_Motion_Clear { get; set; } = "";
+            public string Game_Chara_Motion_GoGo { get; set; } = "0";
+            public int Game_Chara_Beat_Normal { get; set; } = 1;
+            public int Game_Chara_Beat_Clear { get; set; } = 2;
+            public int Game_Chara_Beat_GoGo { get; set; } = 2;
+            public int Game_Chara_Balloon_Timer { get; set; } = 28;
+            public int Game_Chara_Balloon_Delay { get; set; } = 500;
+            public int Game_Chara_Balloon_FadeOut { get; set; } = 84;
+            #endregion
+            #region Dancer
+            public int[] Game_Dancer_X { get; set; } = new int[] { 640, 430, 856, 215, 1070 };
+            public int[] Game_Dancer_Y { get; set; } = new int[] { 500, 500, 500, 500, 500 };
+            public string Game_Dancer_Motion { get; set; } = "0";
+            public int Game_Dancer_Ptn { get; set; } = 0;
+            public int Game_Dancer_Beat { get; set; } = 8;
+            public int[] Game_Dancer_Gauge { get; set; } = new int[] { 0, 20, 40, 60, 80 };
+            #endregion
+            #region Mob
+            public int Game_Mob_Ptn { get; set; } = 0;
+            public int Game_Mob_Beat { get; set; }
+            public int Game_Mob_Ptn_Beat { get; set; } = 1;
+            #endregion
+            #region CourseSymbol
+            public int[] Game_CourseSymbol_X { get; set; } = new int[] { 64, 64 };
+            public int[] Game_CourseSymbol_Y { get; set; } = new int[] { 232, 432 };
+            #endregion
+            #region PanelFont
+            public int Game_MusicName_X { get; set; } = 1254;
+            public int Game_MusicName_Y { get; set; } = 14;
+            public int Game_MusicName_FontSize { get; set; } = 30;
+            public ReferencePoint Game_MusicName_ReferencePoint { get; set; } = ReferencePoint.Right;
+            public int Game_Genre_X { get; set; } = 1114;
+            public int Game_Genre_Y { get; set; } = 74;
+            public int Game_Lyric_X { get; set; } = 640;
+            public int Game_Lyric_Y { get; set; } = 630;
+            public string Game_Lyric_FontName { get; set; } = "MS UI Gothic";
+            public int Game_Lyric_FontSize { get; set; } = 38;
+            public ReferencePoint Game_Lyric_ReferencePoint { get; set; } = ReferencePoint.Center;
 
-        public bool Game_Effect_HitExplosion_AddBlend = true;
-        public bool Game_Effect_HitExplosionBig_AddBlend = true;
-        public bool Game_Effect_FireWorks_AddBlend = true;
-        public bool Game_Effect_Fire_AddBlend = true;
-        public bool Game_Effect_GoGoSplash_AddBlend = true;
-        public int Game_Effect_FireWorks_Timing = 8;
-        #endregion
-        #region Runner
-        public int[] Game_Runner_Size = new int[] { 60, 125 };
-        public int Game_Runner_Ptn = 48;
-        public int Game_Runner_Type = 4;
-        public int[] Game_Runner_StartPoint_X = new int[] { 175, 175 };
-        public int[] Game_Runner_StartPoint_Y = new int[] { 40, 560 };
-        public int Game_Runner_Timer = 16;
-        #endregion
-        #region PuchiChara
-        public int[] Game_PuchiChara_X = new int[] { 100, 100 };
-        public int[] Game_PuchiChara_Y = new int[] { 140, 600 };
-        public int[] Game_PuchiChara_BalloonX = new int[] { 300, 300 };
-        public int[] Game_PuchiChara_BalloonY = new int[] { 240, 500 };
-        public float[] Game_PuchiChara_Scale = new float[] { 0.7f, 1.0f }; // 通常時、 ふうせん連打時
-        public int[] Game_PuchiChara = new int[] { 180, 180, 2}; // Width, Height, Ptn
-        public int Game_PuchiChara_Sine = 20;
-        public int Game_PuchiChara_Timer = 4800;
-        public double Game_PuchiChara_SineTimer = 2;
-        #endregion
-        #region Dan-C
-        public Color Game_DanC_Title_ForeColor = ColorTranslator.FromHtml("#FFFFFF");
-        public Color Game_DanC_Title_BackColor = ColorTranslator.FromHtml("#000000");
-        public Color Game_DanC_SubTitle_ForeColor = ColorTranslator.FromHtml("#FFFFFF");
-        public Color Game_DanC_SubTitle_BackColor = ColorTranslator.FromHtml("#000000");
-        public int[] Game_DanC_X = new int[] { 302, 302, 302 };
-        public int[] Game_DanC_Y = new int[] { 473, 419, 365 };
-        public int[] Game_DanC_Size = new int[] { 956, 92 };
-        public int Game_DanC_Padding = 5;
-        public int[] Game_DanC_Offset = new int[] { 15, 17 };
-        public int[] Game_DanC_Number_Size = new int[] { 50, 62 };
-        public int Game_DanC_Number_Padding = 50;
-        public float Game_DanC_Number_Small_Scale = 0.5f;
-        public int Game_DanC_Number_Small_Padding = 26;
-        public int[] Game_DanC_Number_XY = new int[] { 218, 610 };
-        public int[] Game_DanC_Number_Small_Number_Offset = new int[] { 178, 43 };
-        public int[] Game_DanC_ExamType_Size = new int[] { 100, 36 };
-        public int[] Game_DanC_ExamRange_Size = new int[] { 60, 36 };
-        public int Game_DanC_ExamRange_Padding = 46;
-        public int[] Game_DanC_Percent_Hit_Score_Padding = new int[] { 20, 20, 20 };
-        public int[] Game_DanC_ExamUnit_Size = new int[] { 30, 36 };
-        public int[] Game_DanC_Exam_Offset = new int[] { 932, 17 };
-        public int[] Game_DanC_Dan_Plate = new int[] { 149, 416 };
-        #endregion
-        #endregion
-        #region Result
-        public int Result_MusicName_X = 1254;
-        public int Result_MusicName_Y = 6;
-        public int Result_MusicName_FontSize = 30;
-        public ReferencePoint Result_MusicName_ReferencePoint = ReferencePoint.Right;
-        public int Result_StageText_X = 230;
-        public int Result_StageText_Y = 6;
-        public int Result_StageText_FontSize = 30;
-        public ReferencePoint Result_StageText_ReferencePoint = ReferencePoint.Left;
+            public SkinConfigColor Game_MusicName_ForeColor { get; set; } = new SkinConfigColor("#FFFFFF");
+            public SkinConfigColor Game_StageText_ForeColor { get; set; } = new SkinConfigColor("#FFFFFF");
+            public SkinConfigColor Game_Lyric_ForeColor { get; set; } = new SkinConfigColor("#FFFFFF");
+            public SkinConfigColor Game_MusicName_BackColor { get; set; } = new SkinConfigColor("#000000");
+            public SkinConfigColor Game_StageText_BackColor { get; set; } = new SkinConfigColor("#000000");
+            public SkinConfigColor Game_Lyric_BackColor { get; set; } = new SkinConfigColor("#0000FF");
 
-        public Color Result_MusicName_ForeColor = ColorTranslator.FromHtml("#FFFFFF");
-        public Color Result_StageText_ForeColor = ColorTranslator.FromHtml("#FFFFFF");
-        //public Color Result_StageText_ForeColor_Red = ColorTranslator.FromHtml("#FFFFFF");
-        public Color Result_MusicName_BackColor = ColorTranslator.FromHtml("#000000");
-        public Color Result_StageText_BackColor = ColorTranslator.FromHtml("#000000");
-        //public Color Result_StageText_BackColor_Red = ColorTranslator.FromHtml("#FF0000");
+            #endregion
+            #region Score
+            public int[] Game_Score_X { get; set; } = new int[] { 20, 20, 0, 0 };
+            public int[] Game_Score_Y { get; set; } = new int[] { 226, 530, 0, 0 };
+            public int[] Game_Score_Add_X { get; set; } = new int[] { 20, 20, 0, 0 };
+            public int[] Game_Score_Add_Y { get; set; } = new int[] { 186, 570, 0, 0 };
+            public int[] Game_Score_AddBonus_X { get; set; } = new int[] { 20, 20, 0, 0 };
+            public int[] Game_Score_AddBonus_Y { get; set; } = new int[] { 136, 626, 0, 0 };
+            public int Game_Score_Padding { get; set; } = 20;
+            public int[] Game_Score_Size { get; set; } = new int[] { 24, 40 };
+            #endregion
+            #region Taiko
+            public int[] Game_Taiko_NamePlate_X { get; set; } = new int[] { 0, 0 };
+            public int[] Game_Taiko_NamePlate_Y { get; set; } = new int[] { 288, 368 };
+            public int[] Game_Taiko_PlayerNumber_X { get; set; } = new int[] { 4, 4 };
+            public int[] Game_Taiko_PlayerNumber_Y { get; set; } = new int[] { 233, 435 };
+            public int[] Game_Taiko_X { get; set; } = new int[] { 190, 190 };
+            public int[] Game_Taiko_Y { get; set; } = new int[] { 190, 366 };
+            public int[] Game_Taiko_Combo_X { get; set; } = new int[] { 268, 268 };
+            public int[] Game_Taiko_Combo_Y { get; set; } = new int[] { 270, 448 };
+            public int[] Game_Taiko_Combo_Ex_X { get; set; } = new int[] { 268, 268 };
+            public int[] Game_Taiko_Combo_Ex_Y { get; set; } = new int[] { 270, 448 };
+            public int[] Game_Taiko_Combo_Ex4_X { get; set; } = new int[] { 268, 268 };
+            public int[] Game_Taiko_Combo_Ex4_Y { get; set; } = new int[] { 270, 448 };
+            public int[] Game_Taiko_Combo_Padding { get; set; } = new int[] { 28, 30, 24 };
+            public int[] Game_Taiko_Combo_Size { get; set; } = new int[] { 42, 48 };
+            public int[] Game_Taiko_Combo_Size_Ex { get; set; } = new int[] { 42, 56 };
+            public float[] Game_Taiko_Combo_Scale { get; set; } = new float[] { 1.0f, 1.0f, 0.8f };
+            public int[] Game_Taiko_Combo_Text_X { get; set; } = new int[] { 268, 268 };
+            public int[] Game_Taiko_Combo_Text_Y { get; set; } = new int[] { 295, 472 };
+            public int[] Game_Taiko_Combo_Text_Size { get; set; } = new int[] { 100, 50 };
+            public bool Game_Taiko_Combo_Ex_IsJumping { get; set; } = true;
+            #endregion
+            #region Gauge
+            public int Game_Gauge_Rainbow_Ptn;
+            public int Game_Gauge_Rainbow_Timer { get; set; } = 50;
+            #endregion
+            #region Balloon
+            public int[] Game_Balloon_Combo_X { get; set; } = new int[] { 253, 253 };
+            public int[] Game_Balloon_Combo_Y { get; set; } = new int[] { -11, 498 };
+            public int[] Game_Balloon_Combo_Number_X { get; set; } = new int[] { 312, 312 };
+            public int[] Game_Balloon_Combo_Number_Y { get; set; } = new int[] { 34, 540 };
+            public int[] Game_Balloon_Combo_Number_Ex_X { get; set; } = new int[] { 335, 335 };
+            public int[] Game_Balloon_Combo_Number_Ex_Y { get; set; } = new int[] { 34, 540 };
+            public int[] Game_Balloon_Combo_Text_X { get; set; } = new int[] { 471, 471 };
+            public int[] Game_Balloon_Combo_Text_Y { get; set; } = new int[] { 55, 561 };
+            public int[] Game_Balloon_Combo_Text_Ex_X { get; set; } = new int[] { 491, 491 };
+            public int[] Game_Balloon_Combo_Text_Ex_Y { get; set; } = new int[] { 55, 561 };
 
-        public int[] Result_NamePlate_X = new int[] { 260, 260 };
-        public int[] Result_NamePlate_Y = new int[] { 96, 390 };
+            public int[] Game_Balloon_Balloon_X { get; set; } = new int[] { 382, 382 };
+            public int[] Game_Balloon_Balloon_Y { get; set; } = new int[] { 115, 290 };
+            public int[] Game_Balloon_Balloon_Frame_X { get; set; } = new int[] { 382, 382 };
+            public int[] Game_Balloon_Balloon_Frame_Y { get; set; } = new int[] { 80, 260 };
+            public int[] Game_Balloon_Balloon_Number_X { get; set; } = new int[] { 486, 486 };
+            public int[] Game_Balloon_Balloon_Number_Y { get; set; } = new int[] { 187, 373 };
+            public int[] Game_Balloon_Roll_Frame_X { get; set; } = new int[] { 218, 218 };
+            public int[] Game_Balloon_Roll_Frame_Y { get; set; } = new int[] { -3, 514 };
+            public int[] Game_Balloon_Roll_Number_X { get; set; } = new int[] { 392, 392 };
+            public int[] Game_Balloon_Roll_Number_Y { get; set; } = new int[] { 128, 639 };
+            public int[] Game_Balloon_Number_Size { get; set; } = new int[] { 62, 80 };
+            public int Game_Balloon_Number_Padding { get; set; } = 60;
+            public float Game_Balloon_Roll_Number_Scale { get; set; } = 1.000f;
+            public float Game_Balloon_Balloon_Number_Scale { get; set; } = 0.879f;
+            #endregion
+            #region Effects
+            public int[] Game_Effect_Roll_StartPoint_X { get; set; } = new int[] { 56, -10, 200, 345, 100, 451, 600, 260, -30, 534, 156, 363 };
+            public int[] Game_Effect_Roll_StartPoint_Y { get; set; } = new int[] { 720 };
+            public int[] Game_Effect_Roll_StartPoint_1P_X { get; set; } = new int[] { 56, -10, 200, 345, 100, 451, 600, 260, -30, 534, 156, 363 };
+            public int[] Game_Effect_Roll_StartPoint_1P_Y { get; set; } = new int[] { 240 };
+            public int[] Game_Effect_Roll_StartPoint_2P_X { get; set; } = new int[] { 56, -10, 200, 345, 100, 451, 600, 260, -30, 534, 156, 363 };
+            public int[] Game_Effect_Roll_StartPoint_2P_Y { get; set; } = new int[] { 360 };
+            public float[] Game_Effect_Roll_Speed_X { get; set; } = new float[] { 0.6f };
+            public float[] Game_Effect_Roll_Speed_Y { get; set; } = new float[] { -0.6f };
+            public float[] Game_Effect_Roll_Speed_1P_X { get; set; } = new float[] { 0.6f };
+            public float[] Game_Effect_Roll_Speed_1P_Y { get; set; } = new float[] { -0.6f };
+            public float[] Game_Effect_Roll_Speed_2P_X { get; set; } = new float[] { 0.6f };
+            public float[] Game_Effect_Roll_Speed_2P_Y { get; set; } = new float[] { 0.6f };
+            public int Game_Effect_Roll_Ptn;
+            public int[] Game_Effect_NotesFlash { get; set; } = new int[] { 180, 180, 12 }; // Width, Height, Ptn
+            public int Game_Effect_NotesFlash_Timer { get; set; } = 20;
+            public int[] Game_Effect_GoGoSplash { get; set; } = new int[] { 300, 400, 30 };
+            public int[] Game_Effect_GoGoSplash_X { get; set; } = new int[] { 120, 300, 520, 760, 980, 1160 };
+            public int[] Game_Effect_GoGoSplash_Y { get; set; } = new int[] { 740, 730, 720, 720, 730, 740 };
+            public bool Game_Effect_GoGoSplash_Rotate { get; set; } = true;
+            public int Game_Effect_GoGoSplash_Timer { get; set; } = 18;
+            // super-flying-notes AioiLight
+            public int[] Game_Effect_FlyingNotes_StartPoint_X { get; set; } = new int[] { 414, 414 };
+            public int[] Game_Effect_FlyingNotes_StartPoint_Y { get; set; } = new int[] { 260, 434 };
+            public int[] Game_Effect_FlyingNotes_EndPoint_X { get; set; } = new int[] { 1222, 1222 }; // 1P, 2P
+            public int[] Game_Effect_FlyingNotes_EndPoint_Y { get; set; } = new int[] { 164, 554 };
 
-        public int[] Result_Dan = new int[] { 500, 500 };
-        public int[] Result_Dan_XY = new int[] { 100, 0 };
-        public int[] Result_Dan_Plate_XY = new int[] { 149, 416 };
-        #endregion
-        #region Font
-        public int Font_Edge_Ratio = 30;
-        public int Font_Edge_Ratio_Vertical = 30;
-        public int Text_Correction_X = 0;
-        public int Text_Correction_Y = 0;
-        #endregion
-        #endregion
+            public int Game_Effect_FlyingNotes_Sine { get; set; } = 220;
+            public bool Game_Effect_FlyingNotes_IsUsingEasing { get; set; } = true;
+            public int Game_Effect_FlyingNotes_Timer { get; set; } = 4;
+            public int[] Game_Effect_FireWorks { get; set; } = new int[] { 180, 180, 30 };
+            public int Game_Effect_FireWorks_Timer { get; set; } = 5;
+            public int Game_Effect_Rainbow_Timer { get; set; } = 8;
+
+            public bool Game_Effect_HitExplosion_AddBlend { get; set; } = true;
+            public bool Game_Effect_HitExplosionBig_AddBlend { get; set; } = true;
+            public bool Game_Effect_FireWorks_AddBlend { get; set; } = true;
+            public bool Game_Effect_Fire_AddBlend { get; set; } = true;
+            public bool Game_Effect_GoGoSplash_AddBlend { get; set; } = true;
+            public int Game_Effect_FireWorks_Timing { get; set; } = 8;
+            #endregion
+            #region Runner
+            public int[] Game_Runner_Size { get; set; } = new int[] { 60, 125 };
+            public int Game_Runner_Ptn { get; set; } = 48;
+            public int Game_Runner_Type { get; set; } = 4;
+            public int[] Game_Runner_StartPoint_X { get; set; } = new int[] { 175, 175 };
+            public int[] Game_Runner_StartPoint_Y { get; set; } = new int[] { 40, 560 };
+            public int Game_Runner_Timer { get; set; } = 16;
+            #endregion
+            #region PuchiChara
+            public int[] Game_PuchiChara_X { get; set; } = new int[] { 100, 100 };
+            public int[] Game_PuchiChara_Y { get; set; } = new int[] { 140, 600 };
+            public int[] Game_PuchiChara_BalloonX { get; set; } = new int[] { 300, 300 };
+            public int[] Game_PuchiChara_BalloonY { get; set; } = new int[] { 240, 500 };
+            public float[] Game_PuchiChara_Scale { get; set; } = new float[] { 0.7f, 1.0f }; // 通常時、 ふうせん連打時
+            public int[] Game_PuchiChara { get; set; } = new int[] { 180, 180, 2 }; // Width, Height, Ptn
+            public int Game_PuchiChara_Sine { get; set; } = 20;
+            public int Game_PuchiChara_Timer { get; set; } = 4800;
+            public double Game_PuchiChara_SineTimer { get; set; } = 2;
+            #endregion
+            #region Dan-C
+            public SkinConfigColor Game_DanC_Title_ForeColor { get; set; } = new SkinConfigColor("#FFFFFF");
+            public SkinConfigColor Game_DanC_Title_BackColor { get; set; } = new SkinConfigColor("#000000");
+            public SkinConfigColor Game_DanC_SubTitle_ForeColor { get; set; } = new SkinConfigColor("#FFFFFF");
+            public SkinConfigColor Game_DanC_SubTitle_BackColor { get; set; } = new SkinConfigColor("#000000");
+            public int[] Game_DanC_X { get; set; } = new int[] { 302, 302, 302 };
+            public int[] Game_DanC_Y { get; set; } = new int[] { 473, 419, 365 };
+            public int[] Game_DanC_Size { get; set; } = new int[] { 956, 92 };
+            public int Game_DanC_Padding { get; set; } = 5;
+            public int[] Game_DanC_Offset { get; set; } = new int[] { 15, 17 };
+            public int[] Game_DanC_Number_Size { get; set; } = new int[] { 50, 62 };
+            public int Game_DanC_Number_Padding { get; set; } = 50;
+            public float Game_DanC_Number_Small_Scale { get; set; } = 0.5f;
+            public int Game_DanC_Number_Small_Padding { get; set; } = 26;
+            public int[] Game_DanC_Number_XY { get; set; } = new int[] { 218, 610 };
+            public int[] Game_DanC_Number_Small_Number_Offset { get; set; } = new int[] { 178, 43 };
+            public int[] Game_DanC_ExamType_Size { get; set; } = new int[] { 100, 36 };
+            public int[] Game_DanC_ExamRange_Size { get; set; } = new int[] { 60, 36 };
+            public int Game_DanC_ExamRange_Padding { get; set; } = 46;
+            public int[] Game_DanC_Percent_Hit_Score_Padding { get; set; } = new int[] { 20, 20, 20 };
+            public int[] Game_DanC_ExamUnit_Size { get; set; } = new int[] { 30, 36 };
+            public int[] Game_DanC_Exam_Offset { get; set; } = new int[] { 932, 17 };
+            public int[] Game_DanC_Dan_Plate { get; set; } = new int[] { 149, 416 };
+            #endregion
+            #endregion
+            #region Result
+            public int Result_MusicName_X { get; set; } = 1254;
+            public int Result_MusicName_Y { get; set; } = 6;
+            public int Result_MusicName_FontSize { get; set; } = 30;
+            public ReferencePoint Result_MusicName_ReferencePoint { get; set; } = ReferencePoint.Right;
+            public int Result_StageText_X { get; set; } = 230;
+            public int Result_StageText_Y { get; set; } = 6;
+            public int Result_StageText_FontSize { get; set; } = 30;
+            public ReferencePoint Result_StageText_ReferencePoint { get; set; } = ReferencePoint.Left;
+
+            public SkinConfigColor Result_MusicName_ForeColor { get; set; } = new SkinConfigColor("#FFFFFF");
+            public SkinConfigColor Result_StageText_ForeColor { get; set; } = new SkinConfigColor("#FFFFFF");
+            //public SkinConfigColor Result_StageText_ForeColor_Red { get; set; } = new SkinConfigColor("#FFFFFF");
+            public SkinConfigColor Result_MusicName_BackColor { get; set; } = new SkinConfigColor("#000000");
+            public SkinConfigColor Result_StageText_BackColor { get; set; } = new SkinConfigColor("#000000");
+            //public SkinConfigColor Result_StageText_BackColor_Red { get; set; } = new SkinConfigColor("#FF0000");
+
+            public int[] Result_NamePlate_X { get; set; } = new int[] { 260, 260 };
+            public int[] Result_NamePlate_Y { get; set; } = new int[] { 96, 390 };
+
+            public int[] Result_Dan { get; set; } = new int[] { 500, 500 };
+            public int[] Result_Dan_XY { get; set; } = new int[] { 100, 0 };
+            public int[] Result_Dan_Plate_XY { get; set; } = new int[] { 149, 416 };
+            #endregion
+            #region Font
+            public int Font_Edge_Ratio { get; set; } = 30;
+            public int Font_Edge_Ratio_Vertical { get; set; } = 30;
+            public int Text_Correction_X { get; set; } = 0;
+            public int Text_Correction_Y { get; set; } = 0;
+            #endregion
+            #endregion
+        }
+
+        public SkinConfigInfo SkinValue;
+
     }
 }

@@ -148,12 +148,12 @@ namespace TJAPlayer3
                 //{
                 //    this.txゲージ虹[ i ] = CDTXMania.tテクスチャの生成( CSkin.Path(@"Graphics\Gauge\Gauge_rainbow_" + i.ToString() + ".png") );
                 //}
-                if(TJAPlayer3.Skin.Game_Gauge_Rainbow_Timer <= 1)
+                if(TJAPlayer3.Skin.SkinValue.Game_Gauge_Rainbow_Timer <= 1)
                 {
                     throw new DivideByZeroException("SkinConfigの設定\"Game_Gauge_Rainbow_Timer\"を1以下にすることは出来ません。");
                 }
-                this.ct虹アニメ = new Counter( 0, TJAPlayer3.Skin.Game_Gauge_Rainbow_Ptn -1, TJAPlayer3.Skin.Game_Gauge_Rainbow_Timer, TJAPlayer3.Timer );
-                this.ct虹透明度 = new Counter(0, TJAPlayer3.Skin.Game_Gauge_Rainbow_Timer-1, 1, TJAPlayer3.Timer);
+                this.ct虹アニメ = new Counter( 0, TJAPlayer3.Skin.SkinValue.Game_Gauge_Rainbow_Ptn -1, TJAPlayer3.Skin.SkinValue.Game_Gauge_Rainbow_Timer, TJAPlayer3.Timer );
+                this.ct虹透明度 = new Counter(0, TJAPlayer3.Skin.SkinValue.Game_Gauge_Rainbow_Timer-1, 1, TJAPlayer3.Timer);
                 //this.tx音符 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_taiko_notes.png"));
                 base.ManagedCreateResources();
 			}

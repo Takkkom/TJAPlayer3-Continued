@@ -44,11 +44,11 @@ namespace TJAPlayer3
             }
             if (Splash.IsProcessed)
             {
-                for (int i = 0; i < TJAPlayer3.Skin.Game_Effect_GoGoSplash_X.Length; i++)
+                for (int i = 0; i < TJAPlayer3.Skin.SkinValue.Game_Effect_GoGoSplash_X.Length; i++)
                 {
-                    if (i > TJAPlayer3.Skin.Game_Effect_GoGoSplash_Y.Length) break;
+                    if (i > TJAPlayer3.Skin.SkinValue.Game_Effect_GoGoSplash_Y.Length) break;
                     // Yの配列がiよりも小さかったらそこでキャンセルする。
-                    if(TJAPlayer3.Skin.Game_Effect_GoGoSplash_Rotate && TJAPlayer3.Tx.Effects_GoGoSplash != null)
+                    if(TJAPlayer3.Skin.SkinValue.Game_Effect_GoGoSplash_Rotate && TJAPlayer3.Tx.Effects_GoGoSplash != null)
                     {
                         // Switch文を使いたかったが、定数じゃないから使えねぇ!!!!
                         if (i == 0)
@@ -59,11 +59,11 @@ namespace TJAPlayer3
                         {
                             TJAPlayer3.Tx.Effects_GoGoSplash.Rotation = -0.13962634015954636f;
                         }
-                        else if (i == TJAPlayer3.Skin.Game_Effect_GoGoSplash_X.Length - 2)
+                        else if (i == TJAPlayer3.Skin.SkinValue.Game_Effect_GoGoSplash_X.Length - 2)
                         {
                             TJAPlayer3.Tx.Effects_GoGoSplash.Rotation = 0.13962634015954636f;
                         }
-                        else if (i == TJAPlayer3.Skin.Game_Effect_GoGoSplash_X.Length - 1)
+                        else if (i == TJAPlayer3.Skin.SkinValue.Game_Effect_GoGoSplash_X.Length - 1)
                         {
                             TJAPlayer3.Tx.Effects_GoGoSplash.Rotation = 0.2792526803190927f;
                         }
@@ -72,7 +72,7 @@ namespace TJAPlayer3
                             TJAPlayer3.Tx.Effects_GoGoSplash.Rotation = 0.0f;
                         }
                     }
-                    TJAPlayer3.Tx.Effects_GoGoSplash?.t2D拡大率考慮下中心基準描画(TJAPlayer3.app.Device, TJAPlayer3.Skin.Game_Effect_GoGoSplash_X[i], TJAPlayer3.Skin.Game_Effect_GoGoSplash_Y[i], new Rectangle(TJAPlayer3.Skin.Game_Effect_GoGoSplash[0] * Splash.NowValue, 0, TJAPlayer3.Skin.Game_Effect_GoGoSplash[0], TJAPlayer3.Skin.Game_Effect_GoGoSplash[1]));
+                    TJAPlayer3.Tx.Effects_GoGoSplash?.t2D拡大率考慮下中心基準描画(TJAPlayer3.app.Device, TJAPlayer3.Skin.SkinValue.Game_Effect_GoGoSplash_X[i], TJAPlayer3.Skin.SkinValue.Game_Effect_GoGoSplash_Y[i], new Rectangle(TJAPlayer3.Skin.SkinValue.Game_Effect_GoGoSplash[0] * Splash.NowValue, 0, TJAPlayer3.Skin.SkinValue.Game_Effect_GoGoSplash[0], TJAPlayer3.Skin.SkinValue.Game_Effect_GoGoSplash[1]));
                 }
             }
             return base.Draw();
@@ -80,7 +80,7 @@ namespace TJAPlayer3
 
         public void StartSplash()
         {
-            Splash = new Counter(0, TJAPlayer3.Skin.Game_Effect_GoGoSplash[2] - 1, TJAPlayer3.Skin.Game_Effect_GoGoSplash_Timer, TJAPlayer3.Timer);
+            Splash = new Counter(0, TJAPlayer3.Skin.SkinValue.Game_Effect_GoGoSplash[2] - 1, TJAPlayer3.Skin.SkinValue.Game_Effect_GoGoSplash_Timer, TJAPlayer3.Timer);
         }
 
         private Counter Splash;

@@ -36,13 +36,13 @@ namespace TJAPlayer3
 				this.strSTAGEFILE = "";
                 if( !string.IsNullOrEmpty( TJAPlayer3._MainConfig.FontName ) )
                 {
-                    this.pfTITLE = new CachePrivateFont( new FontFamily( TJAPlayer3._MainConfig.FontName ), TJAPlayer3.Skin.SongLoading_Title_FontSize );
-                    this.pfSUBTITLE = new CachePrivateFont( new FontFamily( TJAPlayer3._MainConfig.FontName ), TJAPlayer3.Skin.SongLoading_SubTitle_FontSize);
+                    this.pfTITLE = new CachePrivateFont( new FontFamily( TJAPlayer3._MainConfig.FontName ), TJAPlayer3.Skin.SkinValue.SongLoading_Title_FontSize );
+                    this.pfSUBTITLE = new CachePrivateFont( new FontFamily( TJAPlayer3._MainConfig.FontName ), TJAPlayer3.Skin.SkinValue.SongLoading_SubTitle_FontSize);
                 }
                 else
                 {
-                    this.pfTITLE = new CachePrivateFont( new FontFamily("MS UI Gothic"), TJAPlayer3.Skin.SongLoading_Title_FontSize);
-                    this.pfSUBTITLE = new CachePrivateFont( new FontFamily("MS UI Gothic" ), TJAPlayer3.Skin.SongLoading_SubTitle_FontSize);
+                    this.pfTITLE = new CachePrivateFont( new FontFamily("MS UI Gothic"), TJAPlayer3.Skin.SkinValue.SongLoading_Title_FontSize);
+                    this.pfSUBTITLE = new CachePrivateFont( new FontFamily("MS UI Gothic" ), TJAPlayer3.Skin.SkinValue.SongLoading_SubTitle_FontSize);
                 }
 				this.nBGM再生開始時刻 = -1;
 				this.nBGMの総再生時間ms = 0;
@@ -152,14 +152,14 @@ namespace TJAPlayer3
                         //this.txタイトル.vc拡大縮小倍率 = new Vector3( 0.5f, 0.5f, 1f );
 
 
-					    using (var bmpSongTitle = this.pfTITLE.DrawPrivateFont( タイトル, TJAPlayer3.Skin.SongLoading_Title_ForeColor, TJAPlayer3.Skin.SongLoading_Title_BackColor ))
+					    using (var bmpSongTitle = this.pfTITLE.DrawPrivateFont( タイトル, TJAPlayer3.Skin.SkinValue.SongLoading_Title_ForeColor.GetColor(), TJAPlayer3.Skin.SkinValue.SongLoading_Title_BackColor.GetColor()))
 
 					    {
 					        this.txタイトル = new FDKTexture( TJAPlayer3.app.Device, bmpSongTitle, TJAPlayer3.TextureFormat, false );
 					        txタイトル.Scaling.X = TJAPlayer3.GetSongNameXScaling(ref txタイトル, 710);
 					    }
 
-					    using (var bmpSongSubTitle = this.pfSUBTITLE.DrawPrivateFont( サブタイトル, TJAPlayer3.Skin.SongLoading_SubTitle_ForeColor, TJAPlayer3.Skin.SongLoading_SubTitle_BackColor ))
+					    using (var bmpSongSubTitle = this.pfSUBTITLE.DrawPrivateFont( サブタイトル, TJAPlayer3.Skin.SkinValue.SongLoading_SubTitle_ForeColor.GetColor(), TJAPlayer3.Skin.SkinValue.SongLoading_SubTitle_BackColor.GetColor()))
 
 
 					    {
@@ -260,19 +260,19 @@ namespace TJAPlayer3
 
             if (TJAPlayer3.Tx.SongLoading_Plate != null)
             {
-                TJAPlayer3.Tx.SongLoading_Plate.IsScreenBlend = TJAPlayer3.Skin.SongLoading_Plate_ScreenBlend; //あまりにも出番が無い
+                TJAPlayer3.Tx.SongLoading_Plate.IsScreenBlend = TJAPlayer3.Skin.SkinValue.SongLoading_Plate_ScreenBlend; //あまりにも出番が無い
                 TJAPlayer3.Tx.SongLoading_Plate.Opacity = ConvertUtility.ParsentTo255((this.ct曲名表示.NowValue / 30.0));
-                if(TJAPlayer3.Skin.SongLoading_Plate_ReferencePoint == SkinManager.ReferencePoint.Left)
+                if(TJAPlayer3.Skin.SkinValue.SongLoading_Plate_ReferencePoint == SkinManager.ReferencePoint.Left)
                 {
-                TJAPlayer3.Tx.SongLoading_Plate.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.SongLoading_Plate_X, TJAPlayer3.Skin.SongLoading_Plate_Y - (TJAPlayer3.Tx.SongLoading_Plate.ImageSize.Height / 2));
+                TJAPlayer3.Tx.SongLoading_Plate.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.SkinValue.SongLoading_Plate_X, TJAPlayer3.Skin.SkinValue.SongLoading_Plate_Y - (TJAPlayer3.Tx.SongLoading_Plate.ImageSize.Height / 2));
                 }
-                else if(TJAPlayer3.Skin.SongLoading_Plate_ReferencePoint == SkinManager.ReferencePoint.Right)
+                else if(TJAPlayer3.Skin.SkinValue.SongLoading_Plate_ReferencePoint == SkinManager.ReferencePoint.Right)
                 {
-                TJAPlayer3.Tx.SongLoading_Plate.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.SongLoading_Plate_X - TJAPlayer3.Tx.SongLoading_Plate.ImageSize.Width, TJAPlayer3.Skin.SongLoading_Plate_Y - (TJAPlayer3.Tx.SongLoading_Plate.ImageSize.Height / 2));
+                TJAPlayer3.Tx.SongLoading_Plate.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.SkinValue.SongLoading_Plate_X - TJAPlayer3.Tx.SongLoading_Plate.ImageSize.Width, TJAPlayer3.Skin.SkinValue.SongLoading_Plate_Y - (TJAPlayer3.Tx.SongLoading_Plate.ImageSize.Height / 2));
                 }
                 else
                 {
-                TJAPlayer3.Tx.SongLoading_Plate.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.SongLoading_Plate_X - (TJAPlayer3.Tx.SongLoading_Plate.ImageSize.Width / 2), TJAPlayer3.Skin.SongLoading_Plate_Y - (TJAPlayer3.Tx.SongLoading_Plate.ImageSize.Height / 2));
+                TJAPlayer3.Tx.SongLoading_Plate.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.SkinValue.SongLoading_Plate_X - (TJAPlayer3.Tx.SongLoading_Plate.ImageSize.Width / 2), TJAPlayer3.Skin.SkinValue.SongLoading_Plate_Y - (TJAPlayer3.Tx.SongLoading_Plate.ImageSize.Height / 2));
                 }
             }
             //CDTXMania.act文字コンソール.tPrint( 0, 16, C文字コンソール.Eフォント種別.灰, C変換.nParsentTo255( ( this.ct曲名表示.n現在の値 / 30.0 ) ).ToString() );
@@ -284,33 +284,33 @@ namespace TJAPlayer3
                 int nサブタイトル補正 = string.IsNullOrEmpty(TJAPlayer3.stage選曲.r確定されたスコア.譜面情報.strサブタイトル) ? 15 : 0;
 
                 this.txタイトル.Opacity = ConvertUtility.ParsentTo255( ( this.ct曲名表示.NowValue / 30.0 ) );
-                if(TJAPlayer3.Skin.SongLoading_Title_ReferencePoint == SkinManager.ReferencePoint.Left)
+                if(TJAPlayer3.Skin.SkinValue.SongLoading_Title_ReferencePoint == SkinManager.ReferencePoint.Left)
                 {
-                    this.txタイトル.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.SongLoading_Title_X, TJAPlayer3.Skin.SongLoading_Title_Y - (this.txタイトル.ImageSize.Height / 2) + nサブタイトル補正);
+                    this.txタイトル.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.SkinValue.SongLoading_Title_X, TJAPlayer3.Skin.SkinValue.SongLoading_Title_Y - (this.txタイトル.ImageSize.Height / 2) + nサブタイトル補正);
                 }
-                else if(TJAPlayer3.Skin.SongLoading_Title_ReferencePoint == SkinManager.ReferencePoint.Right)
+                else if(TJAPlayer3.Skin.SkinValue.SongLoading_Title_ReferencePoint == SkinManager.ReferencePoint.Right)
                 {
-                    this.txタイトル.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.SongLoading_Title_X - (this.txタイトル.ImageSize.Width * txタイトル.Scaling.X), TJAPlayer3.Skin.SongLoading_Title_Y - (this.txタイトル.ImageSize.Height / 2) + nサブタイトル補正);
+                    this.txタイトル.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.SkinValue.SongLoading_Title_X - (this.txタイトル.ImageSize.Width * txタイトル.Scaling.X), TJAPlayer3.Skin.SkinValue.SongLoading_Title_Y - (this.txタイトル.ImageSize.Height / 2) + nサブタイトル補正);
                 }
                 else
                 {
-                    this.txタイトル.Draw2D(TJAPlayer3.app.Device, (TJAPlayer3.Skin.SongLoading_Title_X - ((this.txタイトル.ImageSize.Width * txタイトル.Scaling.X) / 2)), TJAPlayer3.Skin.SongLoading_Title_Y - (this.txタイトル.ImageSize.Height / 2) + nサブタイトル補正);
+                    this.txタイトル.Draw2D(TJAPlayer3.app.Device, (TJAPlayer3.Skin.SkinValue.SongLoading_Title_X - ((this.txタイトル.ImageSize.Width * txタイトル.Scaling.X) / 2)), TJAPlayer3.Skin.SkinValue.SongLoading_Title_Y - (this.txタイトル.ImageSize.Height / 2) + nサブタイトル補正);
                 }
             }
 			if( this.txサブタイトル != null )
 			{
                 this.txサブタイトル.Opacity = ConvertUtility.ParsentTo255( ( this.ct曲名表示.NowValue / 30.0 ) );
-                if(TJAPlayer3.Skin.SongLoading_SubTitle_ReferencePoint == SkinManager.ReferencePoint.Left)
+                if(TJAPlayer3.Skin.SkinValue.SongLoading_SubTitle_ReferencePoint == SkinManager.ReferencePoint.Left)
                 {
-                    this.txサブタイトル.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.SongLoading_SubTitle_X, TJAPlayer3.Skin.SongLoading_SubTitle_Y - (this.txサブタイトル.ImageSize.Height / 2));
+                    this.txサブタイトル.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.SkinValue.SongLoading_SubTitle_X, TJAPlayer3.Skin.SkinValue.SongLoading_SubTitle_Y - (this.txサブタイトル.ImageSize.Height / 2));
                 }
-                else if(TJAPlayer3.Skin.SongLoading_Title_ReferencePoint == SkinManager.ReferencePoint.Right)
+                else if(TJAPlayer3.Skin.SkinValue.SongLoading_Title_ReferencePoint == SkinManager.ReferencePoint.Right)
                 {
-                    this.txサブタイトル.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.SongLoading_SubTitle_X - (this.txサブタイトル.ImageSize.Width * txタイトル.Scaling.X), TJAPlayer3.Skin.SongLoading_SubTitle_Y - (this.txサブタイトル.ImageSize.Height / 2));
+                    this.txサブタイトル.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.SkinValue.SongLoading_SubTitle_X - (this.txサブタイトル.ImageSize.Width * txタイトル.Scaling.X), TJAPlayer3.Skin.SkinValue.SongLoading_SubTitle_Y - (this.txサブタイトル.ImageSize.Height / 2));
                 }
                 else
                 {
-                    this.txサブタイトル.Draw2D(TJAPlayer3.app.Device, (TJAPlayer3.Skin.SongLoading_SubTitle_X - ((this.txサブタイトル.ImageSize.Width * txサブタイトル.Scaling.X) / 2)), TJAPlayer3.Skin.SongLoading_SubTitle_Y - (this.txサブタイトル.ImageSize.Height / 2));
+                    this.txサブタイトル.Draw2D(TJAPlayer3.app.Device, (TJAPlayer3.Skin.SkinValue.SongLoading_SubTitle_X - ((this.txサブタイトル.ImageSize.Width * txサブタイトル.Scaling.X) / 2)), TJAPlayer3.Skin.SkinValue.SongLoading_SubTitle_Y - (this.txサブタイトル.ImageSize.Height / 2));
                 }
             }
 			//-----------------------------
@@ -377,16 +377,16 @@ namespace TJAPlayer3
                                     pfSubTitle = new PrivateFont(new FontFamily("MS UI Gothic"), 22);
                                 }
 
-                                var titleForeColor = TJAPlayer3.Skin.Game_DanC_Title_ForeColor;
-                                var titleBackColor = TJAPlayer3.Skin.Game_DanC_Title_BackColor;
-                                var subtitleForeColor = TJAPlayer3.Skin.Game_DanC_SubTitle_ForeColor;
-                                var subtitleBackColor = TJAPlayer3.Skin.Game_DanC_SubTitle_BackColor;
+                                var titleForeColor = TJAPlayer3.Skin.SkinValue.Game_DanC_Title_ForeColor;
+                                var titleBackColor = TJAPlayer3.Skin.SkinValue.Game_DanC_Title_BackColor;
+                                var subtitleForeColor = TJAPlayer3.Skin.SkinValue.Game_DanC_SubTitle_ForeColor;
+                                var subtitleBackColor = TJAPlayer3.Skin.SkinValue.Game_DanC_SubTitle_BackColor;
 
                                 for (int i = 0; i < TJAPlayer3.DTX.List_DanSongs.Count; i++)
                                 {
                                     if (!string.IsNullOrEmpty(TJAPlayer3.DTX.List_DanSongs[i].Title))
                                     {
-                                        using (var bmpSongTitle = pfTitle.DrawPrivateFont(TJAPlayer3.DTX.List_DanSongs[i].Title, titleForeColor, titleBackColor))
+                                        using (var bmpSongTitle = pfTitle.DrawPrivateFont(TJAPlayer3.DTX.List_DanSongs[i].Title, titleForeColor.GetColor(), titleBackColor.GetColor()))
                                         {
                                             TJAPlayer3.DTX.List_DanSongs[i].TitleTex = TJAPlayer3.CreateFDKTexture(bmpSongTitle, false);
                                             TJAPlayer3.DTX.List_DanSongs[i].TitleTex.Scaling.X = TJAPlayer3.GetSongNameXScaling(ref TJAPlayer3.DTX.List_DanSongs[i].TitleTex, 710);
@@ -395,7 +395,7 @@ namespace TJAPlayer3
 
                                     if (!string.IsNullOrEmpty(TJAPlayer3.DTX.List_DanSongs[i].SubTitle))
                                     {
-                                        using (var bmpSongSubTitle = pfSubTitle.DrawPrivateFont(TJAPlayer3.DTX.List_DanSongs[i].SubTitle, subtitleForeColor, subtitleBackColor))
+                                        using (var bmpSongSubTitle = pfSubTitle.DrawPrivateFont(TJAPlayer3.DTX.List_DanSongs[i].SubTitle, subtitleForeColor.GetColor(), subtitleBackColor.GetColor()))
                                         {
                                             TJAPlayer3.DTX.List_DanSongs[i].SubTitleTex = TJAPlayer3.CreateFDKTexture(bmpSongSubTitle, false);
                                             TJAPlayer3.DTX.List_DanSongs[i].SubTitleTex.Scaling.X = TJAPlayer3.GetSongNameXScaling(ref TJAPlayer3.DTX.List_DanSongs[i].SubTitleTex, 710);

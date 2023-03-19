@@ -336,7 +336,7 @@ namespace TJAPlayer3
 			{
 				if (TJAPlayer3.Tx.NamePlate[i] != null)
 				{
-					TJAPlayer3.Tx.NamePlate[i].Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.SongSelect_NamePlate_X[i], TJAPlayer3.Skin.SongSelect_NamePlate_Y[i]);
+					TJAPlayer3.Tx.NamePlate[i].Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.SkinValue.SongSelect_NamePlate_X[i], TJAPlayer3.Skin.SkinValue.SongSelect_NamePlate_Y[i]);
 				}
 			}
 			#endregion
@@ -346,11 +346,11 @@ namespace TJAPlayer3
 			{
 				if (TJAPlayer3._MainConfig.b太鼓パートAutoPlay)
 				{
-					TJAPlayer3.Tx.SongSelect_Auto.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.SongSelect_Auto_X[0], TJAPlayer3.Skin.SongSelect_Auto_Y[0]);
+					TJAPlayer3.Tx.SongSelect_Auto.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.SkinValue.SongSelect_Auto_X[0], TJAPlayer3.Skin.SkinValue.SongSelect_Auto_Y[0]);
 				}
 				if (TJAPlayer3._MainConfig.nPlayerCount > 1 && TJAPlayer3._MainConfig.b太鼓パートAutoPlay2P)
 				{
-					TJAPlayer3.Tx.SongSelect_Auto.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.SongSelect_Auto_X[1], TJAPlayer3.Skin.SongSelect_Auto_Y[1]);
+					TJAPlayer3.Tx.SongSelect_Auto.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.SkinValue.SongSelect_Auto_X[1], TJAPlayer3.Skin.SkinValue.SongSelect_Auto_Y[1]);
 				}
 			}
 			if (TJAPlayer3._MainConfig.eGameMode == EGame.完走叩ききりまショー)

@@ -491,7 +491,7 @@ namespace TJAPlayer3
                     TJAPlayer3.Tx.GameMode_Timer_Tick.Draw3D( TJAPlayer3.app.Device, mat );
 
                     string str表示する残り時間 = ( this.st叩ききりまショー.ct残り時間.NowValue < 1000 ) ? "25" : ( ( 26000 - this.st叩ききりまショー.ct残り時間.NowValue ) / 1000 ).ToString();
-                    this.t小文字表示( 230 + (str表示する残り時間.Length * TJAPlayer3.Skin.Game_Taiko_Combo_Size[0] / 4 ), 84 + TJAPlayer3.Tx.GameMode_Timer_Frame.TextureSize.Height / 2 , string.Format("{0,2:#0}", str表示する残り時間 ));
+                    this.t小文字表示( 230 + (str表示する残り時間.Length * TJAPlayer3.Skin.SkinValue.Game_Taiko_Combo_Size[0] / 4 ), 84 + TJAPlayer3.Tx.GameMode_Timer_Frame.TextureSize.Height / 2 , string.Format("{0,2:#0}", str表示する残り時間 ));
                 }
 
                 if( !this.st叩ききりまショー.ct加算審査中.IsStoped )
@@ -853,7 +853,7 @@ namespace TJAPlayer3
 				{
                     if (this.st小文字位置[i].ch == ch)
                     {
-                        Rectangle rectangle = new Rectangle(TJAPlayer3.Skin.Game_Taiko_Combo_Size[0] * i, 0, TJAPlayer3.Skin.Game_Taiko_Combo_Size[0], TJAPlayer3.Skin.Game_Taiko_Combo_Size[1]);
+                        Rectangle rectangle = new Rectangle(TJAPlayer3.Skin.SkinValue.Game_Taiko_Combo_Size[0] * i, 0, TJAPlayer3.Skin.SkinValue.Game_Taiko_Combo_Size[0], TJAPlayer3.Skin.SkinValue.Game_Taiko_Combo_Size[1]);
 						if(TJAPlayer3.Tx.Taiko_Combo[0]  != null )
 						{
                             if( this.st叩ききりまショー.bタイマー使用中 )
@@ -869,7 +869,7 @@ namespace TJAPlayer3
 						break;
 					}
 				}
-				x += TJAPlayer3.Skin.Game_Taiko_Combo_Padding[0] * 2;
+				x += TJAPlayer3.Skin.SkinValue.Game_Taiko_Combo_Padding[0] * 2;
 			}
 		}
         protected void t加算文字表示( int x, int y, string str )
@@ -881,7 +881,7 @@ namespace TJAPlayer3
                 {
                     if( cFont[ i ] == ch )
                     {
-                        Rectangle rectangle = new Rectangle(TJAPlayer3.Skin.Game_Score_Size[0] * i, 0, TJAPlayer3.Skin.Game_Score_Size[0], TJAPlayer3.Skin.Game_Score_Size[1]);
+                        Rectangle rectangle = new Rectangle(TJAPlayer3.Skin.SkinValue.Game_Score_Size[0] * i, 0, TJAPlayer3.Skin.SkinValue.Game_Score_Size[0], TJAPlayer3.Skin.SkinValue.Game_Score_Size[1]);
                         if (TJAPlayer3.Tx.Taiko_Score[0] != null )
                         {
                             TJAPlayer3.Tx.Taiko_Score[0].Scaling.Y = 1f;

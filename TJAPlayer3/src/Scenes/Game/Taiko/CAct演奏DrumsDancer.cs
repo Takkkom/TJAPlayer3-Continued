@@ -31,7 +31,7 @@ namespace TJAPlayer3
 
         public override void ManagedCreateResources()
         {
-            this.ar踊り子モーション番号 = ConvertUtility.StringArrayToIntArray(TJAPlayer3.Skin.Game_Dancer_Motion);
+            this.ar踊り子モーション番号 = ConvertUtility.StringArrayToIntArray(TJAPlayer3.Skin.SkinValue.Game_Dancer_Motion);
             if(this.ar踊り子モーション番号 == null) ar踊り子モーション番号 = ConvertUtility.StringArrayToIntArray("0,0");
             this.ct踊り子モーション = new Counter(0, this.ar踊り子モーション番号.Length - 1, 0.01, SoundManager.PlayTimer);
             base.ManagedCreateResources();
@@ -49,16 +49,16 @@ namespace TJAPlayer3
                 this.JustStartedUpdate = true;
             }
 
-            if (this.ct踊り子モーション != null || TJAPlayer3.Skin.Game_Dancer_Ptn != 0) this.ct踊り子モーション.TickLoop_Double();
+            if (this.ct踊り子モーション != null || TJAPlayer3.Skin.SkinValue.Game_Dancer_Ptn != 0) this.ct踊り子モーション.TickLoop_Double();
 
-            if (TJAPlayer3._MainConfig.ShowDancer && this.ct踊り子モーション != null && TJAPlayer3.Skin.Game_Dancer_Ptn != 0)
+            if (TJAPlayer3._MainConfig.ShowDancer && this.ct踊り子モーション != null && TJAPlayer3.Skin.SkinValue.Game_Dancer_Ptn != 0)
             {
                 for (int i = 0; i < 5; i++)
                 {
                     if (TJAPlayer3.Tx.Dancer[i][this.ar踊り子モーション番号[(int)this.ct踊り子モーション.NowValue_Double]] != null)
                     {
-                        if ((int)TJAPlayer3.stage演奏ドラム画面.actGauge.db現在のゲージ値[0] >= TJAPlayer3.Skin.Game_Dancer_Gauge[i])
-                            TJAPlayer3.Tx.Dancer[i][this.ar踊り子モーション番号[(int)this.ct踊り子モーション.NowValue_Double]].t2D中心基準描画(TJAPlayer3.app.Device, TJAPlayer3.Skin.Game_Dancer_X[i], TJAPlayer3.Skin.Game_Dancer_Y[i]);
+                        if ((int)TJAPlayer3.stage演奏ドラム画面.actGauge.db現在のゲージ値[0] >= TJAPlayer3.Skin.SkinValue.Game_Dancer_Gauge[i])
+                            TJAPlayer3.Tx.Dancer[i][this.ar踊り子モーション番号[(int)this.ct踊り子モーション.NowValue_Double]].t2D中心基準描画(TJAPlayer3.app.Device, TJAPlayer3.Skin.SkinValue.Game_Dancer_X[i], TJAPlayer3.Skin.SkinValue.Game_Dancer_Y[i]);
                     }
                 }
             }

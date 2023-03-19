@@ -231,7 +231,7 @@ namespace TJAPlayer3
 				//txMenuItemLeft = CDTXMania.tテクスチャの生成( bmpStr, false );
 				int flag = ( this.n現在のメニュー番号 == i ) ? 1 : 0;
 				int num4 = txMenuItemLeft[ i, flag ].ImageSize.Width;
-                txMenuItemLeft[i, flag].Draw2D(TJAPlayer3.app.Device, 282 - (num4 / 2) + TJAPlayer3.Skin.Config_ItemText_Correction_X, menuY + TJAPlayer3.Skin.Config_ItemText_Correction_Y ); //55
+                txMenuItemLeft[i, flag].Draw2D(TJAPlayer3.app.Device, 282 - (num4 / 2) + TJAPlayer3.Skin.SkinValue.Config_ItemText_Correction_X, menuY + TJAPlayer3.Skin.SkinValue.Config_ItemText_Correction_Y ); //55
 				//txMenuItem.Dispose();
 				menuY += stepY;
 			}

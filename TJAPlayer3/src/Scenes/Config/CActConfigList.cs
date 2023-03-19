@@ -1713,7 +1713,7 @@ namespace TJAPlayer3
 				//-----------------
 				if ( listMenu[ nItem ].txMenuItemRight != null )	// 自前のキャッシュに含まれているようなら、再レンダリングせずキャッシュを使用
 				{
-                    listMenu[nItem].txMenuItemRight.Draw2D(TJAPlayer3.app.Device, x + 20 + TJAPlayer3.Skin.Config_ItemText_Correction_X, y + 12 + TJAPlayer3.Skin.Config_ItemText_Correction_Y);
+                    listMenu[nItem].txMenuItemRight.Draw2D(TJAPlayer3.app.Device, x + 20 + TJAPlayer3.Skin.SkinValue.Config_ItemText_Correction_X, y + 12 + TJAPlayer3.Skin.SkinValue.Config_ItemText_Correction_Y);
 				}
 				else
 				{
@@ -1818,7 +1818,7 @@ namespace TJAPlayer3
 				    {
 				        using (var txStr = TJAPlayer3.CreateFDKTexture( bmpStr, false ))
 				        {
-				            txStr.Draw2D( TJAPlayer3.app.Device, x + 400 + TJAPlayer3.Skin.Config_ItemText_Correction_X, y + 12 + TJAPlayer3.Skin.Config_ItemText_Correction_Y );
+				            txStr.Draw2D( TJAPlayer3.app.Device, x + 400 + TJAPlayer3.Skin.SkinValue.Config_ItemText_Correction_X, y + 12 + TJAPlayer3.Skin.SkinValue.Config_ItemText_Correction_Y );
 				        }
 				    }
 				}
@@ -1839,7 +1839,7 @@ namespace TJAPlayer3
 
 						listMenu[ nItem ] = stm;
 					}
-					listMenu[ nItem ].txParam.Draw2D( TJAPlayer3.app.Device,  x + 400 + TJAPlayer3.Skin.Config_ItemText_Correction_X, y + 12 + TJAPlayer3.Skin.Config_ItemText_Correction_Y );
+					listMenu[ nItem ].txParam.Draw2D( TJAPlayer3.app.Device,  x + 400 + TJAPlayer3.Skin.SkinValue.Config_ItemText_Correction_X, y + 12 + TJAPlayer3.Skin.SkinValue.Config_ItemText_Correction_Y );
 				}
 				//-----------------
 				#endregion

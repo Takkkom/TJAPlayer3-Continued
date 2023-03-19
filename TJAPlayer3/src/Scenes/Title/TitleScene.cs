@@ -190,7 +190,7 @@ namespace TJAPlayer3
 			TJAPlayer3._ConsoleText.tPrint(4, 44, ConsoleText.FontType.White, "DEBUG BUILD");
 #endif
 			TJAPlayer3._ConsoleText.tPrint(4, 4, ConsoleText.FontType.White, asmApp.Name + " Ver." + TJAPlayer3.VERSION + " (" + strCreator + ")");
-			TJAPlayer3._ConsoleText.tPrint(4, 24, ConsoleText.FontType.White, "Skin:" + TJAPlayer3.Skin.Skin_Name + " Ver." + TJAPlayer3.Skin.Skin_Version + " (" + TJAPlayer3.Skin.Skin_Creator + ")");
+			TJAPlayer3._ConsoleText.tPrint(4, 24, ConsoleText.FontType.White, "Skin:" +TJAPlayer3.Skin.SkinValue.Skin_Name + " Ver." +TJAPlayer3.Skin.SkinValue.Skin_Version + " (" +TJAPlayer3.Skin.SkinValue.Skin_Creator + ")");
 			//CDTXMania.act文字コンソール.tPrint(4, 24, C文字コンソール.Eフォント種別.白, strSubTitle);
 			TJAPlayer3._ConsoleText.tPrint(4, (720 - 24), ConsoleText.FontType.White, "TJAPlayer3 forked TJAPlayer2 forPC(kairera0467)");
 			#endregion

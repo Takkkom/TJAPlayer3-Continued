@@ -212,9 +212,9 @@ namespace TJAPlayer3
             //double dbUnit = ( ( ( 60.0 / ( CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM ) ) ) );
             //double dbUnit_gogo = ( ( ( 60.0 / ( CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM ) ) ) / this.actChara.arゴーゴーモーション番号.Length );
 
-            double dbPtn_Normal = (60.0 / TJAPlayer3.stage演奏ドラム画面.actPlayInfo.dbBPM) * TJAPlayer3.Skin.Game_Chara_Beat_Normal / this.actChara.arモーション番号.Length;
-            double dbPtn_Clear = (60.0 / TJAPlayer3.stage演奏ドラム画面.actPlayInfo.dbBPM) * TJAPlayer3.Skin.Game_Chara_Beat_Clear / this.actChara.arクリアモーション番号.Length;
-            double dbPtn_GoGo = (60.0 / TJAPlayer3.stage演奏ドラム画面.actPlayInfo.dbBPM) * TJAPlayer3.Skin.Game_Chara_Beat_GoGo / this.actChara.arゴーゴーモーション番号.Length;
+            double dbPtn_Normal = (60.0 / TJAPlayer3.stage演奏ドラム画面.actPlayInfo.dbBPM) * TJAPlayer3.Skin.SkinValue.Game_Chara_Beat_Normal / this.actChara.arモーション番号.Length;
+            double dbPtn_Clear = (60.0 / TJAPlayer3.stage演奏ドラム画面.actPlayInfo.dbBPM) * TJAPlayer3.Skin.SkinValue.Game_Chara_Beat_Clear / this.actChara.arクリアモーション番号.Length;
+            double dbPtn_GoGo = (60.0 / TJAPlayer3.stage演奏ドラム画面.actPlayInfo.dbBPM) * TJAPlayer3.Skin.SkinValue.Game_Chara_Beat_GoGo / this.actChara.arゴーゴーモーション番号.Length;
 
             PuchiChara.ChangeBPM(60.0 / TJAPlayer3.stage演奏ドラム画面.actPlayInfo.dbBPM);
 
@@ -225,21 +225,21 @@ namespace TJAPlayer3
             ////this.actChara.ct通常モーション = new CCounter( 0, this.actChara.arモーション番号.Length - 1, 0.07, CSound管理.rc演奏用タイマ );
             //this.actChara.ctChara_GoGo = new CCounter( 0, this.actChara.arゴーゴーモーション番号.Length - 1, dbPtn_GoGo, CSound管理.rc演奏用タイマ );
 
-            if(TJAPlayer3.Skin.Game_Chara_Ptn_Normal != 0 )
+            if(TJAPlayer3.Skin.SkinValue.Game_Chara_Ptn_Normal != 0 )
             {
                 this.actChara.ctChara_Normal = new Counter( 0, this.actChara.arモーション番号.Length - 1, dbPtn_Normal, SoundManager.PlayTimer );
             } else
             {
                 this.actChara.ctChara_Normal = new Counter();
             }
-            if (TJAPlayer3.Skin.Game_Chara_Ptn_Clear != 0 )
+            if (TJAPlayer3.Skin.SkinValue.Game_Chara_Ptn_Clear != 0 )
             {
                 this.actChara.ctChara_Clear = new Counter( 0, this.actChara.arクリアモーション番号.Length - 1, dbPtn_Clear, SoundManager.PlayTimer );
             } else
             {
                 this.actChara.ctChara_Clear = new Counter();
             }
-            if( TJAPlayer3.Skin.Game_Chara_Ptn_GoGo != 0 )
+            if( TJAPlayer3.Skin.SkinValue.Game_Chara_Ptn_GoGo != 0 )
             {
                 this.actChara.ctChara_GoGo = new Counter( 0, this.actChara.arゴーゴーモーション番号.Length - 1, dbPtn_GoGo, SoundManager.PlayTimer );
             } else
@@ -255,7 +255,7 @@ namespace TJAPlayer3
             if(this.actDancer.ct踊り子モーション != null)
             {
                 double dbUnit_dancer = (((60 / (TJAPlayer3.stage演奏ドラム画面.actPlayInfo.dbBPM))) / this.actDancer.ar踊り子モーション番号.Length);
-                this.actDancer.ct踊り子モーション = new Counter(0, this.actDancer.ar踊り子モーション番号.Length - 1, dbUnit_dancer * TJAPlayer3.Skin.Game_Dancer_Beat, SoundManager.PlayTimer);
+                this.actDancer.ct踊り子モーション = new Counter(0, this.actDancer.ar踊り子モーション番号.Length - 1, dbUnit_dancer * TJAPlayer3.Skin.SkinValue.Game_Dancer_Beat, SoundManager.PlayTimer);
             }else
             {
                 this.actDancer.ct踊り子モーション = new Counter();
@@ -531,13 +531,13 @@ namespace TJAPlayer3
                 {
                     base.eフェーズID = BaseScene.Eフェーズ.演奏_演奏終了演出;
                     this.actEnd.Start();
-                    if (TJAPlayer3.Skin.Game_Chara_Ptn_10combo_Max != 0)
+                    if (TJAPlayer3.Skin.SkinValue.Game_Chara_Ptn_10combo_Max != 0)
                     {
                         if (TJAPlayer3.stage演奏ドラム画面.actGauge.db現在のゲージ値[0] >= 100)
                         {
                             double dbUnit = (((60.0 / (TJAPlayer3.stage演奏ドラム画面.actPlayInfo.dbBPM))));
                             this.actChara.アクションタイマーリセット();
-                            this.actChara.ctキャラクターアクション_10コンボMAX = new Counter(0, TJAPlayer3.Skin.Game_Chara_Ptn_10combo_Max - 1, (dbUnit / TJAPlayer3.Skin.Game_Chara_Ptn_10combo_Max) * 2, SoundManager.PlayTimer);
+                            this.actChara.ctキャラクターアクション_10コンボMAX = new Counter(0, TJAPlayer3.Skin.SkinValue.Game_Chara_Ptn_10combo_Max - 1, (dbUnit / TJAPlayer3.Skin.SkinValue.Game_Chara_Ptn_10combo_Max) * 2, SoundManager.PlayTimer);
                             this.actChara.ctキャラクターアクション_10コンボMAX.Tick_Double();
                             this.actChara.ctキャラクターアクション_10コンボMAX.NowValue_Double = 0D;
                             this.actChara.bマイどんアクション中 = true;
@@ -1447,7 +1447,7 @@ namespace TJAPlayer3
                         {
                             //int num9 = this.actCombo.n現在のコンボ数.Drums >= 50 ? this.ctチップ模様アニメ.Drums.n現在の値 * 130 : 0;
                             int num9 = 0;
-                            if (TJAPlayer3.Skin.Game_Notes_Anime)
+                            if (TJAPlayer3.Skin.SkinValue.Game_Notes_Anime)
                             {
                                 if (this.actCombo.n現在のコンボ数[nPlayer] >= 300 && ctChipAnimeLag[nPlayer].IsEndValueReached)
                                 {
@@ -1755,7 +1755,7 @@ namespace TJAPlayer3
                         //{
                         //    num9 = base.n現在の音符の顔番号 != 0 ? base.n現在の音符の顔番号 * 130 : 0;
                         //}
-                        if (TJAPlayer3.Skin.Game_Notes_Anime)
+                        if (TJAPlayer3.Skin.SkinValue.Game_Notes_Anime)
                         {
                             if (this.actCombo.n現在のコンボ数[nPlayer] >= 300 && ctChipAnimeLag[nPlayer].IsEndValueReached)
                             {
@@ -1857,7 +1857,7 @@ namespace TJAPlayer3
                                 #endregion
                                 #region[末端をテクスチャ側でつなげる場合の方式]
 
-                                if (TJAPlayer3.Skin.Game_RollColorMode != SkinManager.RollColorMode.None)
+                                if (TJAPlayer3.Skin.SkinValue.Game_RollColorMode != SkinManager.RollColorMode.None)
                                     TJAPlayer3.Tx.Notes.color4 = effectedColor;
                                 else
                                     TJAPlayer3.Tx.Notes.color4 = normalColor;
@@ -1865,7 +1865,7 @@ namespace TJAPlayer3
                                 TJAPlayer3.Tx.Notes.Draw2D(TJAPlayer3.app.Device, x + 64, y, new Rectangle(781, 0, 128, 130));
                                 TJAPlayer3.Tx.Notes.Scaling.X = 1.0f;
                                 TJAPlayer3.Tx.Notes.Draw2D(TJAPlayer3.app.Device, x末端 + f末端ノーツのテクスチャ位置調整, y, 0, new Rectangle(910, num9, 130, 130));
-                                if (TJAPlayer3.Skin.Game_RollColorMode == SkinManager.RollColorMode.All)
+                                if (TJAPlayer3.Skin.SkinValue.Game_RollColorMode == SkinManager.RollColorMode.All)
                                     TJAPlayer3.Tx.Notes.color4 = effectedColor;
                                 else
                                     TJAPlayer3.Tx.Notes.color4 = normalColor;
@@ -1899,7 +1899,7 @@ namespace TJAPlayer3
                                 #endregion
                                 #region[末端をテクスチャ側でつなげる場合の方式]
 
-                                if (TJAPlayer3.Skin.Game_RollColorMode != SkinManager.RollColorMode.None)
+                                if (TJAPlayer3.Skin.SkinValue.Game_RollColorMode != SkinManager.RollColorMode.None)
                                     TJAPlayer3.Tx.Notes.color4 = effectedColor;
                                 else
                                     TJAPlayer3.Tx.Notes.color4 = normalColor;
@@ -1909,7 +1909,7 @@ namespace TJAPlayer3
 
                                 TJAPlayer3.Tx.Notes.Scaling.X = 1.0f;
                                 TJAPlayer3.Tx.Notes.Draw2D(TJAPlayer3.app.Device, x末端 + f末端ノーツのテクスチャ位置調整, y, 0, new Rectangle(1300, num9, 130, 130));
-                                if (TJAPlayer3.Skin.Game_RollColorMode == SkinManager.RollColorMode.All)
+                                if (TJAPlayer3.Skin.SkinValue.Game_RollColorMode == SkinManager.RollColorMode.All)
                                     TJAPlayer3.Tx.Notes.color4 = effectedColor;
                                 else
                                     TJAPlayer3.Tx.Notes.color4 = normalColor;

@@ -131,8 +131,8 @@ namespace TJAPlayer3
                     TJAPlayer3.Tx.Balloon_Number_Roll.Opacity = opacity;
 
 
-                    TJAPlayer3.Tx.Balloon_Roll.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.Game_Balloon_Roll_Frame_X[player], TJAPlayer3.Skin.Game_Balloon_Roll_Frame_Y[player]);
-                    this.t文字表示(TJAPlayer3.Skin.Game_Balloon_Roll_Number_X[player], TJAPlayer3.Skin.Game_Balloon_Roll_Number_Y[player], n連打数.ToString(), n連打数, player);
+                    TJAPlayer3.Tx.Balloon_Roll.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.SkinValue.Game_Balloon_Roll_Frame_X[player], TJAPlayer3.Skin.SkinValue.Game_Balloon_Roll_Frame_Y[player]);
+                    this.t文字表示(TJAPlayer3.Skin.SkinValue.Game_Balloon_Roll_Number_X[player], TJAPlayer3.Skin.SkinValue.Game_Balloon_Roll_Number_Y[player], n連打数.ToString(), n連打数, player);
                 }
             }
 
@@ -187,18 +187,18 @@ namespace TJAPlayer3
 				{
 					if( this.st文字位置[ i ].ch == ch )
 					{
-						Rectangle rectangle = new Rectangle(TJAPlayer3.Skin.Game_Balloon_Number_Size[0] * i, 0, TJAPlayer3.Skin.Game_Balloon_Number_Size[0], TJAPlayer3.Skin.Game_Balloon_Number_Size[1]);
+						Rectangle rectangle = new Rectangle(TJAPlayer3.Skin.SkinValue.Game_Balloon_Number_Size[0] * i, 0, TJAPlayer3.Skin.SkinValue.Game_Balloon_Number_Size[0], TJAPlayer3.Skin.SkinValue.Game_Balloon_Number_Size[1]);
 
 						if(TJAPlayer3.Tx.Balloon_Number_Roll != null )
 						{
-                            TJAPlayer3.Tx.Balloon_Number_Roll.Scaling.X = TJAPlayer3.Skin.Game_Balloon_Roll_Number_Scale;
-                            TJAPlayer3.Tx.Balloon_Number_Roll.Scaling.Y = TJAPlayer3.Skin.Game_Balloon_Roll_Number_Scale + RollScale[this.ct連打アニメ[nPlayer].NowValue];
-                            TJAPlayer3.Tx.Balloon_Number_Roll.t2D拡大率考慮下基準描画( TJAPlayer3.app.Device, x - ( ( (TJAPlayer3.Skin.Game_Balloon_Number_Padding + 2) * n桁数 ) / 2 ), y, rectangle );
+                            TJAPlayer3.Tx.Balloon_Number_Roll.Scaling.X = TJAPlayer3.Skin.SkinValue.Game_Balloon_Roll_Number_Scale;
+                            TJAPlayer3.Tx.Balloon_Number_Roll.Scaling.Y = TJAPlayer3.Skin.SkinValue.Game_Balloon_Roll_Number_Scale + RollScale[this.ct連打アニメ[nPlayer].NowValue];
+                            TJAPlayer3.Tx.Balloon_Number_Roll.t2D拡大率考慮下基準描画( TJAPlayer3.app.Device, x - ( ( (TJAPlayer3.Skin.SkinValue.Game_Balloon_Number_Padding + 2) * n桁数 ) / 2 ), y, rectangle );
 						}
 						break;
 					}
 				}
-				x += ( TJAPlayer3.Skin.Game_Balloon_Number_Padding - ( n桁数 > 2 ? n桁数 * 2 : 0 ) );
+				x += ( TJAPlayer3.Skin.SkinValue.Game_Balloon_Number_Padding - ( n桁数 > 2 ? n桁数 * 2 : 0 ) );
 			}
 		}
     }

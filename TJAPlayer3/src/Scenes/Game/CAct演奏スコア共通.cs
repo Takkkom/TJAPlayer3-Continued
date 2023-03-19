@@ -300,7 +300,7 @@ namespace TJAPlayer3
                 {
                     if( this.stFont[ i ].ch == ch )
                     {
-                        Rectangle rectangle = new Rectangle(TJAPlayer3.Skin.Game_Score_Size[0] * i, 0, TJAPlayer3.Skin.Game_Score_Size[0], TJAPlayer3.Skin.Game_Score_Size[1]);
+                        Rectangle rectangle = new Rectangle(TJAPlayer3.Skin.SkinValue.Game_Score_Size[0] * i, 0, TJAPlayer3.Skin.SkinValue.Game_Score_Size[0], TJAPlayer3.Skin.SkinValue.Game_Score_Size[1]);
                         switch( mode )
                         {
                             case 0:
@@ -337,7 +337,7 @@ namespace TJAPlayer3
                         break;
                     }
                 }
-                x += TJAPlayer3.Skin.Game_Score_Padding;
+                x += TJAPlayer3.Skin.SkinValue.Game_Score_Padding;
             }
         }
 	}

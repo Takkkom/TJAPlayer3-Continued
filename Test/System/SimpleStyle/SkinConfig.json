@@ -1,0 +1,781 @@
+{
+  "Skin_Name": "Unknown",
+  "Skin_Version": "Unknown",
+  "Skin_Creator": "Unknown",
+  "Config_ItemText_Correction_X": 0,
+  "Config_ItemText_Correction_Y": 0,
+  "SongSelect_Overall_Y": 103,
+  "SongSelect_NamePlate_X": [
+    60,
+    950
+  ],
+  "SongSelect_NamePlate_Y": [
+    650,
+    650
+  ],
+  "SongSelect_Auto_X": [
+    60,
+    950
+  ],
+  "SongSelect_Auto_Y": [
+    650,
+    650
+  ],
+  "SongSelect_ForeColor_JPOP": {
+    "R": 255,
+    "G": 255,
+    "B": 255
+  },
+  "SongSelect_ForeColor_Anime": {
+    "R": 255,
+    "G": 255,
+    "B": 255
+  },
+  "SongSelect_ForeColor_VOCALOID": {
+    "R": 255,
+    "G": 255,
+    "B": 255
+  },
+  "SongSelect_ForeColor_Children": {
+    "R": 255,
+    "G": 255,
+    "B": 255
+  },
+  "SongSelect_ForeColor_Variety": {
+    "R": 255,
+    "G": 255,
+    "B": 255
+  },
+  "SongSelect_ForeColor_Classic": {
+    "R": 255,
+    "G": 255,
+    "B": 255
+  },
+  "SongSelect_ForeColor_GameMusic": {
+    "R": 255,
+    "G": 255,
+    "B": 255
+  },
+  "SongSelect_ForeColor_Namco": {
+    "R": 255,
+    "G": 255,
+    "B": 255
+  },
+  "SongSelect_BackColor_JPOP": {
+    "R": 1,
+    "G": 69,
+    "B": 91
+  },
+  "SongSelect_BackColor_Anime": {
+    "R": 157,
+    "G": 56,
+    "B": 0
+  },
+  "SongSelect_BackColor_VOCALOID": {
+    "R": 91,
+    "G": 98,
+    "B": 120
+  },
+  "SongSelect_BackColor_Children": {
+    "R": 153,
+    "G": 0,
+    "B": 31
+  },
+  "SongSelect_BackColor_Variety": {
+    "R": 54,
+    "G": 102,
+    "B": 0
+  },
+  "SongSelect_BackColor_Classic": {
+    "R": 135,
+    "G": 86,
+    "B": 0
+  },
+  "SongSelect_BackColor_GameMusic": {
+    "R": 65,
+    "G": 32,
+    "B": 128
+  },
+  "SongSelect_BackColor_Namco": {
+    "R": 152,
+    "G": 14,
+    "B": 0
+  },
+  "SongSelect_CorrectionX_Chara": [
+    "ここにX座標を補正したい文字をカンマで区切って記入"
+  ],
+  "SongSelect_CorrectionY_Chara": [
+    "ここにY座標を補正したい文字をカンマで区切って記入"
+  ],
+  "SongSelect_CorrectionX_Chara_Value": 0,
+  "SongSelect_CorrectionY_Chara_Value": 0,
+  "SongSelect_Rotate_Chara": [
+    "ここに90℃回転させたい文字をカンマで区切って記入"
+  ],
+  "SongLoading_Plate_X": 640,
+  "SongLoading_Plate_Y": 360,
+  "SongLoading_Title_X": 640,
+  "SongLoading_Title_Y": 340,
+  "SongLoading_SubTitle_X": 640,
+  "SongLoading_SubTitle_Y": 390,
+  "SongLoading_Title_FontSize": 30,
+  "SongLoading_SubTitle_FontSize": 22,
+  "SongLoading_Plate_ReferencePoint": 0,
+  "SongLoading_Title_ReferencePoint": 0,
+  "SongLoading_SubTitle_ReferencePoint": 0,
+  "SongLoading_Title_ForeColor": {
+    "R": 255,
+    "G": 255,
+    "B": 255
+  },
+  "SongLoading_Title_BackColor": {
+    "R": 0,
+    "G": 0,
+    "B": 0
+  },
+  "SongLoading_SubTitle_ForeColor": {
+    "R": 255,
+    "G": 255,
+    "B": 255
+  },
+  "SongLoading_SubTitle_BackColor": {
+    "R": 0,
+    "G": 0,
+    "B": 0
+  },
+  "SongLoading_Plate_ScreenBlend": true,
+  "Game_Notes_Anime": false,
+  "Game_StageText": "1曲目",
+  "Game_RollColorMode": 1,
+  "Game_JudgeFrame_AddBlend": true,
+  "Game_Chara_X": [
+    0,
+    0
+  ],
+  "Game_Chara_Y": [
+    0,
+    537
+  ],
+  "Game_Chara_Balloon_X": [
+    240,
+    240,
+    0,
+    0
+  ],
+  "Game_Chara_Balloon_Y": [
+    0,
+    297,
+    0,
+    0
+  ],
+  "Game_Chara_Ptn_Normal": 0,
+  "Game_Chara_Ptn_GoGo": 0,
+  "Game_Chara_Ptn_Clear": 0,
+  "Game_Chara_Ptn_10combo": 0,
+  "Game_Chara_Ptn_10combo_Max": 0,
+  "Game_Chara_Ptn_GoGoStart": 0,
+  "Game_Chara_Ptn_GoGoStart_Max": 0,
+  "Game_Chara_Ptn_ClearIn": 0,
+  "Game_Chara_Ptn_SoulIn": 0,
+  "Game_Chara_Ptn_Balloon_Breaking": 0,
+  "Game_Chara_Ptn_Balloon_Broke": 0,
+  "Game_Chara_Ptn_Balloon_Miss": 0,
+  "Game_Chara_Motion_Normal": "",
+  "Game_Chara_Motion_Clear": "",
+  "Game_Chara_Motion_GoGo": "0",
+  "Game_Chara_Beat_Normal": 1,
+  "Game_Chara_Beat_Clear": 2,
+  "Game_Chara_Beat_GoGo": 2,
+  "Game_Chara_Balloon_Timer": 28,
+  "Game_Chara_Balloon_Delay": 500,
+  "Game_Chara_Balloon_FadeOut": 84,
+  "Game_Dancer_X": [
+    640,
+    430,
+    856,
+    215,
+    1070
+  ],
+  "Game_Dancer_Y": [
+    500,
+    500,
+    500,
+    500,
+    500
+  ],
+  "Game_Dancer_Motion": "0",
+  "Game_Dancer_Ptn": 0,
+  "Game_Dancer_Beat": 8,
+  "Game_Dancer_Gauge": [
+    0,
+    20,
+    40,
+    60,
+    80
+  ],
+  "Game_Mob_Ptn": 0,
+  "Game_Mob_Beat": 0,
+  "Game_Mob_Ptn_Beat": 1,
+  "Game_CourseSymbol_X": [
+    64,
+    64
+  ],
+  "Game_CourseSymbol_Y": [
+    232,
+    432
+  ],
+  "Game_MusicName_X": 1254,
+  "Game_MusicName_Y": 14,
+  "Game_MusicName_FontSize": 30,
+  "Game_MusicName_ReferencePoint": 2,
+  "Game_Genre_X": 1114,
+  "Game_Genre_Y": 74,
+  "Game_Lyric_X": 640,
+  "Game_Lyric_Y": 630,
+  "Game_Lyric_FontName": "MS UI Gothic",
+  "Game_Lyric_FontSize": 38,
+  "Game_Lyric_ReferencePoint": 0,
+  "Game_MusicName_ForeColor": {
+    "R": 255,
+    "G": 255,
+    "B": 255
+  },
+  "Game_StageText_ForeColor": {
+    "R": 255,
+    "G": 255,
+    "B": 255
+  },
+  "Game_Lyric_ForeColor": {
+    "R": 255,
+    "G": 255,
+    "B": 255
+  },
+  "Game_MusicName_BackColor": {
+    "R": 0,
+    "G": 0,
+    "B": 0
+  },
+  "Game_StageText_BackColor": {
+    "R": 0,
+    "G": 0,
+    "B": 0
+  },
+  "Game_Lyric_BackColor": {
+    "R": 0,
+    "G": 0,
+    "B": 255
+  },
+  "Game_Score_X": [
+    20,
+    20,
+    0,
+    0
+  ],
+  "Game_Score_Y": [
+    226,
+    530,
+    0,
+    0
+  ],
+  "Game_Score_Add_X": [
+    20,
+    20,
+    0,
+    0
+  ],
+  "Game_Score_Add_Y": [
+    186,
+    570,
+    0,
+    0
+  ],
+  "Game_Score_AddBonus_X": [
+    20,
+    20,
+    0,
+    0
+  ],
+  "Game_Score_AddBonus_Y": [
+    136,
+    626,
+    0,
+    0
+  ],
+  "Game_Score_Padding": 20,
+  "Game_Score_Size": [
+    24,
+    40
+  ],
+  "Game_Taiko_NamePlate_X": [
+    0,
+    0
+  ],
+  "Game_Taiko_NamePlate_Y": [
+    288,
+    368
+  ],
+  "Game_Taiko_PlayerNumber_X": [
+    4,
+    4
+  ],
+  "Game_Taiko_PlayerNumber_Y": [
+    233,
+    435
+  ],
+  "Game_Taiko_X": [
+    190,
+    190
+  ],
+  "Game_Taiko_Y": [
+    190,
+    366
+  ],
+  "Game_Taiko_Combo_X": [
+    268,
+    268
+  ],
+  "Game_Taiko_Combo_Y": [
+    270,
+    448
+  ],
+  "Game_Taiko_Combo_Ex_X": [
+    268,
+    268
+  ],
+  "Game_Taiko_Combo_Ex_Y": [
+    270,
+    448
+  ],
+  "Game_Taiko_Combo_Ex4_X": [
+    268,
+    268
+  ],
+  "Game_Taiko_Combo_Ex4_Y": [
+    270,
+    448
+  ],
+  "Game_Taiko_Combo_Padding": [
+    28,
+    30,
+    24
+  ],
+  "Game_Taiko_Combo_Size": [
+    42,
+    48
+  ],
+  "Game_Taiko_Combo_Size_Ex": [
+    42,
+    56
+  ],
+  "Game_Taiko_Combo_Scale": [
+    1,
+    1,
+    0.800000012
+  ],
+  "Game_Taiko_Combo_Text_X": [
+    268,
+    268
+  ],
+  "Game_Taiko_Combo_Text_Y": [
+    295,
+    472
+  ],
+  "Game_Taiko_Combo_Text_Size": [
+    100,
+    50
+  ],
+  "Game_Taiko_Combo_Ex_IsJumping": true,
+  "Game_Gauge_Rainbow_Timer": 50,
+  "Game_Balloon_Combo_X": [
+    253,
+    253
+  ],
+  "Game_Balloon_Combo_Y": [
+    -11,
+    498
+  ],
+  "Game_Balloon_Combo_Number_X": [
+    312,
+    312
+  ],
+  "Game_Balloon_Combo_Number_Y": [
+    34,
+    540
+  ],
+  "Game_Balloon_Combo_Number_Ex_X": [
+    335,
+    335
+  ],
+  "Game_Balloon_Combo_Number_Ex_Y": [
+    34,
+    540
+  ],
+  "Game_Balloon_Combo_Text_X": [
+    471,
+    471
+  ],
+  "Game_Balloon_Combo_Text_Y": [
+    55,
+    561
+  ],
+  "Game_Balloon_Combo_Text_Ex_X": [
+    491,
+    491
+  ],
+  "Game_Balloon_Combo_Text_Ex_Y": [
+    55,
+    561
+  ],
+  "Game_Balloon_Balloon_X": [
+    382,
+    382
+  ],
+  "Game_Balloon_Balloon_Y": [
+    115,
+    290
+  ],
+  "Game_Balloon_Balloon_Frame_X": [
+    382,
+    382
+  ],
+  "Game_Balloon_Balloon_Frame_Y": [
+    80,
+    260
+  ],
+  "Game_Balloon_Balloon_Number_X": [
+    486,
+    486
+  ],
+  "Game_Balloon_Balloon_Number_Y": [
+    187,
+    373
+  ],
+  "Game_Balloon_Roll_Frame_X": [
+    218,
+    218
+  ],
+  "Game_Balloon_Roll_Frame_Y": [
+    -3,
+    514
+  ],
+  "Game_Balloon_Roll_Number_X": [
+    392,
+    392
+  ],
+  "Game_Balloon_Roll_Number_Y": [
+    128,
+    639
+  ],
+  "Game_Balloon_Number_Size": [
+    62,
+    80
+  ],
+  "Game_Balloon_Number_Padding": 60,
+  "Game_Balloon_Roll_Number_Scale": 1,
+  "Game_Balloon_Balloon_Number_Scale": 0.879000008,
+  "Game_Effect_Roll_StartPoint_X": [
+    56,
+    -10,
+    200,
+    345,
+    100,
+    451,
+    600,
+    260,
+    -30,
+    534,
+    156,
+    363
+  ],
+  "Game_Effect_Roll_StartPoint_Y": [
+    720
+  ],
+  "Game_Effect_Roll_StartPoint_1P_X": [
+    56,
+    -10,
+    200,
+    345,
+    100,
+    451,
+    600,
+    260,
+    -30,
+    534,
+    156,
+    363
+  ],
+  "Game_Effect_Roll_StartPoint_1P_Y": [
+    240
+  ],
+  "Game_Effect_Roll_StartPoint_2P_X": [
+    56,
+    -10,
+    200,
+    345,
+    100,
+    451,
+    600,
+    260,
+    -30,
+    534,
+    156,
+    363
+  ],
+  "Game_Effect_Roll_StartPoint_2P_Y": [
+    360
+  ],
+  "Game_Effect_Roll_Speed_X": [
+    0.600000024
+  ],
+  "Game_Effect_Roll_Speed_Y": [
+    -0.600000024
+  ],
+  "Game_Effect_Roll_Speed_1P_X": [
+    0.600000024
+  ],
+  "Game_Effect_Roll_Speed_1P_Y": [
+    -0.600000024
+  ],
+  "Game_Effect_Roll_Speed_2P_X": [
+    0.600000024
+  ],
+  "Game_Effect_Roll_Speed_2P_Y": [
+    0.600000024
+  ],
+  "Game_Effect_NotesFlash": [
+    180,
+    180,
+    12
+  ],
+  "Game_Effect_NotesFlash_Timer": 20,
+  "Game_Effect_GoGoSplash": [
+    300,
+    400,
+    30
+  ],
+  "Game_Effect_GoGoSplash_X": [
+    120,
+    300,
+    520,
+    760,
+    980,
+    1160
+  ],
+  "Game_Effect_GoGoSplash_Y": [
+    740,
+    730,
+    720,
+    720,
+    730,
+    740
+  ],
+  "Game_Effect_GoGoSplash_Rotate": true,
+  "Game_Effect_GoGoSplash_Timer": 18,
+  "Game_Effect_FlyingNotes_StartPoint_X": [
+    414,
+    414
+  ],
+  "Game_Effect_FlyingNotes_StartPoint_Y": [
+    260,
+    434
+  ],
+  "Game_Effect_FlyingNotes_EndPoint_X": [
+    1222,
+    1222
+  ],
+  "Game_Effect_FlyingNotes_EndPoint_Y": [
+    164,
+    554
+  ],
+  "Game_Effect_FlyingNotes_Sine": 220,
+  "Game_Effect_FlyingNotes_IsUsingEasing": true,
+  "Game_Effect_FlyingNotes_Timer": 4,
+  "Game_Effect_FireWorks": [
+    180,
+    180,
+    30
+  ],
+  "Game_Effect_FireWorks_Timer": 5,
+  "Game_Effect_Rainbow_Timer": 8,
+  "Game_Effect_HitExplosion_AddBlend": true,
+  "Game_Effect_HitExplosionBig_AddBlend": true,
+  "Game_Effect_FireWorks_AddBlend": true,
+  "Game_Effect_Fire_AddBlend": true,
+  "Game_Effect_GoGoSplash_AddBlend": true,
+  "Game_Effect_FireWorks_Timing": 8,
+  "Game_Runner_Size": [
+    60,
+    125
+  ],
+  "Game_Runner_Ptn": 48,
+  "Game_Runner_Type": 4,
+  "Game_Runner_StartPoint_X": [
+    175,
+    175
+  ],
+  "Game_Runner_StartPoint_Y": [
+    40,
+    560
+  ],
+  "Game_Runner_Timer": 16,
+  "Game_PuchiChara_X": [
+    100,
+    100
+  ],
+  "Game_PuchiChara_Y": [
+    140,
+    600
+  ],
+  "Game_PuchiChara_BalloonX": [
+    300,
+    300
+  ],
+  "Game_PuchiChara_BalloonY": [
+    240,
+    500
+  ],
+  "Game_PuchiChara_Scale": [
+    0.699999988,
+    1
+  ],
+  "Game_PuchiChara": [
+    180,
+    180,
+    2
+  ],
+  "Game_PuchiChara_Sine": 20,
+  "Game_PuchiChara_Timer": 4800,
+  "Game_PuchiChara_SineTimer": 2,
+  "Game_DanC_Title_ForeColor": {
+    "R": 255,
+    "G": 255,
+    "B": 255
+  },
+  "Game_DanC_Title_BackColor": {
+    "R": 0,
+    "G": 0,
+    "B": 0
+  },
+  "Game_DanC_SubTitle_ForeColor": {
+    "R": 255,
+    "G": 255,
+    "B": 255
+  },
+  "Game_DanC_SubTitle_BackColor": {
+    "R": 0,
+    "G": 0,
+    "B": 0
+  },
+  "Game_DanC_X": [
+    302,
+    302,
+    302
+  ],
+  "Game_DanC_Y": [
+    473,
+    419,
+    365
+  ],
+  "Game_DanC_Size": [
+    956,
+    92
+  ],
+  "Game_DanC_Padding": 5,
+  "Game_DanC_Offset": [
+    15,
+    17
+  ],
+  "Game_DanC_Number_Size": [
+    50,
+    62
+  ],
+  "Game_DanC_Number_Padding": 50,
+  "Game_DanC_Number_Small_Scale": 0.5,
+  "Game_DanC_Number_Small_Padding": 26,
+  "Game_DanC_Number_XY": [
+    218,
+    610
+  ],
+  "Game_DanC_Number_Small_Number_Offset": [
+    178,
+    43
+  ],
+  "Game_DanC_ExamType_Size": [
+    100,
+    36
+  ],
+  "Game_DanC_ExamRange_Size": [
+    60,
+    36
+  ],
+  "Game_DanC_ExamRange_Padding": 46,
+  "Game_DanC_Percent_Hit_Score_Padding": [
+    20,
+    20,
+    20
+  ],
+  "Game_DanC_ExamUnit_Size": [
+    30,
+    36
+  ],
+  "Game_DanC_Exam_Offset": [
+    932,
+    17
+  ],
+  "Game_DanC_Dan_Plate": [
+    149,
+    416
+  ],
+  "Result_MusicName_X": 1254,
+  "Result_MusicName_Y": 6,
+  "Result_MusicName_FontSize": 30,
+  "Result_MusicName_ReferencePoint": 2,
+  "Result_StageText_X": 230,
+  "Result_StageText_Y": 6,
+  "Result_StageText_FontSize": 30,
+  "Result_StageText_ReferencePoint": 1,
+  "Result_MusicName_ForeColor": {
+    "R": 255,
+    "G": 255,
+    "B": 255
+  },
+  "Result_StageText_ForeColor": {
+    "R": 255,
+    "G": 255,
+    "B": 255
+  },
+  "Result_MusicName_BackColor": {
+    "R": 0,
+    "G": 0,
+    "B": 0
+  },
+  "Result_StageText_BackColor": {
+    "R": 0,
+    "G": 0,
+    "B": 0
+  },
+  "Result_NamePlate_X": [
+    260,
+    260
+  ],
+  "Result_NamePlate_Y": [
+    96,
+    390
+  ],
+  "Result_Dan": [
+    500,
+    500
+  ],
+  "Result_Dan_XY": [
+    100,
+    0
+  ],
+  "Result_Dan_Plate_XY": [
+    149,
+    416
+  ],
+  "Font_Edge_Ratio": 30,
+  "Font_Edge_Ratio_Vertical": 30,
+  "Text_Correction_X": 0,
+  "Text_Correction_Y": 0
+}

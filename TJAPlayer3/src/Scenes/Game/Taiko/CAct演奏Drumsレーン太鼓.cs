@@ -669,12 +669,12 @@ namespace TJAPlayer3
                 if (n移動方向2 == 1)
                 {
                     TJAPlayer3.Skin.nScrollFieldX[1] = this.n移動開始X2 + (int)((((int)SoundManager.PlayTimer.NowTimeMs - this.n移動開始時刻2) / (double)(this.n総移動時間2)) * this.n移動距離px2);
-                    TJAPlayer3.Skin.Game_Effect_FlyingNotes_StartPoint_X[1] = this.n移動開始X2 + (int)((((int)SoundManager.PlayTimer.NowTimeMs - this.n移動開始時刻2) / (double)(this.n総移動時間2)) * this.n移動距離px2);
+                    TJAPlayer3.Skin.SkinValue.Game_Effect_FlyingNotes_StartPoint_X[1] = this.n移動開始X2 + (int)((((int)SoundManager.PlayTimer.NowTimeMs - this.n移動開始時刻2) / (double)(this.n総移動時間2)) * this.n移動距離px2);
                 }
                 else
                 {
                     TJAPlayer3.Skin.nScrollFieldX[1] = this.n移動開始X2 - (int)((((int)SoundManager.PlayTimer.NowTimeMs - this.n移動開始時刻2) / (double)(this.n総移動時間2)) * this.n移動距離px2);
-                    TJAPlayer3.Skin.Game_Effect_FlyingNotes_StartPoint_X[1] = this.n移動開始X2 - (int)((((int)SoundManager.PlayTimer.NowTimeMs - this.n移動開始時刻2) / (double)(this.n総移動時間2)) * this.n移動距離px2);
+                    TJAPlayer3.Skin.SkinValue.Game_Effect_FlyingNotes_StartPoint_X[1] = this.n移動開始X2 - (int)((((int)SoundManager.PlayTimer.NowTimeMs - this.n移動開始時刻2) / (double)(this.n総移動時間2)) * this.n移動距離px2);
                 }
 
 
@@ -772,7 +772,7 @@ namespace TJAPlayer3
             {
                 int nJudgeX = TJAPlayer3.Skin.nScrollFieldX[0] - (130 / 2); //元の値は349なんだけど...
                 int nJudgeY = TJAPlayer3.Skin.nScrollFieldY[0]; //元の値は349なんだけど...
-                TJAPlayer3.Tx.Judge_Frame.IsAddBlend = TJAPlayer3.Skin.Game_JudgeFrame_AddBlend;
+                TJAPlayer3.Tx.Judge_Frame.IsAddBlend = TJAPlayer3.Skin.SkinValue.Game_JudgeFrame_AddBlend;
                 TJAPlayer3.Tx.Judge_Frame.Draw2D(TJAPlayer3.app.Device, nJudgeX, nJudgeY, new Rectangle(0, 0, 130, 130));
 
                 if (TJAPlayer3.stage演奏ドラム画面.bDoublePlay)

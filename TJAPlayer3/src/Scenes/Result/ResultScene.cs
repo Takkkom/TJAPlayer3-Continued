@@ -340,7 +340,7 @@ namespace TJAPlayer3
                 {
                     if (TJAPlayer3.Tx.NamePlate[i] != null)
                     {
-                        TJAPlayer3.Tx.NamePlate[i].Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.Result_NamePlate_X[i], TJAPlayer3.Skin.Result_NamePlate_Y[i]);
+                        TJAPlayer3.Tx.NamePlate[i].Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.SkinValue.Result_NamePlate_X[i], TJAPlayer3.Skin.SkinValue.Result_NamePlate_Y[i]);
                     }
                 }
                 #endregion

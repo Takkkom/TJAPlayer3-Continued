@@ -309,37 +309,37 @@ namespace TJAPlayer3
                                 switch (StringToGenreNum.ForAC15(c曲リストノード.strジャンル))
                                 {
                                     case 0:
-                                        c曲リストノード.ForeColor = TJAPlayer3.Skin.SongSelect_ForeColor_JPOP;
-                                        c曲リストノード.BackColor = TJAPlayer3.Skin.SongSelect_BackColor_JPOP;
+                                        c曲リストノード.ForeColor = TJAPlayer3.Skin.SkinValue.SongSelect_ForeColor_JPOP.GetColor();
+                                        c曲リストノード.BackColor = TJAPlayer3.Skin.SkinValue.SongSelect_BackColor_JPOP.GetColor();
                                         break;
                                     case 1:
-                                        c曲リストノード.ForeColor = TJAPlayer3.Skin.SongSelect_ForeColor_Anime;
-                                        c曲リストノード.BackColor = TJAPlayer3.Skin.SongSelect_BackColor_Anime;
-                                        break;
+                                        c曲リストノード.ForeColor = TJAPlayer3.Skin.SkinValue.SongSelect_ForeColor_Anime.GetColor();
+										c曲リストノード.BackColor = TJAPlayer3.Skin.SkinValue.SongSelect_BackColor_Anime.GetColor();
+										break;
                                     case 2:
-                                        c曲リストノード.ForeColor = TJAPlayer3.Skin.SongSelect_ForeColor_VOCALOID;
-                                        c曲リストノード.BackColor = TJAPlayer3.Skin.SongSelect_BackColor_VOCALOID;
-                                        break;
+                                        c曲リストノード.ForeColor = TJAPlayer3.Skin.SkinValue.SongSelect_ForeColor_VOCALOID.GetColor();
+										c曲リストノード.BackColor = TJAPlayer3.Skin.SkinValue.SongSelect_BackColor_VOCALOID.GetColor();
+										break;
                                     case 3:
-                                        c曲リストノード.ForeColor = TJAPlayer3.Skin.SongSelect_ForeColor_Children;
-                                        c曲リストノード.BackColor = TJAPlayer3.Skin.SongSelect_BackColor_Children;
-                                        break;
+                                        c曲リストノード.ForeColor = TJAPlayer3.Skin.SkinValue.SongSelect_ForeColor_Children.GetColor();
+										c曲リストノード.BackColor = TJAPlayer3.Skin.SkinValue.SongSelect_BackColor_Children.GetColor();
+										break;
                                     case 4:
-                                        c曲リストノード.ForeColor = TJAPlayer3.Skin.SongSelect_ForeColor_Variety;
-                                        c曲リストノード.BackColor = TJAPlayer3.Skin.SongSelect_BackColor_Variety;
-                                        break;
+                                        c曲リストノード.ForeColor = TJAPlayer3.Skin.SkinValue.SongSelect_ForeColor_Variety.GetColor();
+										c曲リストノード.BackColor = TJAPlayer3.Skin.SkinValue.SongSelect_BackColor_Variety.GetColor();
+										break;
                                     case 5:
-                                        c曲リストノード.ForeColor = TJAPlayer3.Skin.SongSelect_ForeColor_Classic;
-                                        c曲リストノード.BackColor = TJAPlayer3.Skin.SongSelect_BackColor_Classic;
-                                        break;
+                                        c曲リストノード.ForeColor = TJAPlayer3.Skin.SkinValue.SongSelect_ForeColor_Classic.GetColor();
+										c曲リストノード.BackColor = TJAPlayer3.Skin.SkinValue.SongSelect_BackColor_Classic.GetColor();
+										break;
                                     case 6:
-                                        c曲リストノード.ForeColor = TJAPlayer3.Skin.SongSelect_ForeColor_GameMusic;
-                                        c曲リストノード.BackColor = TJAPlayer3.Skin.SongSelect_BackColor_GameMusic;
-                                        break;
+                                        c曲リストノード.ForeColor = TJAPlayer3.Skin.SkinValue.SongSelect_ForeColor_GameMusic.GetColor();
+										c曲リストノード.BackColor = TJAPlayer3.Skin.SkinValue.SongSelect_BackColor_GameMusic.GetColor();
+										break;
                                     case 7:
-                                        c曲リストノード.ForeColor = TJAPlayer3.Skin.SongSelect_ForeColor_Namco;
-                                        c曲リストノード.BackColor = TJAPlayer3.Skin.SongSelect_BackColor_Namco;
-                                        break;
+                                        c曲リストノード.ForeColor = TJAPlayer3.Skin.SkinValue.SongSelect_ForeColor_Namco.GetColor();
+										c曲リストノード.BackColor = TJAPlayer3.Skin.SkinValue.SongSelect_BackColor_Namco.GetColor();
+										break;
                                     default:
                                         break;
                                 }
@@ -513,37 +513,37 @@ namespace TJAPlayer3
                     switch (StringToGenreNum.ForAC15(c曲リストノード.strジャンル))
                     {
                         case 0:
-                            c曲リストノード.ForeColor = TJAPlayer3.Skin.SongSelect_ForeColor_JPOP;
-                            c曲リストノード.BackColor = TJAPlayer3.Skin.SongSelect_BackColor_JPOP;
-                            break;
+                            c曲リストノード.ForeColor = TJAPlayer3.Skin.SkinValue.SongSelect_ForeColor_JPOP.GetColor();
+							c曲リストノード.BackColor = TJAPlayer3.Skin.SkinValue.SongSelect_BackColor_JPOP.GetColor();
+							break;
                         case 1:
-                            c曲リストノード.ForeColor = TJAPlayer3.Skin.SongSelect_ForeColor_Anime;
-                            c曲リストノード.BackColor = TJAPlayer3.Skin.SongSelect_BackColor_Anime;
-                            break;
+                            c曲リストノード.ForeColor = TJAPlayer3.Skin.SkinValue.SongSelect_ForeColor_Anime.GetColor();
+							c曲リストノード.BackColor = TJAPlayer3.Skin.SkinValue.SongSelect_BackColor_Anime.GetColor();
+							break;
                         case 2:
-                            c曲リストノード.ForeColor = TJAPlayer3.Skin.SongSelect_ForeColor_VOCALOID;
-                            c曲リストノード.BackColor = TJAPlayer3.Skin.SongSelect_BackColor_VOCALOID;
-                            break;
+                            c曲リストノード.ForeColor = TJAPlayer3.Skin.SkinValue.SongSelect_ForeColor_VOCALOID.GetColor();
+							c曲リストノード.BackColor = TJAPlayer3.Skin.SkinValue.SongSelect_BackColor_VOCALOID.GetColor();
+							break;
                         case 3:
-                            c曲リストノード.ForeColor = TJAPlayer3.Skin.SongSelect_ForeColor_Children;
-                            c曲リストノード.BackColor = TJAPlayer3.Skin.SongSelect_BackColor_Children;
-                            break;
+                            c曲リストノード.ForeColor = TJAPlayer3.Skin.SkinValue.SongSelect_ForeColor_Children.GetColor();
+							c曲リストノード.BackColor = TJAPlayer3.Skin.SkinValue.SongSelect_BackColor_Children.GetColor();
+							break;
                         case 4:
-                            c曲リストノード.ForeColor = TJAPlayer3.Skin.SongSelect_ForeColor_Variety;
-                            c曲リストノード.BackColor = TJAPlayer3.Skin.SongSelect_BackColor_Variety;
-                            break;
+                            c曲リストノード.ForeColor = TJAPlayer3.Skin.SkinValue.SongSelect_ForeColor_Variety.GetColor();
+							c曲リストノード.BackColor = TJAPlayer3.Skin.SkinValue.SongSelect_BackColor_Variety.GetColor();
+							break;
                         case 5:
-                            c曲リストノード.ForeColor = TJAPlayer3.Skin.SongSelect_ForeColor_Classic;
-                            c曲リストノード.BackColor = TJAPlayer3.Skin.SongSelect_BackColor_Classic;
-                            break;
+                            c曲リストノード.ForeColor = TJAPlayer3.Skin.SkinValue.SongSelect_ForeColor_Classic.GetColor();
+							c曲リストノード.BackColor = TJAPlayer3.Skin.SkinValue.SongSelect_BackColor_Classic.GetColor();
+							break;
                         case 6:
-                            c曲リストノード.ForeColor = TJAPlayer3.Skin.SongSelect_ForeColor_GameMusic;
-                            c曲リストノード.BackColor = TJAPlayer3.Skin.SongSelect_BackColor_GameMusic;
-                            break;
+                            c曲リストノード.ForeColor = TJAPlayer3.Skin.SkinValue.SongSelect_ForeColor_GameMusic.GetColor();
+							c曲リストノード.BackColor = TJAPlayer3.Skin.SkinValue.SongSelect_BackColor_GameMusic.GetColor();
+							break;
                         case 7:
-                            c曲リストノード.ForeColor = TJAPlayer3.Skin.SongSelect_ForeColor_Namco;
-                            c曲リストノード.BackColor = TJAPlayer3.Skin.SongSelect_BackColor_Namco;
-                            break;
+                            c曲リストノード.ForeColor = TJAPlayer3.Skin.SkinValue.SongSelect_ForeColor_Namco.GetColor();
+							c曲リストノード.BackColor = TJAPlayer3.Skin.SkinValue.SongSelect_BackColor_Namco.GetColor();
+							break;
                         default:
                             break;
                     }

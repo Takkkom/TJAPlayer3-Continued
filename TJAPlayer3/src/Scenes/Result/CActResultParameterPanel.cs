@@ -374,19 +374,19 @@ namespace TJAPlayer3
                 switch (TJAPlayer3.stage演奏ドラム画面.actDan.GetExamStatus(TJAPlayer3.stage結果.st演奏記録.Drums.Dan_C))
                 {
                     case Exam.Status.Failure:
-                        TJAPlayer3.Tx.Result_Dan?.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.Result_Dan_XY[0], TJAPlayer3.Skin.Result_Dan_XY[1], new Rectangle(0, 0, TJAPlayer3.Skin.Result_Dan[0], TJAPlayer3.Skin.Result_Dan[1]));
+                        TJAPlayer3.Tx.Result_Dan?.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.SkinValue.Result_Dan_XY[0], TJAPlayer3.Skin.SkinValue.Result_Dan_XY[1], new Rectangle(0, 0, TJAPlayer3.Skin.SkinValue.Result_Dan[0], TJAPlayer3.Skin.SkinValue.Result_Dan[1]));
                         break;
                     case Exam.Status.Success:
-                        TJAPlayer3.Tx.Result_Dan?.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.Result_Dan_XY[0], TJAPlayer3.Skin.Result_Dan_XY[1], new Rectangle(TJAPlayer3.Skin.Result_Dan[0], 0, TJAPlayer3.Skin.Result_Dan[0], TJAPlayer3.Skin.Result_Dan[1]));
+                        TJAPlayer3.Tx.Result_Dan?.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.SkinValue.Result_Dan_XY[0], TJAPlayer3.Skin.SkinValue.Result_Dan_XY[1], new Rectangle(TJAPlayer3.Skin.SkinValue.Result_Dan[0], 0, TJAPlayer3.Skin.SkinValue.Result_Dan[0], TJAPlayer3.Skin.SkinValue.Result_Dan[1]));
                         break;
                     case Exam.Status.Better_Success:
-                        TJAPlayer3.Tx.Result_Dan?.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.Result_Dan_XY[0], TJAPlayer3.Skin.Result_Dan_XY[1], new Rectangle(TJAPlayer3.Skin.Result_Dan[0] * 2, 0, TJAPlayer3.Skin.Result_Dan[0], TJAPlayer3.Skin.Result_Dan[1]));
+                        TJAPlayer3.Tx.Result_Dan?.Draw2D(TJAPlayer3.app.Device, TJAPlayer3.Skin.SkinValue.Result_Dan_XY[0], TJAPlayer3.Skin.SkinValue.Result_Dan_XY[1], new Rectangle(TJAPlayer3.Skin.SkinValue.Result_Dan[0] * 2, 0, TJAPlayer3.Skin.SkinValue.Result_Dan[0], TJAPlayer3.Skin.SkinValue.Result_Dan[1]));
                         break;
                     default:
                         break;
                 }
                 // Dan_Plate
-                Dan_Plate?.t2D中心基準描画(TJAPlayer3.app.Device, TJAPlayer3.Skin.Result_Dan_Plate_XY[0], TJAPlayer3.Skin.Result_Dan_Plate_XY[1]);
+                Dan_Plate?.t2D中心基準描画(TJAPlayer3.app.Device, TJAPlayer3.Skin.SkinValue.Result_Dan_Plate_XY[0], TJAPlayer3.Skin.SkinValue.Result_Dan_Plate_XY[1]);
             }
             #endregion
 
