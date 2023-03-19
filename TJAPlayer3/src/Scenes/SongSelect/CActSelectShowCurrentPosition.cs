@@ -39,11 +39,11 @@ namespace TJAPlayer3
 				string pathScrollPosition = SkinManager.Path( @"Graphics\5_scrollbar.png" );
 				if ( File.Exists( pathScrollBar ) )
 				{
-					this.txScrollBar = TJAPlayer3.tテクスチャの生成( pathScrollBar, false );
+					this.txScrollBar = TJAPlayer3.CreateFDKTexture( pathScrollBar, false );
 				}
 				if ( File.Exists( pathScrollPosition ) )
 				{
-					this.txScrollPosition = TJAPlayer3.tテクスチャの生成( pathScrollPosition, false );
+					this.txScrollPosition = TJAPlayer3.CreateFDKTexture( pathScrollPosition, false );
 				}
 				base.ManagedCreateResources();
 			}

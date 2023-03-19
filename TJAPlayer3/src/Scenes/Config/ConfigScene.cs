@@ -116,61 +116,64 @@ namespace TJAPlayer3
 				Trace.Unindent();
 			}
 		}
-		public override void ManagedCreateResources()											// OPTIONと画像以外共通
+		public override void ManagedCreateResources()                                           // OPTIONと画像以外共通
 		{
-			if( !base.NotActivated )
-			{
-				//this.tx背景 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\4_background.jpg" ), false );
-				//this.tx上部パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\4_header panel.png" ) );
-				//this.tx下部パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\4_footer panel.png" ) );
-				//this.txMenuカーソル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenConfig menu cursor.png" ) );
-			    string[] strMenuItem = {"System", "Drums", "Exit"};
-			    txMenuItemLeft = new FDKTexture[strMenuItem.Length, 2];
-			    using (var prvFont = new CachePrivateFont(SkinManager.Path(@"mplus-1p-heavy.ttf"), 20))
-			    {
-			        for (int i = 0; i < strMenuItem.Length; i++)
-			        {
-			            using (var bmpStr = prvFont.DrawPrivateFont(strMenuItem[i], Color.White, Color.Black))
-			            {
-			                txMenuItemLeft[i, 0] = TJAPlayer3.tテクスチャの生成(bmpStr, false);
-			            }
-			            using (var bmpStr = prvFont.DrawPrivateFont(strMenuItem[i], Color.White, Color.Black, Color.Yellow, Color.OrangeRed))
-			            {
-			                txMenuItemLeft[i, 1] = TJAPlayer3.tテクスチャの生成(bmpStr, false);
-			            }
-			        }
-			    }
+			if (this.NotActivated)
+				return;
 
-			    if( this.bメニューにフォーカス中 )
-				{
-					this.t説明文パネルに現在選択されているメニューの説明を描画する();
-				}
-				else
-				{
-					this.t説明文パネルに現在選択されている項目の説明を描画する();
-				}
-				base.ManagedCreateResources();
-			}
-		}
-		public override void ManagedReleaseResources()											// OPTIONと同じ(COnfig.iniの書き出しタイミングのみ異なるが、無視して良い)
-		{
-			if( !base.NotActivated )
+			Background = TJAPlayer3.CreateFDKTexture(SkinManager.Path(@"Graphics\Config\Background.png"));
+			Cursor = TJAPlayer3.CreateFDKTexture(SkinManager.Path(@"Graphics\Config\Cursor.png"));
+			//this.tx上部パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\4_header panel.png" ) );
+			//this.tx下部パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\4_footer panel.png" ) );
+			//this.txMenuカーソル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenConfig menu cursor.png" ) );
+			string[] strMenuItem = { "System", "Drums", "Exit" };
+			txMenuItemLeft = new FDKTexture[strMenuItem.Length, 2];
+			using (var prvFont = new CachePrivateFont(SkinManager.Path(@"mplus-1p-heavy.ttf"), 20))
 			{
-				//CDTXMania.tテクスチャの解放( ref this.tx背景 );
-				//CDTXMania.tテクスチャの解放( ref this.tx上部パネル );
-				//CDTXMania.tテクスチャの解放( ref this.tx下部パネル );
-				//CDTXMania.tテクスチャの解放( ref this.txMenuカーソル );
-				TJAPlayer3.tテクスチャの解放( ref this.tx説明文パネル );
-				for ( int i = 0; i < txMenuItemLeft.GetLength( 0 ); i++ )
+				for (int i = 0; i < strMenuItem.Length; i++)
 				{
-					txMenuItemLeft[ i, 0 ].Dispose();
-					txMenuItemLeft[ i, 0 ] = null;
-					txMenuItemLeft[ i, 1 ].Dispose();
-					txMenuItemLeft[ i, 1 ] = null;
+					using (var bmpStr = prvFont.DrawPrivateFont(strMenuItem[i], Color.White, Color.Black))
+					{
+						txMenuItemLeft[i, 0] = TJAPlayer3.CreateFDKTexture(bmpStr, false);
+					}
+					using (var bmpStr = prvFont.DrawPrivateFont(strMenuItem[i], Color.White, Color.Black, Color.Yellow, Color.OrangeRed))
+					{
+						txMenuItemLeft[i, 1] = TJAPlayer3.CreateFDKTexture(bmpStr, false);
+					}
 				}
-				txMenuItemLeft = null;
-				base.ManagedReleaseResources();
 			}
+
+			if (this.bメニューにフォーカス中)
+			{
+				this.t説明文パネルに現在選択されているメニューの説明を描画する();
+			}
+			else
+			{
+				this.t説明文パネルに現在選択されている項目の説明を描画する();
+			}
+			base.ManagedCreateResources();
+		}
+		public override void ManagedReleaseResources()                                          // OPTIONと同じ(COnfig.iniの書き出しタイミングのみ異なるが、無視して良い)
+		{
+			if (this.NotActivated)
+				return;
+
+			//CDTXMania.tテクスチャの解放( ref this.tx背景 );
+			//CDTXMania.tテクスチャの解放( ref this.tx上部パネル );
+			//CDTXMania.tテクスチャの解放( ref this.tx下部パネル );
+			//CDTXMania.tテクスチャの解放( ref this.txMenuカーソル );
+			TJAPlayer3.DisposeFDKTexture(ref this.Background);
+			TJAPlayer3.DisposeFDKTexture(ref this.Cursor);
+
+			for (int i = 0; i < txMenuItemLeft.GetLength(0); i++)
+			{
+				txMenuItemLeft[i, 0].Dispose();
+				txMenuItemLeft[i, 0] = null;
+				txMenuItemLeft[i, 1].Dispose();
+				txMenuItemLeft[i, 1] = null;
+			}
+			txMenuItemLeft = null;
+			base.ManagedReleaseResources();
 		}
 		public override int Draw()
 		{
@@ -188,21 +191,20 @@ namespace TJAPlayer3
 
 			#region [ 背景 ]
 			//---------------------
-			if(TJAPlayer3.Tx.Config_Background != null )
-                TJAPlayer3.Tx.Config_Background.Draw2D( TJAPlayer3.app.Device, 0, 0 );
+			Background?.Draw2D( TJAPlayer3.app.Device, 0, 0 );
 			//---------------------
 			#endregion
 			#region [ メニューカーソル ]
 			//---------------------
-			if( TJAPlayer3.Tx.Config_Cursor != null )
+			if(Cursor != null )
 			{
 				Rectangle rectangle;
-                TJAPlayer3.Tx.Config_Cursor.Opacity = this.bメニューにフォーカス中 ? 255 : 128;
+				Cursor.Opacity = this.bメニューにフォーカス中 ? 255 : 128;
 				int x = 110;
 				int y = (int)( 145.5 + ( this.n現在のメニュー番号 * 37.5 ) );
 				int num3 = 340;
-                TJAPlayer3.Tx.Config_Cursor.Draw2D( TJAPlayer3.app.Device, x, y, new Rectangle( 0, 0, 32, 48 ) );
-                TJAPlayer3.Tx.Config_Cursor.Draw2D( TJAPlayer3.app.Device, ( x + num3 ) - 32, y, new Rectangle( 20, 0, 32, 48 ) );
+				Cursor.Draw2D( TJAPlayer3.app.Device, x, y, new Rectangle( 0, 0, 32, 48 ) );
+				Cursor.Draw2D( TJAPlayer3.app.Device, ( x + num3 ) - 32, y, new Rectangle( 20, 0, 32, 48 ) );
 				x += 32;
 				for( num3 -= 64; num3 > 0; num3 -= rectangle.Width )
 				{
@@ -211,7 +213,7 @@ namespace TJAPlayer3
 					{
 						rectangle.Width -= 32 - num3;
 					}
-                    TJAPlayer3.Tx.Config_Cursor.Draw2D( TJAPlayer3.app.Device, x, y, rectangle );
+					Cursor.Draw2D( TJAPlayer3.app.Device, x, y, rectangle );
 					x += rectangle.Width;
 				}
 			}
@@ -246,7 +248,7 @@ namespace TJAPlayer3
 			switch( this.eItemPanelモード )
 			{
 				case EItemPanelモード.パッド一覧:
-					this.actList.t進行描画( !this.bメニューにフォーカス中 );
+					this.actList.Draw( !this.bメニューにフォーカス中 );
 					break;
 
 				case EItemPanelモード.キーコード一覧:
@@ -308,7 +310,7 @@ namespace TJAPlayer3
 			// 曲データの一覧取得中は、キー入力を無効化する
 			if ( !TJAPlayer3.EnumSongs.IsEnumerating || TJAPlayer3.actEnumSongs.bコマンドでの曲データ取得 != true )
 			{
-				if ( ( TJAPlayer3.Input管理.Keyboard.GetKeyPressed( (int) SlimDX.DirectInput.Key.Escape ) || TJAPlayer3.Pad.b押された( E楽器パート.DRUMS, Eパッド.FT ) ) || TJAPlayer3.Pad.b押されたGB( Eパッド.FT ) )
+				if (TJAPlayer3.Input管理.Keyboard.GetKeyPressed( (int) SlimDX.DirectInput.Key.Escape))
 				{
 					TJAPlayer3.Skin.sound取消音.t再生する();
 					if ( !this.bメニューにフォーカス中 )
@@ -331,7 +333,7 @@ namespace TJAPlayer3
 						base.eフェーズID = BaseScene.Eフェーズ.共通_フェードアウト;
 					}
 				}
-				else if ( ( TJAPlayer3.Pad.b押されたDGB( Eパッド.CY ) || TJAPlayer3.Pad.b押された( E楽器パート.DRUMS, Eパッド.RD ) ) || ( TJAPlayer3.Pad.b押された( E楽器パート.DRUMS, Eパッド.LC ) || ( TJAPlayer3._MainConfig.bEnterがキー割り当てのどこにも使用されていない && TJAPlayer3.Input管理.Keyboard.GetKeyPressed( (int) SlimDX.DirectInput.Key.Return ) ) ) )
+				else if (TJAPlayer3.Input管理.Keyboard.GetKeyPressed((int)SlimDX.DirectInput.Key.Return))
 				{
 					if ( this.n現在のメニュー番号 == 2 )
 					{
@@ -369,17 +371,7 @@ namespace TJAPlayer3
 					}
 				}
 				this.ctキー反復用.Up.RepeatKey( TJAPlayer3.Input管理.Keyboard.GetKeyKeepPressed( (int) SlimDX.DirectInput.Key.UpArrow ), new Counter.KeyProcess( this.tカーソルを上へ移動する ) );
-				this.ctキー反復用.R.RepeatKey( TJAPlayer3.Pad.b押されているGB( Eパッド.HH ), new Counter.KeyProcess( this.tカーソルを上へ移動する ) );
-				if ( TJAPlayer3.Pad.b押された( E楽器パート.DRUMS, Eパッド.SD ) )
-				{
-					this.tカーソルを上へ移動する();
-				}
 				this.ctキー反復用.Down.RepeatKey( TJAPlayer3.Input管理.Keyboard.GetKeyKeepPressed( (int) SlimDX.DirectInput.Key.DownArrow ), new Counter.KeyProcess( this.tカーソルを下へ移動する ) );
-				this.ctキー反復用.B.RepeatKey( TJAPlayer3.Pad.b押されているGB( Eパッド.BD ), new Counter.KeyProcess( this.tカーソルを下へ移動する ) );
-				if ( TJAPlayer3.Pad.b押された( E楽器パート.DRUMS, Eパッド.LT ) )
-				{
-					this.tカーソルを下へ移動する();
-				}
 			}
 			return 0;
 		}
@@ -464,6 +456,9 @@ namespace TJAPlayer3
 		private FDKTexture tx説明文パネル;
 		//private CTexture tx背景;
 		private FDKTexture[ , ] txMenuItemLeft;
+
+		private FDKTexture Background;
+		private FDKTexture Cursor;
 
 		private void tカーソルを下へ移動する()
 		{

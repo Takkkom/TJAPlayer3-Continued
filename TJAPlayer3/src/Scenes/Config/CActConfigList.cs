@@ -965,74 +965,6 @@ namespace TJAPlayer3
 				//CONFIG中にスキン変化が発生すると面倒なので、一旦マスクした。
 			}
 			#region [ 個々のキーアサイン ]
-			else if( this.list項目リスト[ this.n現在の選択項目 ] == this.iKeyAssignDrumsLC )
-			{
-				TJAPlayer3.stageコンフィグ.tパッド選択通知( EKeyConfigPart.DRUMS, EKeyConfigPad.LC );
-			}
-			else if( this.list項目リスト[ this.n現在の選択項目 ] == this.iKeyAssignDrumsHHC )
-			{
-				TJAPlayer3.stageコンフィグ.tパッド選択通知( EKeyConfigPart.DRUMS, EKeyConfigPad.HH );
-			}
-			else if( this.list項目リスト[ this.n現在の選択項目 ] == this.iKeyAssignDrumsHHO )
-			{
-				TJAPlayer3.stageコンフィグ.tパッド選択通知( EKeyConfigPart.DRUMS, EKeyConfigPad.HHO );
-			}
-			else if( this.list項目リスト[ this.n現在の選択項目 ] == this.iKeyAssignDrumsSD )
-			{
-				TJAPlayer3.stageコンフィグ.tパッド選択通知( EKeyConfigPart.DRUMS, EKeyConfigPad.SD );
-			}
-			else if( this.list項目リスト[ this.n現在の選択項目 ] == this.iKeyAssignDrumsBD )
-			{
-				TJAPlayer3.stageコンフィグ.tパッド選択通知( EKeyConfigPart.DRUMS, EKeyConfigPad.BD );
-			}
-			else if( this.list項目リスト[ this.n現在の選択項目 ] == this.iKeyAssignDrumsHT )
-			{
-				TJAPlayer3.stageコンフィグ.tパッド選択通知( EKeyConfigPart.DRUMS, EKeyConfigPad.HT );
-			}
-			else if( this.list項目リスト[ this.n現在の選択項目 ] == this.iKeyAssignDrumsLT )
-			{
-				TJAPlayer3.stageコンフィグ.tパッド選択通知( EKeyConfigPart.DRUMS, EKeyConfigPad.LT );
-			}
-			else if( this.list項目リスト[ this.n現在の選択項目 ] == this.iKeyAssignDrumsFT )
-			{
-				TJAPlayer3.stageコンフィグ.tパッド選択通知( EKeyConfigPart.DRUMS, EKeyConfigPad.FT );
-			}
-			else if( this.list項目リスト[ this.n現在の選択項目 ] == this.iKeyAssignDrumsCY )
-			{
-				TJAPlayer3.stageコンフィグ.tパッド選択通知( EKeyConfigPart.DRUMS, EKeyConfigPad.CY );
-			}
-			else if( this.list項目リスト[ this.n現在の選択項目 ] == this.iKeyAssignDrumsRD )
-			{
-				TJAPlayer3.stageコンフィグ.tパッド選択通知( EKeyConfigPart.DRUMS, EKeyConfigPad.RD );
-			}
-			else if( this.list項目リスト[ this.n現在の選択項目 ] == this.iKeyAssignDrumsLP )			// #27029 2012.1.4 from
-			{																							//
-				TJAPlayer3.stageコンフィグ.tパッド選択通知( EKeyConfigPart.DRUMS, EKeyConfigPad.LP );	//
-			}																							//
-            else if( this.list項目リスト[ this.n現在の選択項目 ] == this.iKeyAssignDrumsLBD )
-            {
-                TJAPlayer3.stageコンフィグ.tパッド選択通知( EKeyConfigPart.DRUMS, EKeyConfigPad.LBD);
-            }
-			else if( this.list項目リスト[ this.n現在の選択項目 ] == this.iKeyAssignGuitarR )
-			{
-				TJAPlayer3.stageコンフィグ.tパッド選択通知( EKeyConfigPart.GUITAR, EKeyConfigPad.R );
-			}
-			else if( this.list項目リスト[ this.n現在の選択項目 ] == this.iKeyAssignGuitarG )
-			{
-				TJAPlayer3.stageコンフィグ.tパッド選択通知( EKeyConfigPart.GUITAR, EKeyConfigPad.G );
-			}
-			else if( this.list項目リスト[ this.n現在の選択項目 ] == this.iKeyAssignGuitarB )
-			{
-				TJAPlayer3.stageコンフィグ.tパッド選択通知( EKeyConfigPart.GUITAR, EKeyConfigPad.B );
-			}
-			else if( this.list項目リスト[ this.n現在の選択項目 ] == this.iKeyAssignGuitarPick )
-			{
-				TJAPlayer3.stageコンフィグ.tパッド選択通知( EKeyConfigPart.GUITAR, EKeyConfigPad.Pick );
-			}
-			else if( this.list項目リスト[ this.n現在の選択項目 ] == this.iKeyAssignGuitarWail )
-			{
-				TJAPlayer3.stageコンフィグ.tパッド選択通知( EKeyConfigPart.GUITAR, EKeyConfigPad.Wail );
-			}
 			else if( this.list項目リスト[ this.n現在の選択項目 ] == this.iKeyAssignGuitarDecide )
 			{
 				TJAPlayer3.stageコンフィグ.tパッド選択通知( EKeyConfigPart.GUITAR, EKeyConfigPad.Decide );
@@ -1040,26 +972,6 @@ namespace TJAPlayer3
 			else if( this.list項目リスト[ this.n現在の選択項目 ] == this.iKeyAssignGuitarCancel )
 			{
 				TJAPlayer3.stageコンフィグ.tパッド選択通知( EKeyConfigPart.GUITAR, EKeyConfigPad.Cancel );
-			}
-			else if( this.list項目リスト[ this.n現在の選択項目 ] == this.iKeyAssignBassR )
-			{
-				TJAPlayer3.stageコンフィグ.tパッド選択通知( EKeyConfigPart.BASS, EKeyConfigPad.R );
-			}
-			else if( this.list項目リスト[ this.n現在の選択項目 ] == this.iKeyAssignBassG )
-			{
-				TJAPlayer3.stageコンフィグ.tパッド選択通知( EKeyConfigPart.BASS, EKeyConfigPad.G );
-			}
-			else if( this.list項目リスト[ this.n現在の選択項目 ] == this.iKeyAssignBassB )
-			{
-				TJAPlayer3.stageコンフィグ.tパッド選択通知( EKeyConfigPart.BASS, EKeyConfigPad.B );
-			}
-			else if( this.list項目リスト[ this.n現在の選択項目 ] == this.iKeyAssignBassPick )
-			{
-				TJAPlayer3.stageコンフィグ.tパッド選択通知( EKeyConfigPart.BASS, EKeyConfigPad.Pick );
-			}
-			else if( this.list項目リスト[ this.n現在の選択項目 ] == this.iKeyAssignBassWail )
-			{
-				TJAPlayer3.stageコンフィグ.tパッド選択通知( EKeyConfigPart.BASS, EKeyConfigPad.Wail );
 			}
 			else if( this.list項目リスト[ this.n現在の選択項目 ] == this.iKeyAssignBassDecide )
 			{
@@ -1220,7 +1132,7 @@ namespace TJAPlayer3
 			if ( nSkinSampleIndex != nSkinIndex )
 			{
 				string path = skinSubFolders[ nSkinIndex ];
-				path = System.IO.Path.Combine( path, @"Graphics\1_Title\Background.png" );
+				path = System.IO.Path.Combine( path, @"Graphics\Preview.png");
 				Bitmap bmSrc = new Bitmap( path );
 				Bitmap bmDest = new Bitmap( bmSrc.Width / 4, bmSrc.Height / 4 );
 				Graphics g = Graphics.FromImage( bmDest );
@@ -1231,7 +1143,7 @@ namespace TJAPlayer3
 				{
 					TJAPlayer3.t安全にDisposeする( ref txSkinSample1 );
 				}
-				txSkinSample1 = TJAPlayer3.tテクスチャの生成( bmDest, false );
+				txSkinSample1 = TJAPlayer3.CreateFDKTexture( bmDest, false );
 				g.Dispose();
 				bmDest.Dispose();
 				bmSrc.Dispose();
@@ -1594,6 +1506,10 @@ namespace TJAPlayer3
 			//this.tx通常項目行パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\4_itembox.png" ), false );
 			//this.txその他項目行パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\4_itembox other.png" ), false );
 			//this.tx三角矢印 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\4_triangle arrow.png" ), false );
+
+			ItemBox = TJAPlayer3.CreateFDKTexture(SkinManager.Path(@"Graphics\Config\ItemBox.png"));
+			Arrow = TJAPlayer3.CreateFDKTexture(SkinManager.Path(@"Graphics\Config\Arrow.png"));
+
 			this.txSkinSample1 = null;		// スキン選択時に動的に設定するため、ここでは初期化しない
 			base.ManagedCreateResources();
 		}
@@ -1602,11 +1518,13 @@ namespace TJAPlayer3
 			if( this.NotActivated )
 				return;
 
-			TJAPlayer3.tテクスチャの解放( ref this.txSkinSample1 );
+			TJAPlayer3.DisposeFDKTexture(ref ItemBox);
+			TJAPlayer3.DisposeFDKTexture(ref Arrow);
+			TJAPlayer3.DisposeFDKTexture(ref txSkinSample1);
 			//CDTXMania.tテクスチャの解放( ref this.tx通常項目行パネル );
 			//CDTXMania.tテクスチャの解放( ref this.txその他項目行パネル );
 			//CDTXMania.tテクスチャの解放( ref this.tx三角矢印 );
-		
+
 			base.ManagedReleaseResources();
 		}
 		private void OnListMenuの初期化()
@@ -1640,7 +1558,7 @@ namespace TJAPlayer3
 		{
 			throw new InvalidOperationException( "t進行描画(bool)のほうを使用してください。" );
 		}
-		public int t進行描画( bool b項目リスト側にフォーカスがある )
+		public int Draw( bool b項目リスト側にフォーカスがある )
 		{
 			if( this.NotActivated )
 				return 0;
@@ -1786,8 +1704,7 @@ namespace TJAPlayer3
 				{
 					case BaseItem.PanelType.Normal:
                     case BaseItem.PanelType.Other:
-                        if ( TJAPlayer3.Tx.Config_ItemBox != null )
-                            TJAPlayer3.Tx.Config_ItemBox.Draw2D( TJAPlayer3.app.Device, x, y );
+                        ItemBox?.Draw2D( TJAPlayer3.app.Device, x, y );
 						break;
 				}
 				//-----------------
@@ -1802,7 +1719,7 @@ namespace TJAPlayer3
 				{
 					using (var bmpItem = prvFont.DrawPrivateFont( this.list項目リスト[ nItem ].Name, Color.White, Color.Black ))
 					{
-					    listMenu[ nItem ].txMenuItemRight = TJAPlayer3.tテクスチャの生成( bmpItem );
+					    listMenu[ nItem ].txMenuItemRight = TJAPlayer3.CreateFDKTexture( bmpItem );
 					    // ctItem.t2D描画( CDTXMania.app.Device, ( x + 0x12 ) * Scale.X, ( y + 12 ) * Scale.Y - 20 );
 					    // CDTXMania.tテクスチャの解放( ref ctItem );
 					}
@@ -1899,7 +1816,7 @@ namespace TJAPlayer3
 				{
 				    using (var bmpStr = prvFont.DrawPrivateFont(strParam, Color.Black, Color.White, Color.Yellow, Color.OrangeRed))
 				    {
-				        using (var txStr = TJAPlayer3.tテクスチャの生成( bmpStr, false ))
+				        using (var txStr = TJAPlayer3.CreateFDKTexture( bmpStr, false ))
 				        {
 				            txStr.Draw2D( TJAPlayer3.app.Device, x + 400 + TJAPlayer3.Skin.Config_ItemText_Correction_X, y + 12 + TJAPlayer3.Skin.Config_ItemText_Correction_Y );
 				        }
@@ -1917,7 +1834,7 @@ namespace TJAPlayer3
 
 						using (var bmpStr = prvFont.DrawPrivateFont( strParam, Color.White, Color.Black ))
 						{
-						    stm.txParam = TJAPlayer3.tテクスチャの生成( bmpStr, false );
+						    stm.txParam = TJAPlayer3.CreateFDKTexture( bmpStr, false );
 						}
 
 						listMenu[ nItem ] = stm;
@@ -1956,12 +1873,9 @@ namespace TJAPlayer3
 				}
 
 				// 描画。
-				
-				if( TJAPlayer3.Tx.Config_Arrow != null )
-				{
-                    TJAPlayer3.Tx.Config_Arrow.Draw2D( TJAPlayer3.app.Device, x, y_upper, new Rectangle( 0, 0, 0x40, 0x18 ) );
-                    TJAPlayer3.Tx.Config_Arrow.Draw2D( TJAPlayer3.app.Device, x, y_lower, new Rectangle( 0, 0x18, 0x40, 0x18 ) );
-				}
+
+				Arrow?.Draw2D(TJAPlayer3.app.Device, x, y_upper, new Rectangle(0, 0, 0x40, 0x18));
+				Arrow?.Draw2D(TJAPlayer3.app.Device, x, y_lower, new Rectangle(0, 0x18, 0x40, 0x18));
 			}
 			//-----------------
 			#endregion
@@ -2110,6 +2024,9 @@ namespace TJAPlayer3
 		//private CTexture txその他項目行パネル;
 		//private CTexture tx三角矢印;
 		//private CTexture tx通常項目行パネル;
+
+		private FDKTexture ItemBox;
+		private FDKTexture Arrow;
 
 		private CachePrivateFont prvFont;
 		//private List<string> list項目リスト_str最終描画名;

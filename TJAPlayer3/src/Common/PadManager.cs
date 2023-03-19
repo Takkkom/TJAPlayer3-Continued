@@ -95,7 +95,7 @@ namespace TJAPlayer3
 			}
 			return list;
 		}
-		public bool b押された( E楽器パート part, Eパッド pad )
+		public bool GetPressed( E楽器パート part, Eパッド pad )
 		{
 			if( part != E楽器パート.UNKNOWN )
 			{
@@ -146,17 +146,17 @@ namespace TJAPlayer3
 		}
 		public bool b押されたDGB( Eパッド pad )
 		{
-			if( !this.b押された( E楽器パート.DRUMS, pad ) && !this.b押された( E楽器パート.GUITAR, pad ) )
+			if( !this.GetPressed( E楽器パート.DRUMS, pad ) && !this.GetPressed( E楽器パート.GUITAR, pad ) )
 			{
-				return this.b押された( E楽器パート.BASS, pad );
+				return this.GetPressed( E楽器パート.BASS, pad );
 			}
 			return true;
 		}
 		public bool b押されたGB( Eパッド pad )
 		{
-			if( !this.b押された( E楽器パート.GUITAR, pad ) )
+			if( !this.GetPressed( E楽器パート.GUITAR, pad ) )
 			{
-				return this.b押された( E楽器パート.BASS, pad );
+				return this.GetPressed( E楽器パート.BASS, pad );
 			}
 			return true;
 		}

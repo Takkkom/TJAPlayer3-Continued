@@ -162,7 +162,7 @@ namespace TJAPlayer3
 		}
 		public class C演奏記録
 		{
-			public STAUTOPLAY bAutoPlay;
+			public bool[] bAutoPlay = new bool[5];
 			public bool bDrums有効;
 			public bool bGuitar有効;
 			public STDGBVALUE<bool> bHidden;
@@ -218,27 +218,6 @@ namespace TJAPlayer3
 
 			public C演奏記録()
 			{
-				this.bAutoPlay = new STAUTOPLAY();
-				this.bAutoPlay.LC = false;
-				this.bAutoPlay.HH = false;
-				this.bAutoPlay.SD = false;
-				this.bAutoPlay.BD = false;
-				this.bAutoPlay.HT = false;
-				this.bAutoPlay.LT = false;
-				this.bAutoPlay.FT = false;
-				this.bAutoPlay.CY = false;
-				this.bAutoPlay.Guitar = false;
-				this.bAutoPlay.Bass = false;
-				this.bAutoPlay.GtR = false;
-				this.bAutoPlay.GtG = false;
-				this.bAutoPlay.GtB = false;
-				this.bAutoPlay.GtPick = false;
-				this.bAutoPlay.GtW = false;
-				this.bAutoPlay.BsR = false;
-				this.bAutoPlay.BsG = false;
-				this.bAutoPlay.BsB = false;
-				this.bAutoPlay.BsPick = false;
-				this.bAutoPlay.BsW = false;
 
 				this.bSudden = new STDGBVALUE<bool>();
 				this.bSudden.Drums = false;
@@ -1236,7 +1215,7 @@ namespace TJAPlayer3
 				writer.WriteLine( "MaxCombo={0}", this.stセクション[ i ].n最大コンボ数 );
 				writer.WriteLine( "TotalChips={0}", this.stセクション[ i ].n全チップ数 );
 				writer.Write( "AutoPlay=" );
-				for ( int j = 0; j < (int) Eレーン.MAX; j++ )
+				for ( int j = 0; j < 5; j++ )
 				{
 					writer.Write( this.stセクション[ i ].bAutoPlay[ j ] ? 1 : 0 );
 				}
@@ -1350,18 +1329,18 @@ namespace TJAPlayer3
 			}
 			return (int)ERANK.E;
 		}
-		internal static double tゲーム型スキルを計算して返す( int nLevel, int nTotal, int nPerfect, int nCombo, E楽器パート inst, STAUTOPLAY bAutoPlay )
+		internal static double tゲーム型スキルを計算して返す( int nLevel, int nTotal, int nPerfect, int nCombo, E楽器パート inst, bool autoPlay )
 		{
 			double ret;
 			if( ( nTotal == 0 ) || ( ( nPerfect == 0 ) && ( nCombo == 0 ) ) )
 				ret = 0.0;
 
 			ret = ( ( nLevel * ( ( nPerfect * 0.8 + nCombo * 0.2 ) / ( (double) nTotal ) ) ) / 2.0 );
-			ret *= dbCalcReviseValForDrGtBsAutoLanes( inst, bAutoPlay );
+			ret *= dbCalcReviseValForDrGtBsAutoLanes( inst, autoPlay);
 
 			return ret;
 		}
-		internal static double t演奏型スキルを計算して返す( int nTotal, int nPerfect, int nGreat, int nGood, int nPoor, int nMiss, E楽器パート inst, STAUTOPLAY bAutoPlay)
+		internal static double t演奏型スキルを計算して返す( int nTotal, int nPerfect, int nGreat, int nGood, int nPoor, int nMiss, E楽器パート inst, bool autoPlay)
 		{
 			if( nTotal == 0 )
 				return 0.0;
@@ -1370,10 +1349,10 @@ namespace TJAPlayer3
 			double y = ( ( nPerfect * 1.0 + nGreat * 0.8 + nGood * 0.5 + nPoor * 0.2 + nMiss * 0.0 + nAuto * 0.0 ) * 100.0 ) / ( (double) nTotal );
 			double ret = ( 100.0 * ( ( Math.Pow( 1.03, y ) - 1.0 ) / ( Math.Pow( 1.03, 100.0 ) - 1.0 ) ) );
 
-			ret *= dbCalcReviseValForDrGtBsAutoLanes( inst, bAutoPlay );
+			ret *= dbCalcReviseValForDrGtBsAutoLanes( inst, autoPlay);
 			return ret;
 		}
-		internal static double dbCalcReviseValForDrGtBsAutoLanes( E楽器パート inst, STAUTOPLAY bAutoPlay )
+		internal static double dbCalcReviseValForDrGtBsAutoLanes( E楽器パート inst, bool autoPlay)
 		{
             //削除
 			return 1.0;

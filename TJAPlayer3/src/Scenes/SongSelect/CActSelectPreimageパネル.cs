@@ -58,11 +58,11 @@ namespace TJAPlayer3
 		{
 			if( !base.NotActivated )
 			{
-				this.txパネル本体 = TJAPlayer3.tテクスチャの生成( SkinManager.Path( @"Graphics\5_preimage panel.png" ), false );
-				this.txセンサ = TJAPlayer3.tテクスチャの生成( SkinManager.Path( @"Graphics\5_sensor.png" ), false );
+				this.txパネル本体 = TJAPlayer3.CreateFDKTexture( SkinManager.Path( @"Graphics\5_preimage panel.png" ), false );
+				this.txセンサ = TJAPlayer3.CreateFDKTexture( SkinManager.Path( @"Graphics\5_sensor.png" ), false );
 				//this.txセンサ光 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_sensor light.png" ), false );
 				this.txプレビュー画像 = null;
-				this.txプレビュー画像がないときの画像 = TJAPlayer3.tテクスチャの生成( SkinManager.Path( @"Graphics\5_preimage default.png" ), false );
+				this.txプレビュー画像がないときの画像 = TJAPlayer3.CreateFDKTexture( SkinManager.Path( @"Graphics\5_preimage default.png" ), false );
 				this.sfAVI画像 = Surface.CreateOffscreenPlain( TJAPlayer3.app.Device.UnderlyingDevice, 0xcc, 0x10d, TJAPlayer3.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.SystemMemory );
 				this.nAVI再生開始時刻 = -1;
 				this.n前回描画したフレーム番号 = -1;
@@ -76,11 +76,11 @@ namespace TJAPlayer3
 		{
 			if( !base.NotActivated )
 			{
-				TJAPlayer3.tテクスチャの解放( ref this.txパネル本体 );
-				TJAPlayer3.tテクスチャの解放( ref this.txセンサ );
-				TJAPlayer3.tテクスチャの解放( ref this.txセンサ光 );
-				TJAPlayer3.tテクスチャの解放( ref this.txプレビュー画像 );
-				TJAPlayer3.tテクスチャの解放( ref this.txプレビュー画像がないときの画像 );
+				TJAPlayer3.DisposeFDKTexture( ref this.txパネル本体 );
+				TJAPlayer3.DisposeFDKTexture( ref this.txセンサ );
+				TJAPlayer3.DisposeFDKTexture( ref this.txセンサ光 );
+				TJAPlayer3.DisposeFDKTexture( ref this.txプレビュー画像 );
+				TJAPlayer3.DisposeFDKTexture( ref this.txプレビュー画像がないときの画像 );
 				if( this.sfAVI画像 != null )
 				{
 					this.sfAVI画像.Dispose();
@@ -250,14 +250,14 @@ namespace TJAPlayer3
 			string str = cスコア.ファイル情報.フォルダの絶対パス + cスコア.譜面情報.Preimage;
 			if( !str.Equals( this.str現在のファイル名 ) )
 			{
-				TJAPlayer3.tテクスチャの解放( ref this.txプレビュー画像 );
+				TJAPlayer3.DisposeFDKTexture( ref this.txプレビュー画像 );
 				this.str現在のファイル名 = str;
 				if( !File.Exists( this.str現在のファイル名 ) )
 				{
 					Trace.TraceWarning( "ファイルが存在しません。({0})", new object[] { this.str現在のファイル名 } );
 					return false;
 				}
-				this.txプレビュー画像 = TJAPlayer3.tテクスチャの生成( this.str現在のファイル名, false );
+				this.txプレビュー画像 = TJAPlayer3.CreateFDKTexture( this.str現在のファイル名, false );
 				if( this.txプレビュー画像 != null )
 				{
 					this.r表示するプレビュー画像 = this.txプレビュー画像;
@@ -324,7 +324,7 @@ namespace TJAPlayer3
 					Trace.TraceWarning( "ファイルが存在しません。({0})", new object[] { path } );
 					return false;
 				}
-				TJAPlayer3.tテクスチャの解放( ref this.txプレビュー画像 );
+				TJAPlayer3.DisposeFDKTexture( ref this.txプレビュー画像 );
 				this.str現在のファイル名 = path;
 				Bitmap image = null;
 				Bitmap bitmap2 = null;

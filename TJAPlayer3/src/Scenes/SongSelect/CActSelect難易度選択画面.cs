@@ -173,18 +173,18 @@ namespace TJAPlayer3
 			if( this.NotActivated )
 				return;
 
-            this.tx背景 = TJAPlayer3.tテクスチャの生成( SkinManager.Path( @"Graphics\5_diffselect_background.png" ) );
-            this.txヘッダー = TJAPlayer3.tテクスチャの生成( SkinManager.Path( @"Graphics\5_diffselect_header_panel.png" ) );
-            this.txフッター = TJAPlayer3.tテクスチャの生成( SkinManager.Path( @"Graphics\5_footer panel.png" ) );
+            this.tx背景 = TJAPlayer3.CreateFDKTexture( SkinManager.Path( @"Graphics\5_diffselect_background.png" ) );
+            this.txヘッダー = TJAPlayer3.CreateFDKTexture( SkinManager.Path( @"Graphics\5_diffselect_header_panel.png" ) );
+            this.txフッター = TJAPlayer3.CreateFDKTexture( SkinManager.Path( @"Graphics\5_footer panel.png" ) );
 
-            this.tx説明背景 = TJAPlayer3.tテクスチャの生成( SkinManager.Path( @"Graphics\5_information_BG.png" ) );
-            this.tx説明1 = TJAPlayer3.tテクスチャの生成( SkinManager.Path( @"Graphics\5_information.png" ) );
+            this.tx説明背景 = TJAPlayer3.CreateFDKTexture( SkinManager.Path( @"Graphics\5_information_BG.png" ) );
+            this.tx説明1 = TJAPlayer3.CreateFDKTexture( SkinManager.Path( @"Graphics\5_information.png" ) );
 
             this.soundSelectAnnounce = TJAPlayer3._SoundManager.CreateFDKSound( SkinManager.Path( @"Sounds\DiffSelect.ogg" ), SoundGroup.SoundEffect );
 
             for( int i = 0; i < (int)Difficulty.Total; i++ )
             {
-                this.tx踏み台[ i ] = TJAPlayer3.tテクスチャの生成( SkinManager.Path( @"Graphics\5_diffSelect_table" + i.ToString() + @".png" ) );
+                this.tx踏み台[ i ] = TJAPlayer3.CreateFDKTexture( SkinManager.Path( @"Graphics\5_diffSelect_table" + i.ToString() + @".png" ) );
             }
 
 			base.ManagedCreateResources();
@@ -194,18 +194,18 @@ namespace TJAPlayer3
 			if( this.NotActivated )
 				return;
 
-            TJAPlayer3.tテクスチャの解放( ref this.tx背景 );
-            TJAPlayer3.tテクスチャの解放( ref this.txヘッダー );
-            TJAPlayer3.tテクスチャの解放( ref this.txフッター );
+            TJAPlayer3.DisposeFDKTexture( ref this.tx背景 );
+            TJAPlayer3.DisposeFDKTexture( ref this.txヘッダー );
+            TJAPlayer3.DisposeFDKTexture( ref this.txフッター );
 
-            TJAPlayer3.tテクスチャの解放( ref this.tx説明背景 );
-            TJAPlayer3.tテクスチャの解放( ref this.tx説明1 );
+            TJAPlayer3.DisposeFDKTexture( ref this.tx説明背景 );
+            TJAPlayer3.DisposeFDKTexture( ref this.tx説明1 );
 
             TJAPlayer3.t安全にDisposeする( ref this.soundSelectAnnounce );
 
             for( int i = 0; i < (int)Difficulty.Total; i++ )
             {
-                TJAPlayer3.tテクスチャの解放( ref this.tx踏み台[ i ] );
+                TJAPlayer3.DisposeFDKTexture( ref this.tx踏み台[ i ] );
             }
 
 			base.ManagedReleaseResources();

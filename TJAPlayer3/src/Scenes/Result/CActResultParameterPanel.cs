@@ -192,7 +192,7 @@ namespace TJAPlayer3
 		{
 			if( !base.NotActivated )
 			{
-                Dan_Plate = TJAPlayer3.tテクスチャの生成(Path.GetDirectoryName(TJAPlayer3.DTX.strファイル名の絶対パス) + @"\Dan_Plate.png");
+                Dan_Plate = TJAPlayer3.CreateFDKTexture(Path.GetDirectoryName(TJAPlayer3.DTX.strファイル名の絶対パス) + @"\Dan_Plate.png");
                 base.ManagedCreateResources();
 			}
 		}

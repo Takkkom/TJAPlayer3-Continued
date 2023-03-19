@@ -53,13 +53,13 @@ namespace TJAPlayer3
 		    using (var bmpSongTitle = pfMusicName.DrawPrivateFont(title, TJAPlayer3.Skin.Result_MusicName_ForeColor, TJAPlayer3.Skin.Result_MusicName_BackColor))
 
 		    {
-		        this.txMusicName = TJAPlayer3.tテクスチャの生成(bmpSongTitle, false);
+		        this.txMusicName = TJAPlayer3.CreateFDKTexture(bmpSongTitle, false);
 		        txMusicName.Scaling.X = TJAPlayer3.GetSongNameXScaling(ref txMusicName);
 		    }
 
 		    using (var bmpStageText = pfStageText.DrawPrivateFont(TJAPlayer3.Skin.Game_StageText, TJAPlayer3.Skin.Result_StageText_ForeColor, TJAPlayer3.Skin.Result_StageText_BackColor))
 		    {
-		        this.txStageText = TJAPlayer3.tテクスチャの生成(bmpStageText, false);
+		        this.txStageText = TJAPlayer3.CreateFDKTexture(bmpStageText, false);
 		    }
 
 			base.Activate();
@@ -84,10 +84,10 @@ namespace TJAPlayer3
 			if( !base.NotActivated )
 			{
                 TJAPlayer3.t安全にDisposeする(ref this.pfMusicName);
-                TJAPlayer3.tテクスチャの解放( ref this.txMusicName );
+                TJAPlayer3.DisposeFDKTexture( ref this.txMusicName );
 
                 TJAPlayer3.t安全にDisposeする(ref this.pfStageText);
-                TJAPlayer3.tテクスチャの解放(ref this.txStageText);
+                TJAPlayer3.DisposeFDKTexture(ref this.txStageText);
                 base.ManagedReleaseResources();
 			}
 		}

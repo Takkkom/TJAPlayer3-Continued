@@ -1521,11 +1521,11 @@ for (int i = 0; i < 3; i++) {
 
 		#region [ 汎用ヘルパー ]
 		//-----------------
-		public static FDKTexture tテクスチャの生成( string fileName )
+		public static FDKTexture CreateFDKTexture( string fileName )
 		{
-			return tテクスチャの生成( fileName, false );
+			return CreateFDKTexture( fileName, false );
 		}
-		public static FDKTexture tテクスチャの生成( string fileName, bool b黒を透過する )
+		public static FDKTexture CreateFDKTexture( string fileName, bool b黒を透過する )
 		{
 			if ( app == null )
 			{
@@ -1547,7 +1547,7 @@ for (int i = 0; i < 3; i++) {
 				return null;
 			}
 		}
-		public static void tテクスチャの解放(ref FDKTexture tx )
+		public static void DisposeFDKTexture(ref FDKTexture tx )
 		{
 			TJAPlayer3.t安全にDisposeする( ref tx );
 		}
@@ -1555,11 +1555,11 @@ for (int i = 0; i < 3; i++) {
 		{
 			TJAPlayer3.t安全にDisposeする( ref tx );
 		}
-		public static FDKTexture tテクスチャの生成( byte[] txData )
+		public static FDKTexture CreateFDKTexture( byte[] txData )
 		{
-			return tテクスチャの生成( txData, false );
+			return CreateFDKTexture( txData, false );
 		}
-		public static FDKTexture tテクスチャの生成( byte[] txData, bool b黒を透過する )
+		public static FDKTexture CreateFDKTexture( byte[] txData, bool b黒を透過する )
 		{
 			if ( app == null )
 			{
@@ -1576,11 +1576,11 @@ for (int i = 0; i < 3; i++) {
 				return null;
 			}
 		}
-		public static FDKTexture tテクスチャの生成( Bitmap bitmap )
+		public static FDKTexture CreateFDKTexture( Bitmap bitmap )
 		{
-			return tテクスチャの生成( bitmap, false );
+			return CreateFDKTexture( bitmap, false );
 		}
-		public static FDKTexture tテクスチャの生成( Bitmap bitmap, bool b黒を透過する )
+		public static FDKTexture CreateFDKTexture( Bitmap bitmap, bool b黒を透過する )
 		{
 			if ( app == null )
 			{
@@ -1603,11 +1603,11 @@ for (int i = 0; i < 3; i++) {
 			}
 		}
 
-        public static FDKTextureAf tテクスチャの生成Af( string fileName )
+        public static FDKTextureAf CreateFDKTextureAf( string fileName )
 		{
-			return tテクスチャの生成Af( fileName, false );
+			return CreateFDKTextureAf( fileName, false );
 		}
-		public static FDKTextureAf tテクスチャの生成Af( string fileName, bool b黒を透過する )
+		public static FDKTextureAf CreateFDKTextureAf( string fileName, bool b黒を透過する )
 		{
 			if ( app == null )
 			{

@@ -128,7 +128,7 @@ namespace TJAPlayer3
 		{
 			if( !base.NotActivated )
 			{
-				this.tx背景 = TJAPlayer3.tテクスチャの生成( this.strSTAGEFILE, false );
+				this.tx背景 = TJAPlayer3.CreateFDKTexture( this.strSTAGEFILE, false );
                 //this.txSongnamePlate = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\6_SongnamePlate.png" ) );
                 this.ct待機 = new Counter( 0, 600, 5, TJAPlayer3.Timer );
                 this.ct曲名表示 = new Counter( 1, 30, 30, TJAPlayer3.Timer );
@@ -188,10 +188,10 @@ namespace TJAPlayer3
 		{
 			if( !base.NotActivated )
 			{
-				TJAPlayer3.tテクスチャの解放( ref this.tx背景 );
-				TJAPlayer3.tテクスチャの解放( ref this.txタイトル );
+				TJAPlayer3.DisposeFDKTexture( ref this.tx背景 );
+				TJAPlayer3.DisposeFDKTexture( ref this.txタイトル );
 				//CDTXMania.tテクスチャの解放( ref this.txSongnamePlate );
-                TJAPlayer3.tテクスチャの解放( ref this.txサブタイトル );
+                TJAPlayer3.DisposeFDKTexture( ref this.txサブタイトル );
 				base.ManagedReleaseResources();
 			}
 		}
@@ -388,7 +388,7 @@ namespace TJAPlayer3
                                     {
                                         using (var bmpSongTitle = pfTitle.DrawPrivateFont(TJAPlayer3.DTX.List_DanSongs[i].Title, titleForeColor, titleBackColor))
                                         {
-                                            TJAPlayer3.DTX.List_DanSongs[i].TitleTex = TJAPlayer3.tテクスチャの生成(bmpSongTitle, false);
+                                            TJAPlayer3.DTX.List_DanSongs[i].TitleTex = TJAPlayer3.CreateFDKTexture(bmpSongTitle, false);
                                             TJAPlayer3.DTX.List_DanSongs[i].TitleTex.Scaling.X = TJAPlayer3.GetSongNameXScaling(ref TJAPlayer3.DTX.List_DanSongs[i].TitleTex, 710);
                                         }
                                     }
@@ -397,7 +397,7 @@ namespace TJAPlayer3
                                     {
                                         using (var bmpSongSubTitle = pfSubTitle.DrawPrivateFont(TJAPlayer3.DTX.List_DanSongs[i].SubTitle, subtitleForeColor, subtitleBackColor))
                                         {
-                                            TJAPlayer3.DTX.List_DanSongs[i].SubTitleTex = TJAPlayer3.tテクスチャの生成(bmpSongSubTitle, false);
+                                            TJAPlayer3.DTX.List_DanSongs[i].SubTitleTex = TJAPlayer3.CreateFDKTexture(bmpSongSubTitle, false);
                                             TJAPlayer3.DTX.List_DanSongs[i].SubTitleTex.Scaling.X = TJAPlayer3.GetSongNameXScaling(ref TJAPlayer3.DTX.List_DanSongs[i].SubTitleTex, 710);
                                         }
                                     }

@@ -85,6 +85,8 @@ namespace TJAPlayer3
 			//	this.txDialogNowEnumeratingSongs = null;
 			//}
 
+			Enum_Song = TJAPlayer3.CreateFDKTexture(SkinManager.Path(@"Graphics\Enum_Song.png"));
+
 			try
 			{
 				System.Drawing.Font ftMessage = new System.Drawing.Font("MS UI Gothic", 40f, FontStyle.Bold, GraphicsUnit.Pixel );
@@ -132,9 +134,8 @@ namespace TJAPlayer3
 			if ( this.NotActivated )
 				return;
 
-			//CDTXMania.t安全にDisposeする( ref this.txDialogNowEnumeratingSongs );
-			//CDTXMania.t安全にDisposeする( ref this.txNowEnumeratingSongs );
-			TJAPlayer3.t安全にDisposeする( ref this.txMessage );
+			TJAPlayer3.t安全にDisposeする(ref Enum_Song);
+			TJAPlayer3.t安全にDisposeする(ref this.txMessage);
 			base.ManagedReleaseResources();
 		}
 
@@ -145,14 +146,14 @@ namespace TJAPlayer3
 				return 0;
 			}
 			this.ctNowEnumeratingSongs.TickLoop();
-			if ( TJAPlayer3.Tx.Enum_Song != null )
+			if ( Enum_Song != null )
 			{
-                TJAPlayer3.Tx.Enum_Song.Opacity = (int) ( 176.0 + 80.0 * Math.Sin( (double) (2 * Math.PI * this.ctNowEnumeratingSongs.NowValue * 2 / 100.0 ) ) );
-                TJAPlayer3.Tx.Enum_Song.Draw2D( TJAPlayer3.app.Device, 18, 7 );
+                Enum_Song.Opacity = (int) ( 176.0 + 80.0 * Math.Sin( (double) (2 * Math.PI * this.ctNowEnumeratingSongs.NowValue * 2 / 100.0 ) ) );
+                Enum_Song.Draw2D( TJAPlayer3.app.Device, 18, 7 );
 			}
-			if ( bコマンドでの曲データ取得 && TJAPlayer3.Tx.Config_Enum_Song != null )
+			if ( bコマンドでの曲データ取得 )
 			{
-                TJAPlayer3.Tx.Config_Enum_Song.Draw2D( TJAPlayer3.app.Device, 180, 177 );
+				Enum_Song?.Draw2D( TJAPlayer3.app.Device, 180, 177 );
 				this.txMessage.Draw2D( TJAPlayer3.app.Device, 190, 197 );
 			}
 
@@ -164,5 +165,7 @@ namespace TJAPlayer3
 		//private CTexture txNowEnumeratingSongs = null;
 		//private CTexture txDialogNowEnumeratingSongs = null;
 		private FDKTexture txMessage;
+
+		private FDKTexture Enum_Song;
 	}
 }

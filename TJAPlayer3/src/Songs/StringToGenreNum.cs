@@ -53,5 +53,31 @@
                     return 8;
             }
         }
+
+        internal static int GenreBar(string strジャンル)
+        {
+            switch (strジャンル)
+            {
+                case "J-POP":
+                    return 1;
+                case "アニメ":
+                    return 2;
+                case "ボーカロイド":
+                case "VOCALOID":
+                    return 3;
+                case "どうよう":
+                    return 4;
+                case "バラエティ":
+                    return 5;
+                case "クラシック":
+                    return 6;
+                case "ゲームミュージック":
+                    return 7;
+                case "ナムコオリジナル":
+                    return 8;
+                default:
+                    return 0;
+            }
+        }
     }
 }

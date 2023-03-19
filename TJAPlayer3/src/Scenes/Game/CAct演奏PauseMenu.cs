@@ -130,7 +130,7 @@ namespace TJAPlayer3
 				string pathパネル本体 = SkinManager.Path( @"Graphics\ScreenSelect popup auto settings.png" );
 				if ( File.Exists( pathパネル本体 ) )
 				{
-					this.txパネル本体 = TJAPlayer3.tテクスチャの生成( pathパネル本体, true );
+					this.txパネル本体 = TJAPlayer3.CreateFDKTexture( pathパネル本体, true );
 				}
 
 				base.ManagedCreateResources();
@@ -140,8 +140,8 @@ namespace TJAPlayer3
 		{
 			if ( !base.NotActivated )
 			{
-				TJAPlayer3.tテクスチャの解放( ref this.txパネル本体 );
-				TJAPlayer3.tテクスチャの解放( ref this.tx文字列パネル );
+				TJAPlayer3.DisposeFDKTexture( ref this.txパネル本体 );
+				TJAPlayer3.DisposeFDKTexture( ref this.tx文字列パネル );
 				base.ManagedReleaseResources();
 			}
 		}

@@ -93,25 +93,30 @@ namespace TJAPlayer3
 		}
 		public override void Deactivate()
 		{
-			if( !base.NotActivated )
+			if (IsActivated)
 			{
-				//CDTXMania.tテクスチャの解放( ref this.txカーソル );
-				//CDTXMania.tテクスチャの解放( ref this.txHitKeyダイアログ );
 				base.Deactivate();
 			}
 		}
 		public override void ManagedCreateResources()
 		{
-			if( !base.NotActivated )
+			if (IsActivated)
 			{
-				//this.txカーソル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenConfig menu cursor.png" ), false );
-				//this.txHitKeyダイアログ = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenConfig hit key to assign dialog.png" ), false );
+				KeyAssign = TJAPlayer3.CreateFDKTexture(SkinManager.Path(@"Graphics\Config\KeyAssign.png"));
 				base.ManagedCreateResources();
+			}
+		}
+		public override void ManagedReleaseResources()
+		{
+			if (IsActivated)
+			{
+				TJAPlayer3.DisposeFDKTexture(ref KeyAssign);
+				base.ManagedReleaseResources();
 			}
 		}
 		public override int Draw()
 		{
-			if( !base.NotActivated )
+			if (IsActivated)
 			{
 				if( this.bキー入力待ち )
 				{
@@ -185,9 +190,9 @@ namespace TJAPlayer3
 				y += num5;
 				TJAPlayer3.stageコンフィグ.actFont.t文字列描画( x + 20, y, "<< Returnto List", this.n現在の選択行 == 0x11, 0.75f );
 				y += num5;
-				if( this.bキー入力待ち && ( TJAPlayer3.Tx.Config_KeyAssign != null ) )
+				if( this.bキー入力待ち )
 				{
-                    TJAPlayer3.Tx.Config_KeyAssign.Draw2D( TJAPlayer3.app.Device, 0x185, 0xd7 );
+                    KeyAssign?.Draw2D( TJAPlayer3.app.Device, 0x185, 0xd7 );
 				}
 			}
 			return 0;
@@ -229,6 +234,8 @@ namespace TJAPlayer3
 		private string strパッド名;
 		//private CTexture txHitKeyダイアログ;
 		//private CTexture txカーソル;
+
+		private FDKTexture KeyAssign;
 
 		private void tアサインコードの描画_Joypad( int line, int x, int y, int nID, int nCode, bool b強調 )
 		{

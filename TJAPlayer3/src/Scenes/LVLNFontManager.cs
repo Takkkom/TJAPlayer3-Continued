@@ -77,7 +77,7 @@ namespace TJAPlayer3
 		{
 			if (!base.NotActivated)
 			{
-				this.tx数値 = TJAPlayer3.tテクスチャの生成(SkinManager.Path(@"Graphics\ScreenSelect level numbers.png"));
+				this.tx数値 = TJAPlayer3.CreateFDKTexture(SkinManager.Path(@"Graphics\ScreenSelect level numbers.png"));
 				base.ManagedCreateResources();
 			}
 		}

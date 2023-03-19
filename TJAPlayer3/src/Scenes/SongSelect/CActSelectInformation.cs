@@ -39,9 +39,9 @@ namespace TJAPlayer3
 		{
 			if( !base.NotActivated )
 			{
-                this.txInfo_Back = TJAPlayer3.tテクスチャの生成( SkinManager.Path( @"Graphics\5_information_BG.png" ) );
-                this.txInfo[ 0 ] = TJAPlayer3.tテクスチャの生成( SkinManager.Path( @"Graphics\5_information.png" ) );
-                this.txInfo[ 1 ] = TJAPlayer3.tテクスチャの生成( SkinManager.Path( @"Graphics\5_information2.png" ) );
+                this.txInfo_Back = TJAPlayer3.CreateFDKTexture( SkinManager.Path( @"Graphics\5_information_BG.png" ) );
+                this.txInfo[ 0 ] = TJAPlayer3.CreateFDKTexture( SkinManager.Path( @"Graphics\5_information.png" ) );
+                this.txInfo[ 1 ] = TJAPlayer3.CreateFDKTexture( SkinManager.Path( @"Graphics\5_information2.png" ) );
 				base.ManagedCreateResources();
 			}
 		}
@@ -49,9 +49,9 @@ namespace TJAPlayer3
 		{
 			if( !base.NotActivated )
 			{
-				TJAPlayer3.tテクスチャの解放( ref this.txInfo_Back );
-				TJAPlayer3.tテクスチャの解放( ref this.txInfo[ 0 ] );
-				TJAPlayer3.tテクスチャの解放( ref this.txInfo[ 1 ] );
+				TJAPlayer3.DisposeFDKTexture( ref this.txInfo_Back );
+				TJAPlayer3.DisposeFDKTexture( ref this.txInfo[ 0 ] );
+				TJAPlayer3.DisposeFDKTexture( ref this.txInfo[ 1 ] );
 				base.ManagedReleaseResources();
 			}
 		}

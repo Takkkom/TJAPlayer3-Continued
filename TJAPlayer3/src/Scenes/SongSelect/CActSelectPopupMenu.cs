@@ -67,7 +67,7 @@ namespace TJAPlayer3
 			stqMenuTitle.cItem.Name = title;
 		    using (var bitmap = prvFont.DrawPrivateFont( title, Color.White, Color.Black ))
 		    {
-		        stqMenuTitle.txName = TJAPlayer3.tテクスチャの生成( bitmap, false );
+		        stqMenuTitle.txName = TJAPlayer3.CreateFDKTexture( bitmap, false );
 		        stqMenuTitle.rectName = prvFont.RectStrings;
 		    }
 			lciMenuItems = new stQuickMenuItem[ menulist.Count ];
@@ -77,7 +77,7 @@ namespace TJAPlayer3
 				stqm.cItem = menulist[ i ];
 			    using (var bitmap = prvFont.DrawPrivateFont( menulist[ i ].Name, Color.White, Color.Black ))
 			    {
-			        stqm.txName = TJAPlayer3.tテクスチャの生成( bitmap, false );
+			        stqm.txName = TJAPlayer3.CreateFDKTexture( bitmap, false );
 			        stqm.rectName = prvFont.RectStrings;
 			    }
 				lciMenuItems[ i ] = stqm;
@@ -263,7 +263,6 @@ namespace TJAPlayer3
 					#endregion
 					#region [ キー入力: キャンセル ]
 					else if ( ( TJAPlayer3.Input管理.Keyboard.GetKeyPressed( (int) SlimDX.DirectInput.Key.Escape )
-						|| TJAPlayer3.Pad.b押された( E楽器パート.DRUMS, Eパッド.FT )
 						|| TJAPlayer3.Pad.b押されたGB( Eパッド.Cancel ) )
                         && this.bEsc有効 )
 					{	// キャンセル
@@ -276,20 +275,18 @@ namespace TJAPlayer3
 					#region [ キー入力: 決定 ]
 					// E楽器パート eInst = E楽器パート.UNKNOWN;
 					ESortAction eAction = ESortAction.END;
-					if ( TJAPlayer3.Pad.b押された( E楽器パート.GUITAR, Eパッド.Decide ) )
+					if ( TJAPlayer3.Pad.GetPressed( E楽器パート.GUITAR, Eパッド.Decide ) )
 					{
 						eInst = E楽器パート.GUITAR;
 						eAction = ESortAction.Decide;
 					}
-					else if ( TJAPlayer3.Pad.b押された( E楽器パート.BASS, Eパッド.Decide ) )
+					else if ( TJAPlayer3.Pad.GetPressed( E楽器パート.BASS, Eパッド.Decide ) )
 					{
 						eInst = E楽器パート.BASS;
 						eAction = ESortAction.Decide;
 					}
 					else if (
-						TJAPlayer3.Pad.b押された( E楽器パート.DRUMS, Eパッド.Decide )	// #24756 2011.4.1 yyagi: Add condition "Drum-Decide" to enable CY in Sort Menu.
-						|| TJAPlayer3.Pad.b押された( E楽器パート.DRUMS, Eパッド.RD )
-						|| TJAPlayer3.Pad.b押された( E楽器パート.DRUMS, Eパッド.LC )
+						TJAPlayer3.Pad.GetPressed( E楽器パート.DRUMS, Eパッド.Decide )	// #24756 2011.4.1 yyagi: Add condition "Drum-Decide" to enable CY in Sort Menu.
 						|| ( TJAPlayer3._MainConfig.bEnterがキー割り当てのどこにも使用されていない && TJAPlayer3.Input管理.Keyboard.GetKeyPressed( (int) SlimDX.DirectInput.Key.Return ) ) )
 					{
 						eInst = E楽器パート.DRUMS;
@@ -302,19 +299,9 @@ namespace TJAPlayer3
 					#endregion
 					#region [ キー入力: 前に移動 ]
 					this.ctキー反復用.Up.RepeatKey( TJAPlayer3.Input管理.Keyboard.GetKeyKeepPressed( (int) SlimDX.DirectInput.Key.UpArrow ), new Counter.KeyProcess( this.t前に移動 ) );
-					this.ctキー反復用.R.RepeatKey( TJAPlayer3.Pad.b押されているGB( Eパッド.R ), new Counter.KeyProcess( this.t前に移動 ) );
-					if ( TJAPlayer3.Pad.b押された( E楽器パート.DRUMS, Eパッド.SD ) )
-					{
-						this.t前に移動();
-					}
 					#endregion
 					#region [ キー入力: 次に移動 ]
 					this.ctキー反復用.Down.RepeatKey( TJAPlayer3.Input管理.Keyboard.GetKeyKeepPressed( (int) SlimDX.DirectInput.Key.DownArrow ), new Counter.KeyProcess( this.t次に移動 ) );
-					this.ctキー反復用.B.RepeatKey( TJAPlayer3.Pad.b押されているGB( Eパッド.B ), new Counter.KeyProcess( this.t次に移動 ) );
-					if ( TJAPlayer3.Pad.b押された( E楽器パート.DRUMS, Eパッド.LT ) )
-					{
-						this.t次に移動();
-					}
 					#endregion
 				}
 				#region [ ポップアップメニュー 背景描画 ]
@@ -383,7 +370,7 @@ namespace TJAPlayer3
                             prvFont.DrawPrivateFont(s, Color.White, Color.Black, Color.Yellow, Color.OrangeRed) :
                             prvFont.DrawPrivateFont(s, Color.White, Color.Black))
                         {
-                            using (var ctStr = TJAPlayer3.tテクスチャの生成(bmpStr, false))
+                            using (var ctStr = TJAPlayer3.CreateFDKTexture(bmpStr, false))
                             {
                                 ctStr.Draw2D(TJAPlayer3.app.Device, 330, 77 + i * 32);
                             }

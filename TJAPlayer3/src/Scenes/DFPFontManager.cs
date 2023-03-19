@@ -530,7 +530,7 @@ namespace TJAPlayer3
 		{
 			if( !base.NotActivated && !string.IsNullOrEmpty( str ) )
 			{
-				FDKTexture texture = b強調 ? TJAPlayer3.Tx.Config_Font_Bold : TJAPlayer3.Tx.Config_Font;
+				FDKTexture texture = b強調 ? Font_Bold : Font;
 				if( texture != null )
 				{
 					texture.Scaling = new Vector3( fScale, fScale, 1f );
@@ -555,29 +555,21 @@ namespace TJAPlayer3
 
 		public override void ManagedCreateResources()
 		{
-			if( !base.NotActivated )
+			if( base.IsActivated )
 			{
-				//this.tx通常文字 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\Screen font dfp.png" ), false );
-				//this.tx強調文字 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\Screen font dfp em.png" ), false );
+				Font = TJAPlayer3.CreateFDKTexture(SkinManager.Path(@"Graphics\Config\Font.png"));
+				Font_Bold = TJAPlayer3.CreateFDKTexture(SkinManager.Path(@"Graphics\Config\Font_Bold.png") );
 				base.ManagedCreateResources();
 			}
 		}
 		public override void ManagedReleaseResources()
 		{
-			//if( !base.b活性化してない )
-			//{
-			//	if( this.tx強調文字 != null )
-			//	{
-			//		this.tx強調文字.Dispose();
-			//		this.tx強調文字 = null;
-			//	}
-			//	if( this.tx通常文字 != null )
-			//	{
-			//		this.tx通常文字.Dispose();
-			//		this.tx通常文字 = null;
-			//	}
+			if( base.IsActivated )
+			{
+				TJAPlayer3.DisposeFDKTexture(ref Font);
+				TJAPlayer3.DisposeFDKTexture(ref Font_Bold);
 				base.ManagedReleaseResources();
-			//}
+			}
 		}
 		
 
@@ -593,8 +585,8 @@ namespace TJAPlayer3
 		}
 
 		private readonly ST文字領域[] st文字領域;
-		//private CTexture tx強調文字;
-		//private CTexture tx通常文字;
+		private FDKTexture Font;
+		private FDKTexture Font_Bold;
 		//-----------------
 		#endregion
 	}

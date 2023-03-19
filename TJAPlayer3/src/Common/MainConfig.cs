@@ -23,127 +23,6 @@ namespace TJAPlayer3
 		{
 			public class CKeyAssignPad
 			{
-				public MainConfig.CKeyAssign.STKEYASSIGN[] HH
-				{
-					get
-					{
-						return this.padHH_R;
-					}
-					set
-					{
-						this.padHH_R = value;
-					}
-				}
-				public MainConfig.CKeyAssign.STKEYASSIGN[] R
-				{
-					get
-					{
-						return this.padHH_R;
-					}
-					set
-					{
-						this.padHH_R = value;
-					}
-				}
-				public MainConfig.CKeyAssign.STKEYASSIGN[] SD
-				{
-					get
-					{
-						return this.padSD_G;
-					}
-					set
-					{
-						this.padSD_G = value;
-					}
-				}
-				public MainConfig.CKeyAssign.STKEYASSIGN[] G
-				{
-					get
-					{
-						return this.padSD_G;
-					}
-					set
-					{
-						this.padSD_G = value;
-					}
-				}
-				public MainConfig.CKeyAssign.STKEYASSIGN[] BD
-				{
-					get
-					{
-						return this.padBD_B;
-					}
-					set
-					{
-						this.padBD_B = value;
-					}
-				}
-				public MainConfig.CKeyAssign.STKEYASSIGN[] B
-				{
-					get
-					{
-						return this.padBD_B;
-					}
-					set
-					{
-						this.padBD_B = value;
-					}
-				}
-				public MainConfig.CKeyAssign.STKEYASSIGN[] HT
-				{
-					get
-					{
-						return this.padHT_Pick;
-					}
-					set
-					{
-						this.padHT_Pick = value;
-					}
-				}
-				public MainConfig.CKeyAssign.STKEYASSIGN[] Pick
-				{
-					get
-					{
-						return this.padHT_Pick;
-					}
-					set
-					{
-						this.padHT_Pick = value;
-					}
-				}
-				public MainConfig.CKeyAssign.STKEYASSIGN[] LT
-				{
-					get
-					{
-						return this.padLT_Wail;
-					}
-					set
-					{
-						this.padLT_Wail = value;
-					}
-				}
-				public MainConfig.CKeyAssign.STKEYASSIGN[] Wail
-				{
-					get
-					{
-						return this.padLT_Wail;
-					}
-					set
-					{
-						this.padLT_Wail = value;
-					}
-				}
-				public MainConfig.CKeyAssign.STKEYASSIGN[] FT
-				{
-					get
-					{
-						return this.padFT_Cancel;
-					}
-					set
-					{
-						this.padFT_Cancel = value;
-					}
-				}
 				public MainConfig.CKeyAssign.STKEYASSIGN[] Cancel
 				{
 					get
@@ -155,17 +34,6 @@ namespace TJAPlayer3
 						this.padFT_Cancel = value;
 					}
 				}
-				public MainConfig.CKeyAssign.STKEYASSIGN[] CY
-				{
-					get
-					{
-						return this.padCY_Decide;
-					}
-					set
-					{
-						this.padCY_Decide = value;
-					}
-				}
 				public MainConfig.CKeyAssign.STKEYASSIGN[] Decide
 				{
 					get
@@ -175,61 +43,6 @@ namespace TJAPlayer3
 					set
 					{
 						this.padCY_Decide = value;
-					}
-				}
-				public MainConfig.CKeyAssign.STKEYASSIGN[] HHO
-				{
-					get
-					{
-						return this.padHHO;
-					}
-					set
-					{
-						this.padHHO = value;
-					}
-				}
-				public MainConfig.CKeyAssign.STKEYASSIGN[] RD
-				{
-					get
-					{
-						return this.padRD;
-					}
-					set
-					{
-						this.padRD = value;
-					}
-				}
-				public MainConfig.CKeyAssign.STKEYASSIGN[] LC
-				{
-					get
-					{
-						return this.padLC;
-					}
-					set
-					{
-						this.padLC = value;
-					}
-				}
-				public MainConfig.CKeyAssign.STKEYASSIGN[] LP
-				{
-					get
-					{
-						return this.padLP;
-					}
-					set
-					{
-						this.padLP = value;
-					}
-				}
-				public MainConfig.CKeyAssign.STKEYASSIGN[] LBD
-				{
-					get
-					{
-						return this.padLBD;
-					}
-					set
-					{
-						this.padLBD = value;
 					}
 				}
 				public MainConfig.CKeyAssign.STKEYASSIGN[] Capture
@@ -337,41 +150,11 @@ namespace TJAPlayer3
 					{
 						switch ( index )
 						{
-							case (int) EKeyConfigPad.HH:
-								return this.padHH_R;
-
-							case (int) EKeyConfigPad.SD:
-								return this.padSD_G;
-
-							case (int) EKeyConfigPad.BD:
-								return this.padBD_B;
-
-							case (int) EKeyConfigPad.HT:
-								return this.padHT_Pick;
-
-							case (int) EKeyConfigPad.LT:
-								return this.padLT_Wail;
-
-							case (int) EKeyConfigPad.FT:
+							case (int) EKeyConfigPad.Cancel:
 								return this.padFT_Cancel;
 
-							case (int) EKeyConfigPad.CY:
+							case (int) EKeyConfigPad.Decide:
 								return this.padCY_Decide;
-
-							case (int) EKeyConfigPad.HHO:
-								return this.padHHO;
-
-							case (int) EKeyConfigPad.RD:
-								return this.padRD;
-
-							case (int) EKeyConfigPad.LC:
-								return this.padLC;
-
-							case (int) EKeyConfigPad.LP:	// #27029 2012.1.4 from
-								return this.padLP;			//
-
-							case (int) EKeyConfigPad.LBD:	// #27029 2012.1.4 from
-								return this.padLBD;			//
 
 							case (int) EKeyConfigPad.LRed:
 								return this.padLRed;
@@ -406,55 +189,15 @@ namespace TJAPlayer3
 					{
 						switch ( index )
 						{
-							case (int) EKeyConfigPad.HH:
-								this.padHH_R = value;
-								return;
-
-							case (int) EKeyConfigPad.SD:
-								this.padSD_G = value;
-								return;
-
-							case (int) EKeyConfigPad.BD:
-								this.padBD_B = value;
-								return;
-
-							case (int) EKeyConfigPad.Pick:
-								this.padHT_Pick = value;
-								return;
-
-							case (int) EKeyConfigPad.LT:
-								this.padLT_Wail = value;
-								return;
-
-							case (int) EKeyConfigPad.FT:
-								this.padFT_Cancel = value;
-								return;
-
-							case (int) EKeyConfigPad.CY:
+							case (int)EKeyConfigPad.Decide:
 								this.padCY_Decide = value;
 								return;
 
-							case (int) EKeyConfigPad.HHO:
-								this.padHHO = value;
+							case (int)EKeyConfigPad.Cancel:
+								this.padFT_Cancel = value;
 								return;
 
-							case (int) EKeyConfigPad.RD:
-								this.padRD = value;
-								return;
-
-							case (int) EKeyConfigPad.LC:
-								this.padLC = value;
-								return;
-
-							case (int) EKeyConfigPad.LP:
-								this.padLP = value;
-								return;
-
-							case (int) EKeyConfigPad.LBD:
-								this.padLBD = value;
-								return;
-
-                            case (int) EKeyConfigPad.LRed:
+							case (int) EKeyConfigPad.LRed:
                                 this.padLRed = value;
                                 return;
 
@@ -496,18 +239,8 @@ namespace TJAPlayer3
 
 				#region [ private ]
 				//-----------------
-				private MainConfig.CKeyAssign.STKEYASSIGN[] padBD_B;
 				private MainConfig.CKeyAssign.STKEYASSIGN[] padCY_Decide;
 				private MainConfig.CKeyAssign.STKEYASSIGN[] padFT_Cancel;
-				private MainConfig.CKeyAssign.STKEYASSIGN[] padHH_R;
-				private MainConfig.CKeyAssign.STKEYASSIGN[] padHHO;
-				private MainConfig.CKeyAssign.STKEYASSIGN[] padHT_Pick;
-				private MainConfig.CKeyAssign.STKEYASSIGN[] padLC;
-				private MainConfig.CKeyAssign.STKEYASSIGN[] padLT_Wail;
-				private MainConfig.CKeyAssign.STKEYASSIGN[] padRD;
-				private MainConfig.CKeyAssign.STKEYASSIGN[] padSD_G;
-				private MainConfig.CKeyAssign.STKEYASSIGN[] padLP;
-				private MainConfig.CKeyAssign.STKEYASSIGN[] padLBD;
 				private MainConfig.CKeyAssign.STKEYASSIGN[] padLRed;
 				private MainConfig.CKeyAssign.STKEYASSIGN[] padLBlue;
 				private MainConfig.CKeyAssign.STKEYASSIGN[] padRRed;
@@ -721,7 +454,14 @@ namespace TJAPlayer3
 
 
         public int nPlayerCount; //2017.08.18 kairera0467 マルチプレイ対応
-        public bool b太鼓パートAutoPlay;
+		public bool[] AutoPlay
+        {
+            get
+            {
+				return new bool[] { b太鼓パートAutoPlay, b太鼓パートAutoPlay2P };
+            }
+        }
+		public bool b太鼓パートAutoPlay;
         public bool b太鼓パートAutoPlay2P; //2017.08.16 kairera0467 マルチプレイ対応
         public bool bAuto先生の連打;
         public bool b大音符判定;
@@ -838,7 +578,6 @@ namespace TJAPlayer3
 		}
 		public int nRisky;						// #23559 2011.6.20 yyagi Riskyでの残ミス数。0で閉店
 		public bool bIsAllowedDoubleClickFullscreen;	// #26752 2011.11.27 yyagi ダブルクリックしてもフルスクリーンに移行しない
-		public STAUTOPLAY bAutoPlay;
 		public int nSoundDeviceType;				// #24820 2012.12.23 yyagi 出力サウンドデバイス(0=ACM(にしたいが設計がきつそうならDirectShow), 1=ASIO, 2=WASAPI)
 		public int nWASAPIBufferSizeMs;				// #24820 2013.1.15 yyagi WASAPIのバッファサイズ
 //		public int nASIOBufferSizeMs;				// #24820 2012.12.28 yyagi ASIOのバッファサイズ
@@ -1324,8 +1063,6 @@ namespace TJAPlayer3
 			}
 			this.n演奏速度 = 20;
 			#region [ AutoPlay ]
-			this.bAutoPlay = new STAUTOPLAY();
-
             this.b太鼓パートAutoPlay = true;
             this.b太鼓パートAutoPlay2P = true;
             this.bAuto先生の連打 = true;

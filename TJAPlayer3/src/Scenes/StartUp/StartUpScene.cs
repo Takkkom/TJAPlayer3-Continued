@@ -66,23 +66,23 @@ namespace TJAPlayer3
 		}
 		public override void ManagedCreateResources()
 		{
-			if( !base.NotActivated )
-			{
-				this.tx背景 = TJAPlayer3.tテクスチャの生成( SkinManager.Path( @"Graphics\1_Title\Background.png" ), false );
-				base.ManagedCreateResources();
-			}
+			if (this.NotActivated)
+				return;
+
+			Background = TJAPlayer3.CreateFDKTexture(SkinManager.Path(@"Graphics\StartUp\Background.png"), false);
+			base.ManagedCreateResources();
 		}
 		public override void ManagedReleaseResources()
 		{
-			if( !base.NotActivated )
-			{
-				TJAPlayer3.tテクスチャの解放( ref this.tx背景 );
-				base.ManagedReleaseResources();
-			}
+			if (this.NotActivated)
+				return;
+
+			TJAPlayer3.DisposeFDKTexture(ref Background);
+			base.ManagedReleaseResources();
 		}
 		public override int Draw()
 		{
-			if( !base.NotActivated )
+			if (IsActivated)
 			{
 				if( base.JustStartedUpdate )
 				{
@@ -103,8 +103,7 @@ namespace TJAPlayer3
 
 				// CSongs管理 s管理 = CDTXMania.Songs管理;
 
-				//if( this.tx背景 != null )
-				//	this.tx背景.t2D描画( CDTXMania.app.Device, 0, 0 );
+				Background?.Draw2D( TJAPlayer3.app.Device, 0, 0 );
 
 				#region [ this.str現在進行中 の決定 ]
 				//-----------------
@@ -182,7 +181,7 @@ namespace TJAPlayer3
 		#region [ private ]
 		//-----------------
 		private string str現在進行中 = "";
-		private FDKTexture tx背景;
+		private FDKTexture Background;
 		private CEnumSongs es;
 
 #if false

@@ -17,7 +17,7 @@ namespace TJAPlayer3
 		{
 			if( !base.NotActivated )
 			{
-				TJAPlayer3.tテクスチャの解放( ref this.txオプションパネル );
+				TJAPlayer3.DisposeFDKTexture( ref this.txオプションパネル );
 				base.Deactivate();
 			}
 		}
@@ -25,7 +25,7 @@ namespace TJAPlayer3
 		{
 			if( !base.NotActivated )
 			{
-				this.txオプションパネル = TJAPlayer3.tテクスチャの生成( SkinManager.Path( @"Graphics\Screen option panels.png" ), false );
+				this.txオプションパネル = TJAPlayer3.CreateFDKTexture( SkinManager.Path( @"Graphics\Screen option panels.png" ), false );
 				base.ManagedCreateResources();
 			}
 		}

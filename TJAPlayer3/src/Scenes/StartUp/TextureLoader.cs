@@ -54,15 +54,15 @@ namespace TJAPlayer3
 
         internal FDKTexture TxC(string FileName)
         {
-            return TJAPlayer3.tテクスチャの生成(SkinManager.Path(BASE + FileName));
+            return TJAPlayer3.CreateFDKTexture(SkinManager.Path(BASE + FileName));
         }
         internal FDKTextureAf TxCAf(string FileName)
         {
-            return TJAPlayer3.tテクスチャの生成Af(SkinManager.Path(BASE + FileName));
+            return TJAPlayer3.CreateFDKTextureAf(SkinManager.Path(BASE + FileName));
         }
         internal FDKTexture TxCGen(string FileName)
         {
-            return TJAPlayer3.tテクスチャの生成(SkinManager.Path(BASE + GAME + GENRE + FileName + ".png"));
+            return TJAPlayer3.CreateFDKTexture(SkinManager.Path(BASE + GAME + GENRE + FileName + ".png"));
         }
 
         public void LoadTexture()
@@ -72,7 +72,6 @@ namespace TJAPlayer3
             Tile_White = TxC(@"Tile_White.png");
             Menu_Title = TxC(@"Menu_Title.png");
             Menu_Highlight = TxC(@"Menu_Highlight.png");
-            Enum_Song = TxC(@"Enum_Song.png");
             Scanning_Loudness = TxC(@"Scanning_Loudness.png");
             Overlay = TxC(@"Overlay.png");
             NamePlate = new FDKTexture[2];
@@ -80,11 +79,14 @@ namespace TJAPlayer3
             NamePlate[1] = TxC(@"2P_NamePlate.png");
             #endregion
             #region 1_タイトル画面
+            /*
             Title_Background = TxC(TITLE + @"Background.png");
             Title_Menu = TxC(TITLE + @"Menu.png");
+            */
             #endregion
 
             #region 2_コンフィグ画面
+            /*
             Config_Background = TxC(CONFIG + @"Background.png");
             Config_Cursor = TxC(CONFIG + @"Cursor.png");
             Config_ItemBox = TxC(CONFIG + @"ItemBox.png");
@@ -93,6 +95,7 @@ namespace TJAPlayer3
             Config_Font = TxC(CONFIG + @"Font.png");
             Config_Font_Bold = TxC(CONFIG + @"Font_Bold.png");
             Config_Enum_Song = TxC(CONFIG + @"Enum_Song.png");
+            */
             #endregion
 
             #region 3_選曲画面
@@ -502,35 +505,37 @@ namespace TJAPlayer3
             #endregion
 
             #region 7_終了画面
-            Exit_Background = TxC(EXIT + @"Background.png");
+            //Exit_Background = TxC(EXIT + @"Background.png");
             #endregion
 
         }
 
         public void DisposeTexture()
         {
-            TJAPlayer3.tテクスチャの解放(ref Title_Background);
-            TJAPlayer3.tテクスチャの解放(ref Title_Menu);
+            //TJAPlayer3.tテクスチャの解放(ref Title_Background);
+            //TJAPlayer3.tテクスチャの解放(ref Title_Menu);
             #region 共通
-            TJAPlayer3.tテクスチャの解放(ref Tile_Black);
-            TJAPlayer3.tテクスチャの解放(ref Tile_White);
-            TJAPlayer3.tテクスチャの解放(ref Menu_Title);
-            TJAPlayer3.tテクスチャの解放(ref Menu_Highlight);
-            TJAPlayer3.tテクスチャの解放(ref Enum_Song);
-            TJAPlayer3.tテクスチャの解放(ref Scanning_Loudness);
-            TJAPlayer3.tテクスチャの解放(ref Overlay);
+            TJAPlayer3.DisposeFDKTexture(ref Tile_Black);
+            TJAPlayer3.DisposeFDKTexture(ref Tile_White);
+            TJAPlayer3.DisposeFDKTexture(ref Menu_Title);
+            TJAPlayer3.DisposeFDKTexture(ref Menu_Highlight);
+            TJAPlayer3.DisposeFDKTexture(ref Scanning_Loudness);
+            TJAPlayer3.DisposeFDKTexture(ref Overlay);
             for (int i = 0; i < 2; i++)
             {
-                TJAPlayer3.tテクスチャの解放(ref NamePlate[i]);
+                TJAPlayer3.DisposeFDKTexture(ref NamePlate[i]);
             }
 
             #endregion
             #region 1_タイトル画面
+            /*
             TJAPlayer3.tテクスチャの解放(ref Title_Background);
             TJAPlayer3.tテクスチャの解放(ref Title_Menu);
+            */
             #endregion
 
             #region 2_コンフィグ画面
+            /*
             TJAPlayer3.tテクスチャの解放(ref Config_Background);
             TJAPlayer3.tテクスチャの解放(ref Config_Cursor);
             TJAPlayer3.tテクスチャの解放(ref Config_ItemBox);
@@ -539,112 +544,113 @@ namespace TJAPlayer3
             TJAPlayer3.tテクスチャの解放(ref Config_Font);
             TJAPlayer3.tテクスチャの解放(ref Config_Font_Bold);
             TJAPlayer3.tテクスチャの解放(ref Config_Enum_Song);
+            */
             #endregion
 
             #region 3_選曲画面
-            TJAPlayer3.tテクスチャの解放(ref SongSelect_Background);
-            TJAPlayer3.tテクスチャの解放(ref SongSelect_Header);
-            TJAPlayer3.tテクスチャの解放(ref SongSelect_Footer);
-            TJAPlayer3.tテクスチャの解放(ref SongSelect_Difficulty);
-            TJAPlayer3.tテクスチャの解放(ref SongSelect_Auto);
-            TJAPlayer3.tテクスチャの解放(ref SongSelect_Level);
-            TJAPlayer3.tテクスチャの解放(ref SongSelect_Branch);
-            TJAPlayer3.tテクスチャの解放(ref SongSelect_Branch_Text);
-            TJAPlayer3.tテクスチャの解放(ref SongSelect_Bar_Center);
-            TJAPlayer3.tテクスチャの解放(ref SongSelect_Frame_Score);
-            TJAPlayer3.tテクスチャの解放(ref SongSelect_Frame_Box);
-            TJAPlayer3.tテクスチャの解放(ref SongSelect_Frame_BackBox);
-            TJAPlayer3.tテクスチャの解放(ref SongSelect_Frame_Random);
-            TJAPlayer3.tテクスチャの解放(ref SongSelect_Score_Select);
-            TJAPlayer3.tテクスチャの解放(ref SongSelect_GenreText);
-            TJAPlayer3.tテクスチャの解放(ref SongSelect_Cursor_Left);
-            TJAPlayer3.tテクスチャの解放(ref SongSelect_Cursor_Right);
+            TJAPlayer3.DisposeFDKTexture(ref SongSelect_Background);
+            TJAPlayer3.DisposeFDKTexture(ref SongSelect_Header);
+            TJAPlayer3.DisposeFDKTexture(ref SongSelect_Footer);
+            TJAPlayer3.DisposeFDKTexture(ref SongSelect_Difficulty);
+            TJAPlayer3.DisposeFDKTexture(ref SongSelect_Auto);
+            TJAPlayer3.DisposeFDKTexture(ref SongSelect_Level);
+            TJAPlayer3.DisposeFDKTexture(ref SongSelect_Branch);
+            TJAPlayer3.DisposeFDKTexture(ref SongSelect_Branch_Text);
+            TJAPlayer3.DisposeFDKTexture(ref SongSelect_Bar_Center);
+            TJAPlayer3.DisposeFDKTexture(ref SongSelect_Frame_Score);
+            TJAPlayer3.DisposeFDKTexture(ref SongSelect_Frame_Box);
+            TJAPlayer3.DisposeFDKTexture(ref SongSelect_Frame_BackBox);
+            TJAPlayer3.DisposeFDKTexture(ref SongSelect_Frame_Random);
+            TJAPlayer3.DisposeFDKTexture(ref SongSelect_Score_Select);
+            TJAPlayer3.DisposeFDKTexture(ref SongSelect_GenreText);
+            TJAPlayer3.DisposeFDKTexture(ref SongSelect_Cursor_Left);
+            TJAPlayer3.DisposeFDKTexture(ref SongSelect_Cursor_Right);
             for (int i = 0; i < SongSelect_Bar_Genre.Length; i++)
             {
-                TJAPlayer3.tテクスチャの解放(ref SongSelect_Bar_Genre[i]);
+                TJAPlayer3.DisposeFDKTexture(ref SongSelect_Bar_Genre[i]);
             }
             for (int i = 0; i < (int)Difficulty.Total; i++)
             {
-                TJAPlayer3.tテクスチャの解放(ref SongSelect_ScoreWindow[i]);
+                TJAPlayer3.DisposeFDKTexture(ref SongSelect_ScoreWindow[i]);
             }
 
             for (int i = 0; i < SongSelect_GenreBack.Length; i++)
             {
-                TJAPlayer3.tテクスチャの解放(ref SongSelect_GenreBack[i]);
+                TJAPlayer3.DisposeFDKTexture(ref SongSelect_GenreBack[i]);
             }
-            TJAPlayer3.tテクスチャの解放(ref SongSelect_ScoreWindow_Text);
+            TJAPlayer3.DisposeFDKTexture(ref SongSelect_ScoreWindow_Text);
             #endregion
 
             #region 4_読み込み画面
-            TJAPlayer3.tテクスチャの解放(ref SongLoading_Plate);
-            TJAPlayer3.tテクスチャの解放(ref SongLoading_FadeIn);
-            TJAPlayer3.tテクスチャの解放(ref SongLoading_FadeOut);
+            TJAPlayer3.DisposeFDKTexture(ref SongLoading_Plate);
+            TJAPlayer3.DisposeFDKTexture(ref SongLoading_FadeIn);
+            TJAPlayer3.DisposeFDKTexture(ref SongLoading_FadeOut);
             #endregion
 
             #region 5_演奏画面
             #region 共通
-            TJAPlayer3.tテクスチャの解放(ref Notes);
-            TJAPlayer3.tテクスチャの解放(ref Judge_Frame);
-            TJAPlayer3.tテクスチャの解放(ref SENotes);
-            TJAPlayer3.tテクスチャの解放(ref Notes_Arm);
-            TJAPlayer3.tテクスチャの解放(ref Judge);
+            TJAPlayer3.DisposeFDKTexture(ref Notes);
+            TJAPlayer3.DisposeFDKTexture(ref Judge_Frame);
+            TJAPlayer3.DisposeFDKTexture(ref SENotes);
+            TJAPlayer3.DisposeFDKTexture(ref Notes_Arm);
+            TJAPlayer3.DisposeFDKTexture(ref Judge);
 
-            TJAPlayer3.tテクスチャの解放(ref Judge_Meter);
-            TJAPlayer3.tテクスチャの解放(ref Bar);
-            TJAPlayer3.tテクスチャの解放(ref Bar_Branch);
+            TJAPlayer3.DisposeFDKTexture(ref Judge_Meter);
+            TJAPlayer3.DisposeFDKTexture(ref Bar);
+            TJAPlayer3.DisposeFDKTexture(ref Bar_Branch);
 
             #endregion
             #region キャラクター
 
             for (int i = 0; i < TJAPlayer3.Skin.Game_Chara_Ptn_Normal; i++)
             {
-                TJAPlayer3.tテクスチャの解放(ref Chara_Normal[i]);
+                TJAPlayer3.DisposeFDKTexture(ref Chara_Normal[i]);
             }
             for (int i = 0; i < TJAPlayer3.Skin.Game_Chara_Ptn_Clear; i++)
             {
-                TJAPlayer3.tテクスチャの解放(ref Chara_Normal_Cleared[i]);
-                TJAPlayer3.tテクスチャの解放(ref Chara_Normal_Maxed[i]);
+                TJAPlayer3.DisposeFDKTexture(ref Chara_Normal_Cleared[i]);
+                TJAPlayer3.DisposeFDKTexture(ref Chara_Normal_Maxed[i]);
             }
             for (int i = 0; i < TJAPlayer3.Skin.Game_Chara_Ptn_GoGo; i++)
             {
-                TJAPlayer3.tテクスチャの解放(ref Chara_GoGoTime[i]);
-                TJAPlayer3.tテクスチャの解放(ref Chara_GoGoTime_Maxed[i]);
+                TJAPlayer3.DisposeFDKTexture(ref Chara_GoGoTime[i]);
+                TJAPlayer3.DisposeFDKTexture(ref Chara_GoGoTime_Maxed[i]);
             }
             for (int i = 0; i < TJAPlayer3.Skin.Game_Chara_Ptn_10combo; i++)
             {
-                TJAPlayer3.tテクスチャの解放(ref Chara_10Combo[i]);
+                TJAPlayer3.DisposeFDKTexture(ref Chara_10Combo[i]);
             }
             for (int i = 0; i < TJAPlayer3.Skin.Game_Chara_Ptn_10combo_Max; i++)
             {
-                TJAPlayer3.tテクスチャの解放(ref Chara_10Combo_Maxed[i]);
+                TJAPlayer3.DisposeFDKTexture(ref Chara_10Combo_Maxed[i]);
             }
             for (int i = 0; i < TJAPlayer3.Skin.Game_Chara_Ptn_GoGoStart; i++)
             {
-                TJAPlayer3.tテクスチャの解放(ref Chara_GoGoStart[i]);
+                TJAPlayer3.DisposeFDKTexture(ref Chara_GoGoStart[i]);
             }
             for (int i = 0; i < TJAPlayer3.Skin.Game_Chara_Ptn_GoGoStart_Max; i++)
             {
-                TJAPlayer3.tテクスチャの解放(ref Chara_GoGoStart_Maxed[i]);
+                TJAPlayer3.DisposeFDKTexture(ref Chara_GoGoStart_Maxed[i]);
             }
             for (int i = 0; i < TJAPlayer3.Skin.Game_Chara_Ptn_ClearIn; i++)
             {
-                TJAPlayer3.tテクスチャの解放(ref Chara_Become_Cleared[i]);
+                TJAPlayer3.DisposeFDKTexture(ref Chara_Become_Cleared[i]);
             }
             for (int i = 0; i < TJAPlayer3.Skin.Game_Chara_Ptn_SoulIn; i++)
             {
-                TJAPlayer3.tテクスチャの解放(ref Chara_Become_Maxed[i]);
+                TJAPlayer3.DisposeFDKTexture(ref Chara_Become_Maxed[i]);
             }
             for (int i = 0; i < TJAPlayer3.Skin.Game_Chara_Ptn_Balloon_Breaking; i++)
             {
-                TJAPlayer3.tテクスチャの解放(ref Chara_Balloon_Breaking[i]);
+                TJAPlayer3.DisposeFDKTexture(ref Chara_Balloon_Breaking[i]);
             }
             for (int i = 0; i < TJAPlayer3.Skin.Game_Chara_Ptn_Balloon_Broke; i++)
             {
-                TJAPlayer3.tテクスチャの解放(ref Chara_Balloon_Broke[i]);
+                TJAPlayer3.DisposeFDKTexture(ref Chara_Balloon_Broke[i]);
             }
             for (int i = 0; i < TJAPlayer3.Skin.Game_Chara_Ptn_Balloon_Miss; i++)
             {
-                TJAPlayer3.tテクスチャの解放(ref Chara_Balloon_Miss[i]);
+                TJAPlayer3.DisposeFDKTexture(ref Chara_Balloon_Miss[i]);
             }
             #endregion
             #region 踊り子
@@ -652,142 +658,142 @@ namespace TJAPlayer3
             {
                 for (int p = 0; p < TJAPlayer3.Skin.Game_Dancer_Ptn; p++)
                 {
-                    TJAPlayer3.tテクスチャの解放(ref Dancer[i][p]);
+                    TJAPlayer3.DisposeFDKTexture(ref Dancer[i][p]);
                 }
             }
             #endregion
             #region モブ
             for (int i = 0; i < TJAPlayer3.Skin.Game_Mob_Ptn; i++)
             {
-                TJAPlayer3.tテクスチャの解放(ref Mob[i]);
+                TJAPlayer3.DisposeFDKTexture(ref Mob[i]);
             }
             #endregion
             #region フッター
-            TJAPlayer3.tテクスチャの解放(ref Mob_Footer);
+            TJAPlayer3.DisposeFDKTexture(ref Mob_Footer);
             #endregion
             #region 背景
-            TJAPlayer3.tテクスチャの解放(ref Background);
-            TJAPlayer3.tテクスチャの解放(ref Background_Up[0]);
-            TJAPlayer3.tテクスチャの解放(ref Background_Up[1]);
-            TJAPlayer3.tテクスチャの解放(ref Background_Up_Clear[0]);
-            TJAPlayer3.tテクスチャの解放(ref Background_Up_Clear[1]);
-            TJAPlayer3.tテクスチャの解放(ref Background_Down);
-            TJAPlayer3.tテクスチャの解放(ref Background_Down_Clear);
-            TJAPlayer3.tテクスチャの解放(ref Background_Down_Scroll);
+            TJAPlayer3.DisposeFDKTexture(ref Background);
+            TJAPlayer3.DisposeFDKTexture(ref Background_Up[0]);
+            TJAPlayer3.DisposeFDKTexture(ref Background_Up[1]);
+            TJAPlayer3.DisposeFDKTexture(ref Background_Up_Clear[0]);
+            TJAPlayer3.DisposeFDKTexture(ref Background_Up_Clear[1]);
+            TJAPlayer3.DisposeFDKTexture(ref Background_Down);
+            TJAPlayer3.DisposeFDKTexture(ref Background_Down_Clear);
+            TJAPlayer3.DisposeFDKTexture(ref Background_Down_Scroll);
 
             #endregion
             #region 太鼓
-            TJAPlayer3.tテクスチャの解放(ref Taiko_Background[0]);
-            TJAPlayer3.tテクスチャの解放(ref Taiko_Background[1]);
-            TJAPlayer3.tテクスチャの解放(ref Taiko_Frame[0]);
-            TJAPlayer3.tテクスチャの解放(ref Taiko_Frame[1]);
-            TJAPlayer3.tテクスチャの解放(ref Taiko_PlayerNumber[0]);
-            TJAPlayer3.tテクスチャの解放(ref Taiko_PlayerNumber[1]);
-            TJAPlayer3.tテクスチャの解放(ref Taiko_NamePlate[0]);
-            TJAPlayer3.tテクスチャの解放(ref Taiko_NamePlate[1]);
-            TJAPlayer3.tテクスチャの解放(ref Taiko_Base);
-            TJAPlayer3.tテクスチャの解放(ref Taiko_Don_Left);
-            TJAPlayer3.tテクスチャの解放(ref Taiko_Don_Right);
-            TJAPlayer3.tテクスチャの解放(ref Taiko_Ka_Left);
-            TJAPlayer3.tテクスチャの解放(ref Taiko_Ka_Right);
-            TJAPlayer3.tテクスチャの解放(ref Taiko_LevelUp);
-            TJAPlayer3.tテクスチャの解放(ref Taiko_LevelDown);
+            TJAPlayer3.DisposeFDKTexture(ref Taiko_Background[0]);
+            TJAPlayer3.DisposeFDKTexture(ref Taiko_Background[1]);
+            TJAPlayer3.DisposeFDKTexture(ref Taiko_Frame[0]);
+            TJAPlayer3.DisposeFDKTexture(ref Taiko_Frame[1]);
+            TJAPlayer3.DisposeFDKTexture(ref Taiko_PlayerNumber[0]);
+            TJAPlayer3.DisposeFDKTexture(ref Taiko_PlayerNumber[1]);
+            TJAPlayer3.DisposeFDKTexture(ref Taiko_NamePlate[0]);
+            TJAPlayer3.DisposeFDKTexture(ref Taiko_NamePlate[1]);
+            TJAPlayer3.DisposeFDKTexture(ref Taiko_Base);
+            TJAPlayer3.DisposeFDKTexture(ref Taiko_Don_Left);
+            TJAPlayer3.DisposeFDKTexture(ref Taiko_Don_Right);
+            TJAPlayer3.DisposeFDKTexture(ref Taiko_Ka_Left);
+            TJAPlayer3.DisposeFDKTexture(ref Taiko_Ka_Right);
+            TJAPlayer3.DisposeFDKTexture(ref Taiko_LevelUp);
+            TJAPlayer3.DisposeFDKTexture(ref Taiko_LevelDown);
             for (int i = 0; i < 6; i++)
             {
-                TJAPlayer3.tテクスチャの解放(ref Couse_Symbol[i]);
+                TJAPlayer3.DisposeFDKTexture(ref Couse_Symbol[i]);
             }
-            TJAPlayer3.tテクスチャの解放(ref Taiko_Score[0]);
-            TJAPlayer3.tテクスチャの解放(ref Taiko_Score[1]);
-            TJAPlayer3.tテクスチャの解放(ref Taiko_Score[2]);
-            TJAPlayer3.tテクスチャの解放(ref Taiko_Combo[0]);
-            TJAPlayer3.tテクスチャの解放(ref Taiko_Combo[1]);
-            TJAPlayer3.tテクスチャの解放(ref Taiko_Combo_Effect);
-            TJAPlayer3.tテクスチャの解放(ref Taiko_Combo_Text);
+            TJAPlayer3.DisposeFDKTexture(ref Taiko_Score[0]);
+            TJAPlayer3.DisposeFDKTexture(ref Taiko_Score[1]);
+            TJAPlayer3.DisposeFDKTexture(ref Taiko_Score[2]);
+            TJAPlayer3.DisposeFDKTexture(ref Taiko_Combo[0]);
+            TJAPlayer3.DisposeFDKTexture(ref Taiko_Combo[1]);
+            TJAPlayer3.DisposeFDKTexture(ref Taiko_Combo_Effect);
+            TJAPlayer3.DisposeFDKTexture(ref Taiko_Combo_Text);
             #endregion
             #region ゲージ
-            TJAPlayer3.tテクスチャの解放(ref Gauge[0]);
-            TJAPlayer3.tテクスチャの解放(ref Gauge[1]);
-            TJAPlayer3.tテクスチャの解放(ref Gauge_Base[0]);
-            TJAPlayer3.tテクスチャの解放(ref Gauge_Base[1]);
-            TJAPlayer3.tテクスチャの解放(ref Gauge_Line[0]);
-            TJAPlayer3.tテクスチャの解放(ref Gauge_Line[1]);
+            TJAPlayer3.DisposeFDKTexture(ref Gauge[0]);
+            TJAPlayer3.DisposeFDKTexture(ref Gauge[1]);
+            TJAPlayer3.DisposeFDKTexture(ref Gauge_Base[0]);
+            TJAPlayer3.DisposeFDKTexture(ref Gauge_Base[1]);
+            TJAPlayer3.DisposeFDKTexture(ref Gauge_Line[0]);
+            TJAPlayer3.DisposeFDKTexture(ref Gauge_Line[1]);
             for (int i = 0; i < TJAPlayer3.Skin.Game_Gauge_Rainbow_Ptn; i++)
             {
-                TJAPlayer3.tテクスチャの解放(ref Gauge_Rainbow[i]);
+                TJAPlayer3.DisposeFDKTexture(ref Gauge_Rainbow[i]);
             }
-            TJAPlayer3.tテクスチャの解放(ref Gauge_Soul);
-            TJAPlayer3.tテクスチャの解放(ref Gauge_Soul_Fire);
-            TJAPlayer3.tテクスチャの解放(ref Gauge_Soul_Explosion[0]);
-            TJAPlayer3.tテクスチャの解放(ref Gauge_Soul_Explosion[1]);
+            TJAPlayer3.DisposeFDKTexture(ref Gauge_Soul);
+            TJAPlayer3.DisposeFDKTexture(ref Gauge_Soul_Fire);
+            TJAPlayer3.DisposeFDKTexture(ref Gauge_Soul_Explosion[0]);
+            TJAPlayer3.DisposeFDKTexture(ref Gauge_Soul_Explosion[1]);
             #endregion
             #region 吹き出し
-            TJAPlayer3.tテクスチャの解放(ref Balloon_Combo[0]);
-            TJAPlayer3.tテクスチャの解放(ref Balloon_Combo[1]);
-            TJAPlayer3.tテクスチャの解放(ref Balloon_Roll);
-            TJAPlayer3.tテクスチャの解放(ref Balloon_Balloon);
-            TJAPlayer3.tテクスチャの解放(ref Balloon_Number_Roll);
-            TJAPlayer3.tテクスチャの解放(ref Balloon_Number_Combo);
+            TJAPlayer3.DisposeFDKTexture(ref Balloon_Combo[0]);
+            TJAPlayer3.DisposeFDKTexture(ref Balloon_Combo[1]);
+            TJAPlayer3.DisposeFDKTexture(ref Balloon_Roll);
+            TJAPlayer3.DisposeFDKTexture(ref Balloon_Balloon);
+            TJAPlayer3.DisposeFDKTexture(ref Balloon_Number_Roll);
+            TJAPlayer3.DisposeFDKTexture(ref Balloon_Number_Combo);
 
             for (int i = 0; i < 6; i++)
             {
-                TJAPlayer3.tテクスチャの解放(ref Balloon_Breaking[i]);
+                TJAPlayer3.DisposeFDKTexture(ref Balloon_Breaking[i]);
             }
             #endregion
             #region エフェクト
-            TJAPlayer3.tテクスチャの解放(ref Effects_Hit_Explosion);
-            TJAPlayer3.tテクスチャの解放(ref  Effects_Hit_Explosion_Big);
-            TJAPlayer3.tテクスチャの解放(ref Effects_Hit_FireWorks);
+            TJAPlayer3.DisposeFDKTexture(ref Effects_Hit_Explosion);
+            TJAPlayer3.DisposeFDKTexture(ref  Effects_Hit_Explosion_Big);
+            TJAPlayer3.DisposeFDKTexture(ref Effects_Hit_FireWorks);
 
-            TJAPlayer3.tテクスチャの解放(ref Effects_Fire);
-            TJAPlayer3.tテクスチャの解放(ref Effects_Rainbow);
+            TJAPlayer3.DisposeFDKTexture(ref Effects_Fire);
+            TJAPlayer3.DisposeFDKTexture(ref Effects_Rainbow);
 
-            TJAPlayer3.tテクスチャの解放(ref Effects_GoGoSplash);
+            TJAPlayer3.DisposeFDKTexture(ref Effects_GoGoSplash);
 
             for (int i = 0; i < 15; i++)
             {
-                TJAPlayer3.tテクスチャの解放(ref Effects_Hit_Great[i]);
-                TJAPlayer3.tテクスチャの解放(ref Effects_Hit_Great_Big[i]);
-                TJAPlayer3.tテクスチャの解放(ref Effects_Hit_Good[i]);
-                TJAPlayer3.tテクスチャの解放(ref Effects_Hit_Good_Big[i]);
+                TJAPlayer3.DisposeFDKTexture(ref Effects_Hit_Great[i]);
+                TJAPlayer3.DisposeFDKTexture(ref Effects_Hit_Great_Big[i]);
+                TJAPlayer3.DisposeFDKTexture(ref Effects_Hit_Good[i]);
+                TJAPlayer3.DisposeFDKTexture(ref Effects_Hit_Good_Big[i]);
             }
             for (int i = 0; i < TJAPlayer3.Skin.Game_Effect_Roll_Ptn; i++)
             {
-                TJAPlayer3.tテクスチャの解放(ref Effects_Roll[i]);
+                TJAPlayer3.DisposeFDKTexture(ref Effects_Roll[i]);
             }
             #endregion
             #region レーン
             for (int i = 0; i < 3; i++)
             {
-                TJAPlayer3.tテクスチャの解放(ref Lane_Base[i]);
-                TJAPlayer3.tテクスチャの解放(ref Lane_Text[i]);
+                TJAPlayer3.DisposeFDKTexture(ref Lane_Base[i]);
+                TJAPlayer3.DisposeFDKTexture(ref Lane_Text[i]);
             }
-            TJAPlayer3.tテクスチャの解放(ref Lane_Red);
-            TJAPlayer3.tテクスチャの解放(ref Lane_Blue);
-            TJAPlayer3.tテクスチャの解放(ref Lane_Yellow);
-            TJAPlayer3.tテクスチャの解放(ref Lane_Background_Main);
-            TJAPlayer3.tテクスチャの解放(ref Lane_Background_Sub);
-            TJAPlayer3.tテクスチャの解放(ref Lane_Background_GoGo);
+            TJAPlayer3.DisposeFDKTexture(ref Lane_Red);
+            TJAPlayer3.DisposeFDKTexture(ref Lane_Blue);
+            TJAPlayer3.DisposeFDKTexture(ref Lane_Yellow);
+            TJAPlayer3.DisposeFDKTexture(ref Lane_Background_Main);
+            TJAPlayer3.DisposeFDKTexture(ref Lane_Background_Sub);
+            TJAPlayer3.DisposeFDKTexture(ref Lane_Background_GoGo);
 
             #endregion
             #region 終了演出
             for (int i = 0; i < 5; i++)
             {
-                TJAPlayer3.tテクスチャの解放(ref End_Clear_L[i]);
-                TJAPlayer3.tテクスチャの解放(ref End_Clear_R[i]);
+                TJAPlayer3.DisposeFDKTexture(ref End_Clear_L[i]);
+                TJAPlayer3.DisposeFDKTexture(ref End_Clear_R[i]);
             }
-            TJAPlayer3.tテクスチャの解放(ref End_Clear_Text);
-            TJAPlayer3.tテクスチャの解放(ref End_Clear_Text_Effect);
+            TJAPlayer3.DisposeFDKTexture(ref End_Clear_Text);
+            TJAPlayer3.DisposeFDKTexture(ref End_Clear_Text_Effect);
             #endregion
             #region ゲームモード
-            TJAPlayer3.tテクスチャの解放(ref GameMode_Timer_Tick);
-            TJAPlayer3.tテクスチャの解放(ref GameMode_Timer_Frame);
+            TJAPlayer3.DisposeFDKTexture(ref GameMode_Timer_Tick);
+            TJAPlayer3.DisposeFDKTexture(ref GameMode_Timer_Frame);
             #endregion
             #region ステージ失敗
-            TJAPlayer3.tテクスチャの解放(ref Failed_Game);
-            TJAPlayer3.tテクスチャの解放(ref Failed_Stage);
+            TJAPlayer3.DisposeFDKTexture(ref Failed_Game);
+            TJAPlayer3.DisposeFDKTexture(ref Failed_Stage);
             #endregion
             #region ランナー
-            TJAPlayer3.tテクスチャの解放(ref Runner);
+            TJAPlayer3.DisposeFDKTexture(ref Runner);
             #endregion
             #region DanC
             DanC_Background?.Dispose();
@@ -804,26 +810,26 @@ namespace TJAPlayer3
             DanC_Screen?.Dispose();
             #endregion
             #region PuchiChara
-            TJAPlayer3.tテクスチャの解放(ref PuchiChara);
+            TJAPlayer3.DisposeFDKTexture(ref PuchiChara);
             #endregion
             #endregion
 
             #region 6_結果発表
-            TJAPlayer3.tテクスチャの解放(ref Result_Background);
-            TJAPlayer3.tテクスチャの解放(ref Result_FadeIn);
-            TJAPlayer3.tテクスチャの解放(ref Result_Gauge);
-            TJAPlayer3.tテクスチャの解放(ref Result_Gauge_Base);
-            TJAPlayer3.tテクスチャの解放(ref Result_Judge);
-            TJAPlayer3.tテクスチャの解放(ref Result_Header);
-            TJAPlayer3.tテクスチャの解放(ref Result_Number);
-            TJAPlayer3.tテクスチャの解放(ref Result_Panel);
-            TJAPlayer3.tテクスチャの解放(ref Result_Score_Text);
-            TJAPlayer3.tテクスチャの解放(ref Result_Score_Number);
-            TJAPlayer3.tテクスチャの解放(ref Result_Dan);
+            TJAPlayer3.DisposeFDKTexture(ref Result_Background);
+            TJAPlayer3.DisposeFDKTexture(ref Result_FadeIn);
+            TJAPlayer3.DisposeFDKTexture(ref Result_Gauge);
+            TJAPlayer3.DisposeFDKTexture(ref Result_Gauge_Base);
+            TJAPlayer3.DisposeFDKTexture(ref Result_Judge);
+            TJAPlayer3.DisposeFDKTexture(ref Result_Header);
+            TJAPlayer3.DisposeFDKTexture(ref Result_Number);
+            TJAPlayer3.DisposeFDKTexture(ref Result_Panel);
+            TJAPlayer3.DisposeFDKTexture(ref Result_Score_Text);
+            TJAPlayer3.DisposeFDKTexture(ref Result_Score_Number);
+            TJAPlayer3.DisposeFDKTexture(ref Result_Dan);
             #endregion
 
             #region 7_終了画面
-            TJAPlayer3.tテクスチャの解放(ref Exit_Background);
+            //TJAPlayer3.DisposeFDKTexture(ref Exit_Background);
             #endregion
 
         }
@@ -833,17 +839,19 @@ namespace TJAPlayer3
             Tile_White,
             Menu_Title,
             Menu_Highlight,
-            Enum_Song,
             Scanning_Loudness,
             Overlay;
         public FDKTexture[] NamePlate;
         #endregion
         #region 1_タイトル画面
+        /*
         public FDKTexture Title_Background,
             Title_Menu;
+        */
         #endregion
 
         #region 2_コンフィグ画面
+        /*
         public FDKTexture Config_Background,
             Config_Cursor,
             Config_ItemBox,
@@ -852,6 +860,7 @@ namespace TJAPlayer3
             Config_Font,
             Config_Font_Bold,
             Config_Enum_Song;
+        */
         #endregion
 
         #region 3_選曲画面
@@ -1034,8 +1043,9 @@ namespace TJAPlayer3
         #endregion
 
         #region 7_終了画面
-        public FDKTexture Exit_Background/* , */
-                                       /*Exit_Text */;
+        //public FDKTexture Exit_Background
+        /* , */
+                                       /*Exit_Text */ //;
         #endregion
 
     }

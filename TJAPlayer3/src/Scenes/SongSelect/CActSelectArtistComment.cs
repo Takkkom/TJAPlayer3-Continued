@@ -22,7 +22,7 @@ namespace TJAPlayer3
 			if( cスコア != null )
 			{
 				Bitmap image = new Bitmap( 1, 1 );
-				TJAPlayer3.tテクスチャの解放( ref this.txArtist );
+				TJAPlayer3.DisposeFDKTexture( ref this.txArtist );
 				this.strArtist = cスコア.譜面情報.アーティスト名;
 				if( ( this.strArtist != null ) && ( this.strArtist.Length > 0 ) )
 				{
@@ -52,7 +52,7 @@ namespace TJAPlayer3
 						this.txArtist = null;
 					}
 				}
-				TJAPlayer3.tテクスチャの解放( ref this.txComment );
+				TJAPlayer3.DisposeFDKTexture( ref this.txComment );
 				//this.strComment = cスコア.譜面情報.コメント;
                 this.strComment = cスコア.譜面情報.ジャンル;
 				if( ( this.strComment != null ) && ( this.strComment.Length > 0 ) )
@@ -138,8 +138,8 @@ namespace TJAPlayer3
 		}
 		public override void Deactivate()
 		{
-			TJAPlayer3.tテクスチャの解放( ref this.txArtist );
-			TJAPlayer3.tテクスチャの解放( ref this.txComment );
+			TJAPlayer3.DisposeFDKTexture( ref this.txArtist );
+			TJAPlayer3.DisposeFDKTexture( ref this.txComment );
 			if( this.ft描画用フォント != null )
 			{
 				this.ft描画用フォント.Dispose();
@@ -160,8 +160,8 @@ namespace TJAPlayer3
 		{
 			if( !base.NotActivated )
 			{
-				TJAPlayer3.tテクスチャの解放( ref this.txArtist );
-				TJAPlayer3.tテクスチャの解放( ref this.txComment );
+				TJAPlayer3.DisposeFDKTexture( ref this.txArtist );
+				TJAPlayer3.DisposeFDKTexture( ref this.txComment );
 				base.ManagedReleaseResources();
 			}
 		}

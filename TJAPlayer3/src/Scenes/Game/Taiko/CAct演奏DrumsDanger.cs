@@ -42,7 +42,7 @@ namespace TJAPlayer3
 		{
 			if( !base.NotActivated )
 			{
-				TJAPlayer3.tテクスチャの解放( ref this.txDANGER );
+				TJAPlayer3.DisposeFDKTexture( ref this.txDANGER );
 				base.ManagedReleaseResources();
 			}
 		}

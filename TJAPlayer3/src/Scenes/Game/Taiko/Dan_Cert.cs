@@ -199,7 +199,7 @@ namespace TJAPlayer3
 
         public override void ManagedCreateResources()
         {
-            Dan_Plate = TJAPlayer3.tテクスチャの生成(Path.GetDirectoryName(TJAPlayer3.DTX.strファイル名の絶対パス) + @"\Dan_Plate.png");
+            Dan_Plate = TJAPlayer3.CreateFDKTexture(Path.GetDirectoryName(TJAPlayer3.DTX.strファイル名の絶対パス) + @"\Dan_Plate.png");
             Sound_Section = TJAPlayer3._SoundManager.CreateFDKSound(SkinManager.Path(@"Sounds\Dan\Section.ogg"), SoundGroup.SoundEffect);
             Sound_Failed = TJAPlayer3._SoundManager.CreateFDKSound(SkinManager.Path(@"Sounds\Dan\Failed.ogg"), SoundGroup.SoundEffect);
             base.ManagedCreateResources();
