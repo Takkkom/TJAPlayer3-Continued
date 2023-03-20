@@ -241,6 +241,13 @@ namespace TJAPlayer3
 			}
 		}
 
+		private void ResetTitleKeys()
+		{
+			SelectedSongTitleKey = null;
+			SelectedSongSubTitleKey = null;
+			SelectedSongBoxTitleKey = null;
+		}
+
 
 		public delegate void DGSortFunc(List<SongInfoNode> songList, E楽器パート eInst, int order, params object[] p);
 		/// <summary>
@@ -270,6 +277,7 @@ namespace TJAPlayer3
 					}
                 }
 
+				ResetTitleKeys();
 				this.t現在選択中の曲を元に曲バーを再構成する();
 			}
 		}
@@ -310,9 +318,7 @@ namespace TJAPlayer3
 				this.t選択曲が変更された(false);                                 // #27648 項目数変更を反映させる
 				this.b選択曲が変更された = true;
 
-				SelectedSongTitleKey = null;
-				SelectedSongSubTitleKey = null;
-				SelectedSongBoxTitleKey = null;
+				ResetTitleKeys();
 			}
 			return ret;
 		}
@@ -351,9 +357,7 @@ namespace TJAPlayer3
 				this.t選択曲が変更された(false);                                 // #27648 項目数変更を反映させる
 				this.b選択曲が変更された = true;
 
-				SelectedSongTitleKey = null;
-				SelectedSongSubTitleKey = null;
-				SelectedSongBoxTitleKey = null;
+				ResetTitleKeys();
 			}
 			return ret;
 		}
@@ -387,9 +391,7 @@ namespace TJAPlayer3
 
 			t選択曲が変更された(false);             // スクロールバー用に今何番目を選択しているかを更新
 
-			SelectedSongTitleKey = null;
-			SelectedSongSubTitleKey = null;
-			SelectedSongBoxTitleKey = null;
+			ResetTitleKeys();
 
 			TJAPlayer3.stage選曲.t選択曲変更通知();      // スクロール完了＝選択曲変更！
 
@@ -422,9 +424,7 @@ namespace TJAPlayer3
 
 			this.t選択曲が変更された(false);             // スクロールバー用に今何番目を選択しているかを更新
 
-			SelectedSongTitleKey = null;
-			SelectedSongSubTitleKey = null;
-			SelectedSongBoxTitleKey = null;
+			ResetTitleKeys();
 
 			TJAPlayer3.stage選曲.t選択曲変更通知();      // スクロール完了＝選択曲変更！
 												//-----------------
@@ -542,15 +542,8 @@ namespace TJAPlayer3
 
 				if (this.r現在選択中の曲 != null)          // r現在選択中の曲==null とは、「最初songlist.dbが無かった or 検索したが1曲もない」
 				{
-					this.r現在選択中の曲 = searchCurrentBreadcrumbsPosition(TJAPlayer3.Songs管理.list曲ルート, this.r現在選択中の曲.strBreadcrumbs);
-
-					foreach (var node in TJAPlayer3.Songs管理.list曲ルート)
-					{
-						if (node.NowNodeType == SongInfoNode.NodeType.BOX)
-						{
-							TJAPlayer3.Songs管理.AddOtherBox(node.list子リスト);
-						}
-					}
+					this.r現在選択中の曲 = TJAPlayer3.Songs管理.list曲ルート[0];
+					NowSongIndex = 0;
 
 					if (bRemakeSongTitleBar)                    // 選曲画面以外に居るときには再構成しない (非活性化しているときに実行すると例外となる)
 					{
@@ -562,31 +555,6 @@ namespace TJAPlayer3
 			this.Deactivate();
 			this.r現在選択中の曲 = null;
 			this.Activate();
-		}
-
-
-		/// <summary>
-		/// 現在選曲している位置を検索する
-		/// (曲一覧クラスを新しいものに入れ替える際に用いる)
-		/// </summary>
-		/// <param name="ln">検索対象のList</param>
-		/// <param name="bc">検索するパンくずリスト(文字列)</param>
-		/// <returns></returns>
-		private SongInfoNode searchCurrentBreadcrumbsPosition(List<SongInfoNode> ln, string bc)
-		{
-			foreach (SongInfoNode n in ln)
-			{
-				if (n.strBreadcrumbs == bc)
-				{
-					return n;
-				}
-				else if (n.list子リスト != null && n.list子リスト.Count > 0)    // 子リストが存在するなら、再帰で探す
-				{
-					SongInfoNode r = searchCurrentBreadcrumbsPosition(n.list子リスト, bc);
-					if (r != null) return r;
-				}
-			}
-			return null;
 		}
 
 		/// <summary>

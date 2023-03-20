@@ -1052,6 +1052,14 @@ namespace TJAPlayer3
 
 			this.t曲リストへ後処理を適用する( this.list曲ルート );
 
+			foreach (var node in list曲ルート)
+			{
+				if (node.NowNodeType == SongInfoNode.NodeType.BOX)
+				{
+					TJAPlayer3.Songs管理.AddOtherBox(node.list子リスト);
+				}
+			}
+
 			#region [ skin名で比較して、systemスキンとboxdefスキンに重複があれば、boxdefスキン側を削除する ]
 			string[] systemSkinNames = SkinManager.GetSkinName( TJAPlayer3.Skin.strSystemSkinSubfolders );
 			List<string> l = new List<string>( listStrBoxDefSkinSubfolderFullName );
