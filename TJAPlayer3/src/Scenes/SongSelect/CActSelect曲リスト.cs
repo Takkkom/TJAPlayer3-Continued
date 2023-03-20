@@ -144,8 +144,25 @@ namespace TJAPlayer3
 			this.bIsEnumeratingSongs = false;
 		}
 
+		public List<SongInfoNode> FlattenList(List<SongInfoNode> list, bool useOpenFlag = false)
+		{
+			List<SongInfoNode> ret = new List<SongInfoNode>();
 
-		// メソッド
+			for (int i = 0; i < list.Count; i++)
+			{
+				var e = list[i];
+				if (!useOpenFlag || !e.IsOpenBox) ret.Add(e);
+
+				if (e.NowNodeType == SongInfoNode.NodeType.BOX &&
+					(!useOpenFlag || e.IsOpenBox))
+				{
+					ret.AddRange(FlattenList(e.list子リスト, useOpenFlag));
+				}
+			}
+			return ret;
+		}
+
+			// メソッド
 
 		public int n現在のアンカ難易度レベルに最も近い難易度レベルを返す(SongInfoNode song)
 		{
@@ -244,6 +261,15 @@ namespace TJAPlayer3
 				//				CDTXMania.Songs管理.t曲リストのソート3_演奏回数の多い順( songList, eInst, order );
 				sf(songList, eInst, order, p);
 				//				this.r現在選択中の曲 = CDTXMania
+
+				foreach(var node in TJAPlayer3.Songs管理.list曲ルート)
+                {
+					if (node.NowNodeType == SongInfoNode.NodeType.BOX)
+                    {
+						TJAPlayer3.Songs管理.AddOtherBox(node.list子リスト);
+					}
+                }
+
 				this.t現在選択中の曲を元に曲バーを再構成する();
 			}
 		}
@@ -275,7 +301,11 @@ namespace TJAPlayer3
 
 			if ((this.r現在選択中の曲.list子リスト != null) && (this.r現在選択中の曲.list子リスト.Count > 0))
 			{
-				this.r現在選択中の曲 = this.r現在選択中の曲.list子リスト[0];
+				r現在選択中の曲.IsOpenBox = true;
+
+				NowSongList = FlattenList(TJAPlayer3.Songs管理.list曲ルート, true);
+				r現在選択中の曲 = GetSideSong(r現在選択中の曲.OpenIndex, out NowSongIndex);
+
 				this.t現在選択中の曲を元に曲バーを再構成する();
 				this.t選択曲が変更された(false);                                 // #27648 項目数変更を反映させる
 				this.b選択曲が変更された = true;
@@ -313,7 +343,10 @@ namespace TJAPlayer3
 			//Trace.TraceInformation( "SKIN変更BoxDef  : "+  CSkin.strBoxDefSkinSubfolderFullName );
 			if (this.r現在選択中の曲.r親ノード != null)
 			{
-				this.r現在選択中の曲 = this.r現在選択中の曲.r親ノード;
+				r現在選択中の曲.r親ノード.IsOpenBox = false;
+				r現在選択中の曲.r親ノード.OpenIndex = NowSongIndex - NowSongList.IndexOf(this.r現在選択中の曲.r親ノード.list子リスト[0]);
+				r現在選択中の曲 = GetSideSong(-r現在選択中の曲.r親ノード.OpenIndex, out NowSongIndex);
+
 				this.t現在選択中の曲を元に曲バーを再構成する();
 				this.t選択曲が変更された(false);                                 // #27648 項目数変更を反映させる
 				this.b選択曲が変更された = true;
@@ -326,11 +359,9 @@ namespace TJAPlayer3
 		}
 		public void t現在選択中の曲を元に曲バーを再構成する()
 		{
+			NowSongList = FlattenList(TJAPlayer3.Songs管理.list曲ルート, true);
+			r現在選択中の曲 = NowSongList[NowSongIndex];
 			this.tバーの初期化();
-			for (int i = 0; i < 13; i++)
-			{
-				//this.t曲名バーの生成( i, this.stバー情報[ i ].strタイトル文字列, this.stバー情報[ i ].ForeColor, this.stバー情報[i].BackColor);
-			}
 		}
 		public void t次に移動()
 		{
@@ -345,9 +376,7 @@ namespace TJAPlayer3
 
 			// 選択曲と選択行を１つ下の行に移動。
 
-			r現在選択中の曲 = r次の曲(this.r現在選択中の曲);
-			n現在の選択行 = (n現在の選択行 + 1) % TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Count;
-
+			r現在選択中の曲 = GetSideSong(1, out NowSongIndex);
 
 			// 選択曲から７つ下のパネル（＝新しく最下部に表示されるパネル。消えてしまう一番上のパネルを再利用する）に、新しい曲の情報を記載する。
 
@@ -380,7 +409,7 @@ namespace TJAPlayer3
 
 			// 選択曲と選択行を１つ上の行に移動。
 
-			r現在選択中の曲 = this.r前の曲(this.r現在選択中の曲);
+			r現在選択中の曲 = GetSideSong(-1, out NowSongIndex);
 			n現在の選択行 = ((this.n現在の選択行 - 1) + TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Count) % TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Count;
 
 
@@ -422,17 +451,14 @@ namespace TJAPlayer3
 			// 曲毎に表示しているスキル値を、新しい難易度レベルに合わせて取得し直す。（表示されている13曲全部。）
 
 			int halfCount = (TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Count - 1) / 2;
-			SongInfoNode song = this.r現在選択中の曲;
-			for (int i = 0; i < halfCount; i++)
-				song = this.r前の曲(song);
 
 			for (int i = 0; i < TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Count; i++)
 			{
+				SongInfoNode song = GetSideSong(i - halfCount, out _);
 				for (int m = 0; m < 3; m++)
 				{
 					this.stバー情報[i].nスキル値[m] = (int)song.arスコア[this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す(song)].譜面情報.最大スキル[m];
 				}
-				song = this.r次の曲(song);
 			}
 
 
@@ -485,17 +511,14 @@ namespace TJAPlayer3
 			// 曲毎に表示しているスキル値を、新しい難易度レベルに合わせて取得し直す。（表示されている13曲全部。）
 
 			int halfCount = (TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Count - 1) / 2;
-			SongInfoNode song = this.r現在選択中の曲;
-			for (int i = 0; i < halfCount; i++)
-				song = this.r前の曲(song);
 
 			for (int i = 0; i < TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Count; i++)
 			{
+				SongInfoNode song = GetSideSong(i - halfCount, out _);
 				for (int m = 0; m < 3; m++)
 				{
 					this.stバー情報[i].nスキル値[m] = (int)song.arスコア[this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す(song)].譜面情報.最大スキル[m];
 				}
-				song = this.r次の曲(song);
 			}
 
 
@@ -520,21 +543,19 @@ namespace TJAPlayer3
 				if (this.r現在選択中の曲 != null)          // r現在選択中の曲==null とは、「最初songlist.dbが無かった or 検索したが1曲もない」
 				{
 					this.r現在選択中の曲 = searchCurrentBreadcrumbsPosition(TJAPlayer3.Songs管理.list曲ルート, this.r現在選択中の曲.strBreadcrumbs);
+
+					foreach (var node in TJAPlayer3.Songs管理.list曲ルート)
+					{
+						if (node.NowNodeType == SongInfoNode.NodeType.BOX)
+						{
+							TJAPlayer3.Songs管理.AddOtherBox(node.list子リスト);
+						}
+					}
+
 					if (bRemakeSongTitleBar)                    // 選曲画面以外に居るときには再構成しない (非活性化しているときに実行すると例外となる)
 					{
 						this.t現在選択中の曲を元に曲バーを再構成する();
 					}
-#if false          // list子リストの中まではmatchしてくれないので、検索ロジックは手書きで実装 (searchCurrentBreadcrumbs())
-					string bc = this.r現在選択中の曲.strBreadcrumbs;
-					Predicate<C曲リストノード> match = delegate( C曲リストノード c )
-					{
-						return ( c.strBreadcrumbs.Equals( bc ) );
-					};
-					int nMatched = CDTXMania.Songs管理.list曲ルート.FindIndex( match );
-
-					this.r現在選択中の曲 = ( nMatched == -1 ) ? null : CDTXMania.Songs管理.list曲ルート[ nMatched ];
-					this.t現在選択中の曲を元に曲バーを再構成する();
-#endif
 					return;
 				}
 			}
@@ -642,7 +663,9 @@ namespace TJAPlayer3
 			// 現在選択中の曲がない（＝はじめての活性化）なら、現在選択中の曲をルートの先頭ノードに設定する。
 
 			if ((this.r現在選択中の曲 == null) && (TJAPlayer3.Songs管理.list曲ルート.Count > 0))
+            {
 				this.r現在選択中の曲 = TJAPlayer3.Songs管理.list曲ルート[0];
+			}
 
 
 
@@ -651,7 +674,7 @@ namespace TJAPlayer3
 
 			stバー情報 = new STバー情報[TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Count];
 
-			this.tバーの初期化();
+			this.t現在選択中の曲を元に曲バーを再構成する();
 
 			this.ct三角矢印アニメ = new Counter();
 
@@ -917,13 +940,14 @@ namespace TJAPlayer3
 			// まだ選択中の曲が決まってなければ、曲ツリールートの最初の曲にセットする。
 
 			if ((this.r現在選択中の曲 == null) && (TJAPlayer3.Songs管理.list曲ルート.Count > 0))
-				this.r現在選択中の曲 = TJAPlayer3.Songs管理.list曲ルート[0];
-
+			{
+				t現在選択中の曲を元に曲バーを再構成する();
+			}
 
 			// 本ステージは、(1)登場アニメフェーズ → (2)通常フェーズ　と二段階にわけて進む。
 
 
-			// 進行。
+				// 進行。
 			if (!IsScroll) ct三角矢印アニメ.TickLoop();
 			else ct三角矢印アニメ.NowValue = 0;
 
@@ -1475,6 +1499,10 @@ namespace TJAPlayer3
 		//private CTexture tx難易度星;
 		//private CTexture tx譜面分岐中央パネル用;
 
+		private int NowSongIndex;
+
+		private List<SongInfoNode> NowSongList;
+
 		private long n矢印スクロール用タイマ値;
 
 		private int nCurrentPosition = 0;
@@ -1498,39 +1526,19 @@ namespace TJAPlayer3
 			}
 			return Eバー種別.Other;
 		}
-		private SongInfoNode r次の曲(SongInfoNode song)
-		{
-			if (song == null)
-				return null;
-
-			List<SongInfoNode> list = (song.r親ノード != null) ? song.r親ノード.list子リスト : TJAPlayer3.Songs管理.list曲ルート;
-
-			int index = list.IndexOf(song);
-
-			if (index < 0)
-				return null;
-
-			if (index == (list.Count - 1))
-				return list[0];
-
-			return list[index + 1];
-		}
-		private SongInfoNode r前の曲(SongInfoNode song)
-		{
-			if (song == null)
-				return null;
-
-			List<SongInfoNode> list = (song.r親ノード != null) ? song.r親ノード.list子リスト : TJAPlayer3.Songs管理.list曲ルート;
-
-			int index = list.IndexOf(song);
-
-			if (index < 0)
-				return null;
-
-			if (index == 0)
-				return list[list.Count - 1];
-
-			return list[index - 1];
+		private SongInfoNode GetSideSong(int change, out int index)
+        {
+			if (change > 0)
+			{
+				index = (NowSongIndex + change) % NowSongList.Count;
+				return NowSongList[index];
+			}
+			else
+            {
+				index = NowSongIndex + change;
+				index -= NowSongList.Count * ((index - NowSongList.Count + 1) / NowSongList.Count);
+				return NowSongList[index];
+			}
 		}
 		private void tスキル値の描画(int x, int y, int nスキル値)
 		{
@@ -1590,18 +1598,11 @@ namespace TJAPlayer3
 		}
 		private void tバーの初期化()
 		{
-			SongInfoNode song = this.r現在選択中の曲;
-
-			if (song == null)
-				return;
-
 			int halfCount = ((TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Count - 1) / 2);
-
-			for (int i = 0; i < halfCount; i++)
-				song = this.r前の曲(song);
 
 			for (int i = 0; i < TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Count; i++)
 			{
+				SongInfoNode song = GetSideSong(i - halfCount, out _);
 				this.stバー情報[i].strタイトル文字列 = song.strタイトル;
 				this.stバー情報[i].strジャンル = song.strジャンル;
 				this.stバー情報[i].NodeType = song.NowNodeType;
@@ -1622,8 +1623,6 @@ namespace TJAPlayer3
 					this.stバー情報[i].nスキル値[j] = (int)song.arスコア[this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す(song)].譜面情報.最大スキル[j];
 
 				this.stバー情報[i].ttkタイトル = this.GenerateTitleKey(this.stバー情報[i].strタイトル文字列, this.stバー情報[i].ForeColor, this.stバー情報[i].BackColor);
-
-				song = this.r次の曲(song);
 			}
 
 			this.n現在の選択行 = halfCount;

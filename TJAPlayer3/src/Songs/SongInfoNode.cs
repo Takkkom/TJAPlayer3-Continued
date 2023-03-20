@@ -34,6 +34,8 @@ namespace TJAPlayer3
 				this.bDTXFilesで始まるフォルダ名のBOXである = !value;
 			}
 		}
+		public bool IsOpenBox;
+		public int OpenIndex;
 		public Color col文字色 = Color.White;
         public Color ForeColor = Color.White;
         public Color BackColor = Color.Black;
