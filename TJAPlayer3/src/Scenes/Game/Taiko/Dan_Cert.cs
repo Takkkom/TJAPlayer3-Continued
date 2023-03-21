@@ -28,7 +28,7 @@ namespace TJAPlayer3
             NowShowingNumber = number;
             Counter_In = new Counter(0, 999, 1, TJAPlayer3.Timer);
             ScreenPoint = new double[] { TJAPlayer3.Skin.nScrollFieldBGX[0] - TJAPlayer3.Tx.DanC_Screen.TextureSize.Width / 2, 1280 };
-            TJAPlayer3.stage演奏ドラム画面.ReSetScore(TJAPlayer3.DTX.List_DanSongs[NowShowingNumber].ScoreInit, TJAPlayer3.DTX.List_DanSongs[NowShowingNumber].ScoreDiff);
+            TJAPlayer3.stage演奏ドラム画面.ReSetScore(TJAPlayer3.DTX.List_DanSongs[NowShowingNumber].ScoreInit, TJAPlayer3.DTX.List_DanSongs[NowShowingNumber].ScoreDiff, 0);
             IsAnimating = true;
             TJAPlayer3.stage演奏ドラム画面.actPanel.SetPanelString(TJAPlayer3.DTX.List_DanSongs[NowShowingNumber].Title, TJAPlayer3.DTX.List_DanSongs[NowShowingNumber].Genre, 1 + NowShowingNumber + "曲目");
             Sound_Section?.PlaySoundFromBegin();
@@ -57,7 +57,7 @@ namespace TJAPlayer3
             }
             IsEnded = false;
 
-            if (TJAPlayer3.stage選曲.n確定された曲の難易度 == (int)Difficulty.Dan) IsAnimating = true;
+            if (TJAPlayer3.stage選曲.n確定された曲の難易度[0] == (int)Difficulty.Dan) IsAnimating = true;
             base.Activate();
         }
 
@@ -215,7 +215,7 @@ namespace TJAPlayer3
 
         public override int Draw()
         {
-            if (TJAPlayer3.stage選曲.n確定された曲の難易度 != (int)Difficulty.Dan) return base.Draw();
+            if (TJAPlayer3.stage選曲.n確定された曲の難易度[0] != (int)Difficulty.Dan) return base.Draw();
             Counter_In?.Tick();
             Counter_Wait?.Tick();
             Counter_Out?.Tick();

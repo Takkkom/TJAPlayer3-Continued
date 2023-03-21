@@ -83,8 +83,8 @@ namespace TJAPlayer3
                 if( !TJAPlayer3._MainConfig.b太鼓パートAutoPlay )
                 {
                     Drums.nハイスコア = TJAPlayer3.stage選曲.r確定されたスコア.譜面情報.nハイスコア; //2015.06.16 kairera0467 他難易度の上書き防止。
-                    if( TJAPlayer3.stage選曲.r確定されたスコア.譜面情報.nハイスコア[ TJAPlayer3.stage選曲.n確定された曲の難易度 ] < (int)this.actScore.Get( E楽器パート.DRUMS, 0 ) )
-                        Drums.nハイスコア[ TJAPlayer3.stage選曲.n確定された曲の難易度 ] = (int)this.actScore.Get( E楽器パート.DRUMS, 0 );
+                    if( TJAPlayer3.stage選曲.r確定されたスコア.譜面情報.nハイスコア[ TJAPlayer3.stage選曲.n確定された曲の難易度[0]] < (int)this.actScore.Get( E楽器パート.DRUMS, 0 ) )
+                        Drums.nハイスコア[ TJAPlayer3.stage選曲.n確定された曲の難易度[0]] = (int)this.actScore.Get( E楽器パート.DRUMS, 0 );
                 }
                 var danC = TJAPlayer3.stage演奏ドラム画面.actDan.GetExam();
                 for (int i = 0; i < danC.Length; i++)
@@ -1027,7 +1027,7 @@ namespace TJAPlayer3
 			}
 			else if ( TJAPlayer3.stage選曲.r確定された曲 != null )
 			{
-				this.actStatusPanels.tラベル名からステータスパネルを決定する( TJAPlayer3.stage選曲.r確定された曲.ar難易度ラベル[ TJAPlayer3.stage選曲.n確定された曲の難易度 ] );
+				this.actStatusPanels.tラベル名からステータスパネルを決定する( TJAPlayer3.stage選曲.r確定された曲.ar難易度ラベル[ TJAPlayer3.stage選曲.n確定された曲の難易度[0]] );
 			}
 		}
 
@@ -1076,7 +1076,7 @@ namespace TJAPlayer3
                 this.n現在の連打数[ nPlayer ]++;
                 this.nBranch_roll[ nPlayer ]++;
                 this.n合計連打数[ nPlayer ]++;
-                if(TJAPlayer3.stage選曲.n確定された曲の難易度 != (int)Difficulty.Dan) this.actRollChara.Start(nPlayer);
+                if(TJAPlayer3.stage選曲.n確定された曲の難易度[0] != (int)Difficulty.Dan) this.actRollChara.Start(nPlayer);
 
                 //2017.01.28 DD CDTXから直接呼び出す
                 if (pChip.bGOGOTIME && !TJAPlayer3._MainConfig.ShinuchiMode) //2018.03.11 kairera0467 チップに埋め込んだフラグから読み取る
@@ -1738,14 +1738,14 @@ namespace TJAPlayer3
 			}
 			if ( ( ( pChip.e楽器パート != E楽器パート.UNKNOWN ) ) && ( eJudgeResult != E判定.Miss ) && ( eJudgeResult != E判定.Bad ) && ( eJudgeResult != E判定.Poor ) && ( pChip.nチャンネル番号 <= 0x14 || pChip.nチャンネル番号 == 0x1A || pChip.nチャンネル番号 == 0x1B ) )
 			{
-				int nCombos = this.actCombo.n現在のコンボ数[ nPlayer ];
-                long nInit = TJAPlayer3.DTX.nScoreInit[ 0, TJAPlayer3.stage選曲.n確定された曲の難易度 ];
-                long nDiff = TJAPlayer3.DTX.nScoreDiff[ TJAPlayer3.stage選曲.n確定された曲の難易度 ];
+				int nCombos = this.actCombo.n現在のコンボ数[nPlayer];
+                long nInit = TJAPlayer3.DTX.nScoreInit[ 0, TJAPlayer3.stage選曲.n確定された曲の難易度[nPlayer]];
+                long nDiff = TJAPlayer3.DTX.nScoreDiff[ TJAPlayer3.stage選曲.n確定された曲の難易度[nPlayer]];
                 long nAddScore = 0;
 
                 if( TJAPlayer3._MainConfig.ShinuchiMode )  //2016.07.04 kairera0467 真打モード。
                 {
-                    nAddScore = TJAPlayer3.DTX.nScoreInit[ 1, TJAPlayer3.stage選曲.n確定された曲の難易度 ];
+                    nAddScore = TJAPlayer3.DTX.nScoreInit[ 1, TJAPlayer3.stage選曲.n確定された曲の難易度[nPlayer]];
                     if( nAddScore == 0 )
                     {
                         //可の時に0除算をするとエラーが発生するため、それらしい数値を自動算出する。
@@ -2771,7 +2771,7 @@ namespace TJAPlayer3
 				}
                 else if ( keyboard.GetKeyPressed( (int) SlimDX.DirectInput.Key.D1 ) )
                 {
-                    if (!TJAPlayer3.DTX.bHasBranch[TJAPlayer3.stage選曲.n確定された曲の難易度]) return;
+                    if (!TJAPlayer3.DTX.bHasBranch[TJAPlayer3.stage選曲.n確定された曲の難易度[0]]) return;
 
                     if( this.n分岐した回数[ 0 ] < TJAPlayer3.DTX.listBRANCH.Count )
                         this.t分岐処理( 0, TJAPlayer3.DTX.listBRANCH[ this.n分岐した回数[ 0 ] ].n命令時のChipList番号, 0 );
@@ -2783,7 +2783,7 @@ namespace TJAPlayer3
                 }
                 else if ( keyboard.GetKeyPressed( (int) SlimDX.DirectInput.Key.D2 ) )		// #24243 2011.1.16 yyagi UI for InputAdjustTime in playing screen.
                 {
-                    if (!TJAPlayer3.DTX.bHasBranch[TJAPlayer3.stage選曲.n確定された曲の難易度]) return;
+                    if (!TJAPlayer3.DTX.bHasBranch[TJAPlayer3.stage選曲.n確定された曲の難易度[0]]) return;
 
                     if ( this.n分岐した回数[ 0 ] < TJAPlayer3.DTX.listBRANCH.Count )
                         this.t分岐処理( 1, TJAPlayer3.DTX.listBRANCH[ this.n分岐した回数[ 0 ] ].n命令時のChipList番号, 0 );
@@ -2795,7 +2795,7 @@ namespace TJAPlayer3
                 }
                 else if ( keyboard.GetKeyPressed( (int) SlimDX.DirectInput.Key.D3 ) )		// #24243 2011.1.16 yyagi UI for InputAdjustTime in playing screen.
                 {
-                    if (!TJAPlayer3.DTX.bHasBranch[TJAPlayer3.stage選曲.n確定された曲の難易度]) return;
+                    if (!TJAPlayer3.DTX.bHasBranch[TJAPlayer3.stage選曲.n確定された曲の難易度[0]]) return;
 
                     if ( this.n分岐した回数[ 0 ] < TJAPlayer3.DTX.listBRANCH.Count )
                         this.t分岐処理( 2, TJAPlayer3.DTX.listBRANCH[ this.n分岐した回数[ 0 ] ].n命令時のChipList番号, 0 );
@@ -4274,7 +4274,21 @@ namespace TJAPlayer3
                 }
             }
 
-            this.ReSetScore(TJAPlayer3.DTX.nScoreInit[0, TJAPlayer3.stage選曲.n確定された曲の難易度], TJAPlayer3.DTX.nScoreDiff[TJAPlayer3.stage選曲.n確定された曲の難易度]);
+            for (int i = 0; i < TJAPlayer3._MainConfig.nPlayerCount; i++)
+            {
+                Chart dTX = TJAPlayer3.DTX;
+                switch (i) //2017.08.11 kairera0467
+                {
+                    case 0:
+                        break;
+                    case 1:
+                        dTX = TJAPlayer3.DTX_2P;
+                        break;
+                    default:
+                        break;
+                }
+                this.ReSetScore(dTX.nScoreInit[0, TJAPlayer3.stage選曲.n確定された曲の難易度[i]], TJAPlayer3.DTX.nScoreDiff[TJAPlayer3.stage選曲.n確定された曲の難易度[i]], i);
+            }
             this.nHand = new int[]{ 0, 0, 0, 0 };
         }
 
@@ -4644,7 +4658,7 @@ namespace TJAPlayer3
             }
 		}
 
-        public void ReSetScore(int scoreInit, int scoreDiff)
+        public void ReSetScore(int scoreInit, int scoreDiff, int player)
         {
             //一打目の処理落ちがひどいので、あらかじめここで点数の計算をしておく。
             // -1だった場合、その前を引き継ぐ。
@@ -4653,14 +4667,26 @@ namespace TJAPlayer3
             int nAddScore = 0;
             int[] n倍率 = { 0, 1, 2, 4, 8 };
 
-            if( TJAPlayer3.DTX.nScoreModeTmp == 1 )
+            Chart dTX = TJAPlayer3.DTX;
+            switch (player) //2017.08.11 kairera0467
+            {
+                case 0:
+                    break;
+                case 1:
+                    dTX = TJAPlayer3.DTX_2P;
+                    break;
+                default:
+                    break;
+            }
+
+            if (dTX.nScoreModeTmp == 1 )
             {
                 for( int i = 0; i < 11; i++ )
                 {
                     this.nScore[ i ] = (int)( nInit + ( nDiff * ( i ) ) );
                 }
             }
-            else if( TJAPlayer3.DTX.nScoreModeTmp == 2 )
+            else if(dTX.nScoreModeTmp == 2 )
             {
                 for( int i = 0; i < 5; i++ )
                 {

@@ -51,11 +51,11 @@ namespace TJAPlayer3
                 return this.act曲リスト.IsScroll;
             }
         }
-        public int n確定された曲の難易度
-        {
-            get;
-            private set;
-        }
+		public int[] n確定された曲の難易度
+		{
+			get;
+			private set;
+		} = new int[5];
         public string str確定された曲のジャンル
         {
             get;
@@ -114,7 +114,7 @@ namespace TJAPlayer3
 			base.ChildActivities.Add( this.actSortSongs = new CActSortSongs() );
 			base.ChildActivities.Add( this.actShowCurrentPosition = new CActSelectShowCurrentPosition() );
 			base.ChildActivities.Add( this.actQuickConfig = new CActSelectQuickConfig() );
-			//base.list子Activities.Add( this.act難易度選択画面 = new CActSelect難易度選択画面() );
+			base.ChildActivities.Add( this.act難易度選択画面 = new CActSelect難易度選択画面() );
 
 			this.CommandHistory = new CCommandHistory();		// #24063 2011.1.16 yyagi
 		}
@@ -177,7 +177,7 @@ namespace TJAPlayer3
 				for( int i = 0; i < 4; i++ )
 					this.ctキー反復用[ i ] = new Counter( 0, 0, 0, TJAPlayer3.Timer );
 
-                //this.act難易度選択画面.bIsDifficltSelect = true;
+                this.act難易度選択画面.bIsDifficltSelect = false;
 				base.Activate();
 
 				this.actステータスパネル.t選択曲が変更された();	// 最大ランクを更新
@@ -359,11 +359,6 @@ namespace TJAPlayer3
 				this.bBGM再生済み = true;
 			}
 
-
-			//Debug.WriteLine( "パンくず=" + this.r現在選択中の曲.strBreadcrumbs );
-			if (this.ctDiffSelect移動待ち != null)
-				this.ctDiffSelect移動待ち.Tick();
-
 			// キー入力
 			if (base.eフェーズID == BaseScene.Eフェーズ.共通_通常状態
 				&& TJAPlayer3.CurrentOccupyingInputPlugin == null)
@@ -380,7 +375,8 @@ namespace TJAPlayer3
 					return 0;
 				}
 				#endregion
-				if (!this.actSortSongs.bIsActivePopupMenu && !this.actQuickConfig.bIsActivePopupMenu /*&&  !this.act難易度選択画面.bIsDifficltSelect */ )
+				if (!this.actSortSongs.bIsActivePopupMenu && !this.actQuickConfig.bIsActivePopupMenu &&  
+					!this.act難易度選択画面.bIsDifficltSelect && act難易度選択画面.InOutCounter.NowValue == act難易度選択画面.InOutCounter.EndValue)
 				{
 					#region [ ESC ]
 					if (TJAPlayer3.Input管理.Keyboard.GetKeyPressed((int)SlimDX.DirectInput.Key.Escape) && (this.act曲リスト.r現在選択中の曲 != null))// && (  ) ) )
@@ -513,12 +509,17 @@ namespace TJAPlayer3
 									switch (this.act曲リスト.r現在選択中の曲.NowNodeType)
 									{
 										case SongInfoNode.NodeType.SCORE:
-											if (TJAPlayer3.Skin.sound曲決定音.b読み込み成功)
-												TJAPlayer3.Skin.sound曲決定音.t再生する();
-											else
+											if (n現在選択中の曲の難易度 >= (int)Difficulty.Tower)
+											{
 												TJAPlayer3.Skin.sound決定音.t再生する();
 
-											this.SelectSong();
+												this.SelectSong();
+											}
+											else
+											{
+												TJAPlayer3.Skin.sound決定音.t再生する();
+												act難易度選択画面.Open();
+                                            }
 											break;
 										case SongInfoNode.NodeType.BOX:
 											{
@@ -619,16 +620,7 @@ namespace TJAPlayer3
 				this.actQuickConfig.t進行描画();
 			}
 			//------------------------------
-			//if (this.act難易度選択画面.bIsDifficltSelect)
-			//{
-
-			//    if (this.ctDiffSelect移動待ち.n現在の値 == this.ctDiffSelect移動待ち.n終了値)
-			//    {
-			//        this.act難易度選択画面.On進行描画();
-			//        CDTXMania.act文字コンソール.tPrint(0, 0, C文字コンソール.Eフォント種別.赤, "NowStage:DifficltSelect");
-			//    }
-			//    CDTXMania.act文字コンソール.tPrint(0, 16, C文字コンソール.Eフォント種別.赤, "Count:" + this.ctDiffSelect移動待ち.n現在の値);
-			//}
+			this.act難易度選択画面.Draw();
 			//------------------------------
 
 
@@ -784,7 +776,7 @@ namespace TJAPlayer3
 		public CActSelect演奏履歴パネル act演奏履歴パネル;
 		public CActSelect曲リスト act曲リスト;
 		private CActSelectShowCurrentPosition actShowCurrentPosition;
-        private CActSelect難易度選択画面 act難易度選択画面;
+        public CActSelect難易度選択画面 act難易度選択画面;
 
 		public CActSortSongs actSortSongs;
 		private CActSelectQuickConfig actQuickConfig;
@@ -803,7 +795,6 @@ namespace TJAPlayer3
   //      private CTexture[] tx難易度別背景 = new CTexture[5];
   //      private CTexture tx難易度名;
   //      private CTexture tx下部テキスト;
-        private Counter ctDiffSelect移動待ち;
 
 		private FDKTexture Background;
 		private FDKTexture[] GenreBacks = new FDKTexture[9];
@@ -957,8 +948,8 @@ namespace TJAPlayer3
 				}
 			}
 			this.r確定された曲 = song.listランダム用ノードリスト[ song.stackランダム演奏番号.Pop() ];
-			this.n確定された曲の難易度 = this.act曲リスト.n現在のアンカ難易度レベルに最も近い難易度レベルを返す( this.r確定された曲 );
-			this.r確定されたスコア = this.r確定された曲.arスコア[ this.n確定された曲の難易度 ];
+			this.n確定された曲の難易度[0] = this.act曲リスト.n現在のアンカ難易度レベルに最も近い難易度レベルを返す( this.r確定された曲 );
+			this.r確定されたスコア = this.r確定された曲.arスコア[ this.n確定された曲の難易度[0]];
             this.str確定された曲のジャンル = this.r確定された曲.strジャンル;
 			this.eフェードアウト完了時の戻り値 = E戻り値.選曲した;
 			this.actFOtoNowLoading.StartFadeOut();					// #27787 2012.3.10 yyagi 曲決定時の画面フェードアウトの省略
@@ -987,8 +978,11 @@ namespace TJAPlayer3
 		{
 			this.r確定された曲 = this.act曲リスト.r現在選択中の曲;
 			this.r確定されたスコア = this.act曲リスト.r現在選択中のスコア;
-			this.n確定された曲の難易度 = this.act曲リスト.n現在選択中の曲の現在の難易度レベル;
-            this.str確定された曲のジャンル = this.r確定された曲.strジャンル;
+			for (int player = 0; player < TJAPlayer3._MainConfig.nPlayerCount; player++)
+			{
+				this.n確定された曲の難易度[player] = this.act曲リスト.n現在選択中の曲の現在の難易度レベル;
+			}
+			this.str確定された曲のジャンル = this.r確定された曲.strジャンル;
             if ( ( this.r確定された曲 != null ) && ( this.r確定されたスコア != null ) )
 			{
 				this.eフェードアウト完了時の戻り値 = E戻り値.選曲した;
@@ -997,11 +991,14 @@ namespace TJAPlayer3
 			}
 			TJAPlayer3.Skin.bgm選曲画面.t停止する();
 		}
-		public void t曲を選択する( int nCurrentLevel )
+		public void t曲を選択する( int[] nCurrentLevel )
 		{
 			this.r確定された曲 = this.act曲リスト.r現在選択中の曲;
 			this.r確定されたスコア = this.act曲リスト.r現在選択中のスコア;
-			this.n確定された曲の難易度 = nCurrentLevel;
+			for (int player = 0; player < TJAPlayer3._MainConfig.nPlayerCount; player++)
+			{
+				this.n確定された曲の難易度[player] = nCurrentLevel[player];
+			}
             this.str確定された曲のジャンル = this.r確定された曲.strジャンル;
             if ( ( this.r確定された曲 != null ) && ( this.r確定されたスコア != null ) )
 			{

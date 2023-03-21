@@ -191,7 +191,10 @@ namespace TJAPlayer3
 			this.bフィルイン中 = false;
             this.n待機中の大音符の座標 = 0;
             this.actGame.t叩ききりまショー_初期化();
-            base.ReSetScore(TJAPlayer3.DTX.nScoreInit[0, TJAPlayer3.stage選曲.n確定された曲の難易度], TJAPlayer3.DTX.nScoreDiff[TJAPlayer3.stage選曲.n確定された曲の難易度]);
+            for (int player = 0; player < TJAPlayer3._MainConfig.nPlayerCount; player++)
+            {
+                base.ReSetScore(TJAPlayer3.DTX.nScoreInit[0, TJAPlayer3.stage選曲.n確定された曲の難易度[player]], TJAPlayer3.DTX.nScoreDiff[TJAPlayer3.stage選曲.n確定された曲の難易度[player]], player);
+            }
 			base.Activate();
 
 			// MODIFY_BEGIN #25398 2011.06.07 FROM
@@ -273,7 +276,7 @@ namespace TJAPlayer3
             //    this.stream = new StreamWriter("noteTest.txt", false);
             //}
             // Discord Presence の更新
-            var difficultyName = TJAPlayer3.DifficultyNumberToEnum(TJAPlayer3.stage選曲.n確定された曲の難易度).ToString();
+            var difficultyName = TJAPlayer3.DifficultyNumberToEnum(TJAPlayer3.stage選曲.n確定された曲の難易度[0]).ToString();
             Discord.UpdatePresence(TJAPlayer3._MainConfig.SendDiscordPlayingInformation ? TJAPlayer3.DTX.TITLE + ".tja" : "",
                 Properties.Discord.Stage_InGame + (TJAPlayer3._MainConfig.b太鼓パートAutoPlay == true ? " (" + Properties.Discord.Info_IsAuto + ")" : ""),
                 0,

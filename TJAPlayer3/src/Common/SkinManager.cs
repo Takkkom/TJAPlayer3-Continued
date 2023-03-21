@@ -2526,6 +2526,16 @@ namespace TJAPlayer3
             public int SongSelect_Bar_Center_Box_Title_X { get; set; } = 640;
             public int SongSelect_Bar_Center_Box_Title_Y { get; set; } = 78;
 
+            public int[] SongSelect_DifficultySelection_Item_X { get; set; } = new int[] { 230, 300, 370, 447, 547, 647, 747 };
+            public int[] SongSelect_DifficultySelection_Item_Y { get; set; } = new int[] { 0, 0, 0, 0, 0, 0, 0 };
+
+            public int[] SongSelect_DifficultySelection_Cursor_X { get; set; } = new int[] { 185, 255, 325, 402, 502, 602, 702 };
+            public int[] SongSelect_DifficultySelection_Cursor_Y { get; set; } = new int[] { 0, 0, 0, 0, 0, 0, 0 };
+
+            public int SongSelect_DifficultySelection_Level_Offset_X { get; set; } = 32;
+            public int SongSelect_DifficultySelection_Level_Offset_Y { get; set; } = 480;
+            public int SongSelect_DifficultySelection_Level_Padding { get; set; } = 20;
+
             public SkinConfigColor SongSelect_ForeColor_JPOP { get; set; } = new SkinConfigColor("#FFFFFF");
             public SkinConfigColor SongSelect_ForeColor_Anime { get; set; } = new SkinConfigColor("#FFFFFF");
             public SkinConfigColor SongSelect_ForeColor_VOCALOID { get; set; } = new SkinConfigColor("#FFFFFF");

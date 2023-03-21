@@ -3038,9 +3038,9 @@ namespace TJAPlayer3
                         this.b譜面が存在する[i] = false;
                 }
                 #region[ 読み込ませるコースを決定 ]
-                if (this.b譜面が存在する[TJAPlayer3.stage選曲.n確定された曲の難易度] == false)
+                if (this.b譜面が存在する[TJAPlayer3.stage選曲.n確定された曲の難易度[nPlayerSide]] == false)
                 {
-                    n読み込むコース = TJAPlayer3.stage選曲.n確定された曲の難易度;
+                    n読み込むコース = TJAPlayer3.stage選曲.n確定された曲の難易度[nPlayerSide];
                     n読み込むコース++;
                     for (int n = 1; n < (int)Difficulty.Total; n++)
                     {
@@ -3055,7 +3055,7 @@ namespace TJAPlayer3
                     }
                 }
                 else
-                    n読み込むコース = TJAPlayer3.stage選曲.n確定された曲の難易度;
+                    n読み込むコース = TJAPlayer3.stage選曲.n確定された曲の難易度[nPlayerSide];
                 #endregion
 
                 //指定したコースの譜面の命令を消去する。
