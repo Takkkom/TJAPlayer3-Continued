@@ -23,8 +23,8 @@
   ],
   "SongSelect_Bar_Count": 15,
   "SongSelect_Bar_X": [
-    -160,
     -260,
+    -160,
     -60,
     40,
     140,
@@ -58,6 +58,38 @@
   ],
   "SongSelect_Bar_Genre_Box_Flag_Offset_X": 0,
   "SongSelect_Bar_Genre_Box_Flag_Offset_Y": -14,
+  "SongSelect_Bar_BG_Rect": [
+    [
+      0,
+      0,
+      40,
+      620
+    ],
+    [
+      40,
+      0,
+      40,
+      620
+    ],
+    [
+      80,
+      0,
+      332,
+      620
+    ],
+    [
+      412,
+      0,
+      40,
+      620
+    ],
+    [
+      452,
+      0,
+      40,
+      620
+    ]
+  ],
   "SongSelect_Bar_Center_X": [
     448,
     473,
@@ -94,6 +126,47 @@
   "SongSelect_Bar_Center_Title_Y": 126,
   "SongSelect_Bar_Center_SubTitle_X": 707,
   "SongSelect_Bar_Center_SubTitle_Y": 543,
+  "SongSelect_Bar_Center_Box_Title_X": 640,
+  "SongSelect_Bar_Center_Box_Title_Y": 78,
+  "SongSelect_DifficultySelection_Item_X": [
+    230,
+    300,
+    370,
+    447,
+    547,
+    647,
+    747
+  ],
+  "SongSelect_DifficultySelection_Item_Y": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "SongSelect_DifficultySelection_Cursor_X": [
+    185,
+    255,
+    325,
+    402,
+    502,
+    602,
+    702
+  ],
+  "SongSelect_DifficultySelection_Cursor_Y": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "SongSelect_DifficultySelection_Level_Offset_X": 32,
+  "SongSelect_DifficultySelection_Level_Offset_Y": 480,
+  "SongSelect_DifficultySelection_Level_Padding": 20,
   "SongSelect_ForeColor_JPOP": {
     "R": 255,
     "G": 255,

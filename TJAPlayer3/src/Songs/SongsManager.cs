@@ -972,6 +972,7 @@ namespace TJAPlayer3
 
 			#region [ BOXノードなら子リストに <<BACK を入れ、子リストに後処理を適用する ]
 			//-----------------------------
+			for (int i = 0; i < nodes.Count; i++)
 			{
 				SongInfoNode itemBack = new SongInfoNode();
 				itemBack.NowNodeType = SongInfoNode.NodeType.BACKBOX;
@@ -999,12 +1000,9 @@ namespace TJAPlayer3
 					"BOX を出ます。" :
 					"Exit from the BOX.";
 
-				for (int i = 0; i < nodes.Count; i++)
+				if (i % 9 == 0)
 				{
-					if (i % 9 == 0)
-					{
-						nodes.Insert(i, itemBack);
-					}
+					nodes.Insert(i, itemBack);
 				}
 
 				#region [ ログ出力 ]

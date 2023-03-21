@@ -426,6 +426,10 @@ namespace FDK
         {
             this.Draw2D(device, x - (this.TextureSize.Width / 2 * this.Scaling.X), y - (TextureSize.Height / 2 * this.Scaling.Y), 1f, this.FullImage);
         }
+        public void t2D拡大率考慮中央基準描画(Device device, int x, int y, Rectangle rectangle)
+        {
+            this.Draw2D(device, x - (rectangle.Width / 2 * this.Scaling.X), y - (rectangle.Height / 2 * this.Scaling.Y), 1f, rectangle);
+        }
         public void t2D拡大率考慮中央基準描画(Device device, float x, float y)
         {
             this.t2D拡大率考慮下中心基準描画(device, (int)x, (int)y);

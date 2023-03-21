@@ -2496,7 +2496,7 @@ namespace TJAPlayer3
             public int[] SongSelect_Auto_X { get; set; } = new int[] { 60, 950 };
             public int[] SongSelect_Auto_Y { get; set; } = new int[] { 650, 650 };
             public int SongSelect_Bar_Count { get; set; } = 15;
-            public int[] SongSelect_Bar_X { get; set; } = new int[] { -160, -260, -60, 40, 140, 241, 341, 
+            public int[] SongSelect_Bar_X { get; set; } = new int[] { -260, -160, -60, 40, 140, 241, 341, 
                 590, 
                 840, 941, 1041, 1142, 1242, 1343, 1443 };
             public int[] SongSelect_Bar_Y { get; set; } = new int[] { 103, 103, 103, 103, 103, 103, 103,
@@ -2505,6 +2505,14 @@ namespace TJAPlayer3
 
             public int SongSelect_Bar_Genre_Box_Flag_Offset_X { get; set; } = 0;
             public int SongSelect_Bar_Genre_Box_Flag_Offset_Y { get; set; } = -14;
+
+            public int[][] SongSelect_Bar_BG_Rect { get; set; } = new int[][] {
+                new int[] { 0, 0, 40, 620 },
+                new int[] { 40, 0, 40, 620 },
+                new int[] { 80, 0, 332, 620 },
+                new int[] { 412, 0, 40, 620 },
+                new int[] { 452, 0, 40, 620 },
+            };
 
             public int[] SongSelect_Bar_Center_X { get; set; } = new int[] { 448, 473, 809 };
             public int[] SongSelect_Bar_Center_Y { get; set; } = new int[] { 103, 103, 103 };

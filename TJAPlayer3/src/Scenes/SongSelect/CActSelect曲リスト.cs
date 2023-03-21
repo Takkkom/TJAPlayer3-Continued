@@ -695,6 +695,7 @@ namespace TJAPlayer3
 
 			for (int i = 0; i < 9; i++)
 			{
+				Bar_BGs[i] = TJAPlayer3.CreateFDKTexture(SkinManager.Path($@"Graphics\SongSelect\Bar_BG_{i}.png"));
 				Bar_Genres[i] = TJAPlayer3.CreateFDKTexture(SkinManager.Path($@"Graphics\SongSelect\Bar_Genre_{i}.png"));
 				Bar_Genre_Box_Flag[i] = TJAPlayer3.CreateFDKTexture(SkinManager.Path($@"Graphics\SongSelect\Bar_Genre_Box_Flag_{i}.png"));
 				Bar_Center_Genres[i] = TJAPlayer3.CreateFDKTexture(SkinManager.Path($@"Graphics\SongSelect\Bar_Center_Genre_{i}.png"));
@@ -838,6 +839,7 @@ namespace TJAPlayer3
 
 			for (int i = 0; i < 9; i++)
 			{
+				TJAPlayer3.DisposeFDKTexture(ref Bar_BGs[i]);
 				TJAPlayer3.DisposeFDKTexture(ref Bar_Genres[i]);
 				TJAPlayer3.DisposeFDKTexture(ref Bar_Genre_Box_Flag[i]);
 				TJAPlayer3.DisposeFDKTexture(ref Bar_Center_Genres[i]);
@@ -915,7 +917,7 @@ namespace TJAPlayer3
 			// 本ステージは、(1)登場アニメフェーズ → (2)通常フェーズ　と二段階にわけて進む。
 
 
-				// 進行。
+			// 進行。
 			if (!IsScroll) ct三角矢印アニメ.TickLoop();
 			else ct三角矢印アニメ.NowValue = 0;
 
@@ -987,15 +989,208 @@ namespace TJAPlayer3
 			float barCenterScale = BarCenterOpen.NowValue / 1000.0f;
 			int barCenterMoveX = (int)((TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Center_Rect[1][2] / 2.0f) * (barCenterScale - 1.0f));
 
-			double diffBoxValue = TJAPlayer3.stage選曲.act難易度選択画面.BarMoveCounter.NowValue / 1000.0;
-			diffBoxValue = Math.Sin(Math.Sin(diffBoxValue * Math.PI / 2.0) * Math.PI / 2.0);
+			double barMoveValue = TJAPlayer3.stage選曲.act難易度選択画面.BarMoveCounter.NowValue / 1000.0;
+			double diffBoxValue = Math.Sin(Math.Sin(barMoveValue * Math.PI / 2.0) * Math.PI / 2.0);
 			if (!TJAPlayer3.stage選曲.act難易度選択画面.bIsDifficltSelect)
 			{
+				barMoveValue = 1.0 - barMoveValue;
 				diffBoxValue = 1.0 - diffBoxValue;
 			}
 
 			#region [ (2) 通常フェーズの描画。]
 			//-----------------
+
+			/*
+			for (int i = 1; i < TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Count - 1; i++)    // パネルは全13枚。
+			{
+				int lastIndex = TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Count - 1;
+				int center = lastIndex / 2;
+				if ((i == 0 && IsScroll) ||       // 最上行は、上に移動中なら表示しない。
+					(i == lastIndex && IsScroll))        // 最下行は、下に移動中なら表示しない。
+					continue;
+
+				int n見た目の行番号 = i;
+				int n次のパネル番号 = (i + NowChangeCount);
+				int next_x = TJAPlayer3.Skin.SkinValue.SongSelect_Bar_X[n次のパネル番号];
+				int next_y = TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Y[n次のパネル番号];
+				int prev_x = TJAPlayer3.Skin.SkinValue.SongSelect_Bar_X[n見た目の行番号];
+				int prev_y = TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Y[n見た目の行番号];
+				int x = prev_x + ((int)((next_x - prev_x) * NowScrollValue)) + 52;
+				int y = prev_y + ((int)((next_y - prev_y) * NowScrollValue)) + 230;
+
+				var barInfo = stバー情報[i];
+
+				int bar_bg_center_move = (int)((TJAPlayer3.Skin.SkinValue.SongSelect_Bar_X[center - 1] - TJAPlayer3.Skin.SkinValue.SongSelect_Bar_X[center + 1]) * NowScrollValue);
+				int bar_bg_center_move_r = TJAPlayer3.Skin.SkinValue.SongSelect_Bar_X[center] - TJAPlayer3.Skin.SkinValue.SongSelect_Bar_X[center + NowChangeCount];
+
+				if (barInfo.Node.r親ノード != null && i != 0 && i != TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Count - 1)
+				{
+					int genre = StringToGenreNum.GenreBar(barInfo.Node.r親ノード.strジャンル);
+
+					var tex = Bar_BGs[genre];
+
+					int bgSize = 0;
+					if (i == center)
+					{
+						bgSize = TJAPlayer3.Skin.SkinValue.SongSelect_Bar_X[i + NowChangeCount] - TJAPlayer3.Skin.SkinValue.SongSelect_Bar_X[i + (NowChangeCount * 2)];
+					}
+					else if (i < center)
+					{
+						bgSize = TJAPlayer3.Skin.SkinValue.SongSelect_Bar_X[i] - TJAPlayer3.Skin.SkinValue.SongSelect_Bar_X[i - 1];
+					}
+					else if (i > center)
+					{
+						bgSize = TJAPlayer3.Skin.SkinValue.SongSelect_Bar_X[i] - TJAPlayer3.Skin.SkinValue.SongSelect_Bar_X[i + 1];
+					}
+
+					int resize = 0;
+					{
+						var rect = TJAPlayer3.Skin.SkinValue.SongSelect_Bar_BG_Rect[1];
+						if (i == center)
+						{
+							tex.Scaling.X = Math.Abs(bar_bg_center_move_r) / (float)rect[2];
+							tex.t2D拡大率考慮中央基準描画(TJAPlayer3.app.Device, x, y, new Rectangle(rect[0], rect[1], rect[2], rect[3]));
+						}
+						else if (i == center + NowChangeCount)
+						{
+							tex.Scaling.X = (Math.Abs(bgSize)) / (float)rect[2];
+							tex.t2D拡大率考慮中央基準描画(TJAPlayer3.app.Device, x, y, new Rectangle(rect[0], rect[1], rect[2], rect[3]));
+						}
+						else
+						{
+							tex.Scaling.X = Math.Abs(bgSize) / (float)rect[2];
+							tex.t2D拡大率考慮中央基準描画(TJAPlayer3.app.Device, x, y, new Rectangle(rect[0], rect[1], rect[2], rect[3]));
+						}
+					}
+
+					if (barInfo.Node.r親ノード.list子リスト[0] == barInfo.Node)
+					{
+					}
+					else if (barInfo.Node.r親ノード.list子リスト[barInfo.Node.r親ノード.list子リスト.Count - 1] == barInfo.Node)
+					{
+					}
+					else
+					{
+					}
+				}
+			}
+			*/
+
+			void drawBarBG(int genre, int bar_bg_left_x, int bar_bg_right_x, int y)
+            {
+				var tex = Bar_BGs[genre];
+
+				tex.Opacity = 255 - (int)(barMoveValue * 255);
+
+				var left_left_rect = TJAPlayer3.Skin.SkinValue.SongSelect_Bar_BG_Rect[0];
+				tex.Scaling.X = 1;
+				tex.Draw2D(TJAPlayer3.app.Device, bar_bg_left_x - left_left_rect[2], y, new Rectangle(left_left_rect[0], left_left_rect[1], left_left_rect[2], left_left_rect[3]));
+
+				int size = bar_bg_right_x - bar_bg_left_x;
+				var left_rect = TJAPlayer3.Skin.SkinValue.SongSelect_Bar_BG_Rect[1];
+				tex.Scaling.X = (size / 2.0f) / left_rect[2];
+				tex.Draw2D(TJAPlayer3.app.Device, bar_bg_left_x, y, new Rectangle(left_rect[0], left_rect[1], left_rect[2], left_rect[3]));
+
+
+
+				var right_right_rect = TJAPlayer3.Skin.SkinValue.SongSelect_Bar_BG_Rect[4];
+				tex.Scaling.X = 1;
+				tex.Draw2D(TJAPlayer3.app.Device, bar_bg_right_x, y, new Rectangle(right_right_rect[0], right_right_rect[1], right_right_rect[2], right_right_rect[3]));
+
+				var right_rect = TJAPlayer3.Skin.SkinValue.SongSelect_Bar_BG_Rect[3];
+				tex.Scaling.X = (size / 2.0f) / right_rect[2];
+				tex.Draw2D(TJAPlayer3.app.Device, bar_bg_right_x - (size / 2) - right_rect[2] + left_left_rect[2], y, new Rectangle(right_rect[0], right_rect[1], right_rect[2], right_rect[3]));
+
+			}
+
+			List<SongInfoNode> barInfos = new List<SongInfoNode>();
+			List<int> barInfos_X = new List<int>();
+			List<int> barInfos_EndX = new List<int>();
+
+			List<SongInfoNode> barInfos_End = new List<SongInfoNode>();
+			Dictionary<SongInfoNode, int> barInfos_EndX_D = new Dictionary<SongInfoNode, int>();
+
+			for (int i = 0; i < TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Count; i++)    // パネルは全13枚。
+			{
+				int lastIndex = TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Count - 1;
+				int center = lastIndex / 2;
+				if ((i == 0 && IsScroll) ||       // 最上行は、上に移動中なら表示しない。
+					(i == lastIndex && IsScroll))        // 最下行は、下に移動中なら表示しない。
+					continue;
+
+				int n見た目の行番号 = i;
+				int n次のパネル番号 = (NowChangeCount > 0) ? ((i + 1) % TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Count) : (((i - 1) + TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Count) % TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Count);
+				int x = TJAPlayer3.Skin.SkinValue.SongSelect_Bar_X[n見た目の行番号] + ((int)((TJAPlayer3.Skin.SkinValue.SongSelect_Bar_X[n次のパネル番号] - TJAPlayer3.Skin.SkinValue.SongSelect_Bar_X[n見た目の行番号]) * NowScrollValue));
+
+				var barInfo = stバー情報[i];
+				if (barInfo.Node.r親ノード != null)
+				{
+					if (barInfo.Node.r親ノード.list子リスト[0] == barInfo.Node)
+					{
+						x += 35;
+						if (barInfo.Node == r現在選択中の曲)
+						{
+							x -= (int)(150 * (1.0 - NowScrollValue));
+						}
+						barInfos.Add(barInfo.Node);
+						barInfos_X.Add(x);
+					}
+					else if (barInfo.Node.r親ノード.list子リスト[barInfo.Node.r親ノード.list子リスト.Count - 1] == barInfo.Node)
+					{
+						x += 68;
+						if (barInfo.Node == r現在選択中の曲)
+						{
+							x += (int)(150 * (1.0 - NowScrollValue));
+						}
+						if (barInfos.Contains(barInfo.Node.r親ノード.list子リスト[0]))
+						{
+							barInfos_EndX_D.Add(barInfo.Node.r親ノード, x);
+						}
+						else
+						{
+							barInfos_End.Add(barInfo.Node);
+							barInfos_EndX.Add(x);
+						}
+					}
+					else
+					{
+						if (!barInfos.Contains(barInfo.Node.r親ノード.list子リスト[0]))
+                        {
+							barInfos.Add(barInfo.Node.r親ノード.list子リスト[0]);
+							barInfos_X.Add(0);
+						}
+					}
+				}
+			}
+
+			for (int i = 0; i < barInfos.Count; i++)    // パネルは全13枚。
+			{
+				if (barInfos_EndX_D.ContainsKey(barInfos[i].r親ノード))
+				{
+					drawBarBG(StringToGenreNum.GenreBar(barInfos[i].strジャンル), barInfos_X[i], barInfos_EndX_D[barInfos[i].r親ノード], 22);
+				}
+				else
+				{
+					drawBarBG(StringToGenreNum.GenreBar(barInfos[i].strジャンル), barInfos_X[i], 1280, 22);
+				}
+			}
+			for (int i = 0; i < barInfos_End.Count; i++)    // パネルは全13枚。
+			{
+				drawBarBG(StringToGenreNum.GenreBar(barInfos_End[i].strジャンル), 0, barInfos_EndX[i], 22);
+			}
+
+
+			if (r現在選択中の曲.r親ノード != null)
+			{
+				int genre = StringToGenreNum.GenreBar(r現在選択中の曲.r親ノード.strジャンル);
+				var tex = Bar_BGs[genre];
+
+				var rect = TJAPlayer3.Skin.SkinValue.SongSelect_Bar_BG_Rect[2];
+				tex.Scaling.X = 1;
+				tex.Draw2D(TJAPlayer3.app.Device, 473, 22, new Rectangle(rect[0], rect[1], rect[2], rect[3]));
+			}
+
+
 			for (int i = 0; i < TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Count; i++)    // パネルは全13枚。
 			{
 				int lastIndex = TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Count - 1;
@@ -1398,6 +1593,7 @@ namespace TJAPlayer3
 
 		private struct STバー情報
 		{
+			public SongInfoNode Node;
 			public CActSelect曲リスト.Eバー種別 eバー種別;
 			public string strタイトル文字列;
 			public FDKTexture txタイトル名;
@@ -1521,6 +1717,7 @@ namespace TJAPlayer3
 		private FDKTexture LevelStar;
 		private FDKTexture Diff_Center;
 
+		private FDKTexture[] Bar_BGs = new FDKTexture[9];
 		private FDKTexture[] Bar_Genres = new FDKTexture[9];
 		private FDKTexture[] Bar_Genre_Box_Flag = new FDKTexture[9];
 		private FDKTexture[] Bar_Center_Genres = new FDKTexture[9];
@@ -1647,6 +1844,7 @@ namespace TJAPlayer3
 			for (int i = 0; i < TJAPlayer3.Skin.SkinValue.SongSelect_Bar_Count; i++)
 			{
 				SongInfoNode song = GetSideSong(i - halfCount, out _);
+				stバー情報[i].Node = song;
 				this.stバー情報[i].strタイトル文字列 = song.strタイトル;
 				this.stバー情報[i].strジャンル = song.strジャンル;
 				this.stバー情報[i].NodeType = song.NowNodeType;
