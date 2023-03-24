@@ -47,7 +47,7 @@ namespace TJAPlayer3
                 Drums.n連打数 = this.n合計連打数[ 0 ];
 				Drums.n最大コンボ数 = this.actCombo.n現在のコンボ数.P1最高値;
 				Drums.n全チップ数 = TJAPlayer3.DTX.n可視チップ数.Drums;
-				for ( int i = 0; i < (int) Eレーン.MAX;  i++ )
+				for ( int i = 0; i < TJAPlayer3._MainConfig.nPlayerCount;  i++ )
 				{
 					Drums.bAutoPlay[ i ] = TJAPlayer3._MainConfig.AutoPlay[ i ];
 				}
